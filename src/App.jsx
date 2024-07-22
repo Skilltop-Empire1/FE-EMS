@@ -14,7 +14,7 @@ const App = () => {
         <Routes>
           <Route index element={<LandingPage/>}></Route>
           <Route path='components/Dashboard.jsx' element={<Dashboard/>}></Route>
-          <Route path='components/Dashboard.jsx' element={<Settings/>}></Route>
+          <Route path='components/Settings.jsx' element={<Settings/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
