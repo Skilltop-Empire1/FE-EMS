@@ -1,24 +1,20 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Dashboard from './components/Dashboard'
-import LandingPage from './components/LandingPage'
-import Navbar from './components/Navbar'
-import Settings from './components/Settings'
-
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/app/Dashboard";
+import Settings from "./pages/app/Settings";
+import AppLayout from "./pages/app/AppLayout";
 
 const App = () => {
   return (
-    <div>
-      <BrowserRouter>
-        <Navbar/>
-        <Routes>
-          <Route index element={<LandingPage/>}></Route>
-          <Route path='components/Dashboard.jsx' element={<Dashboard/>}></Route>
-          <Route path='components/Settings.jsx' element={<Settings/>}></Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  )
-}
+    <>
+      {/* <LandingPageLayout /> */}
+      <Routes>
+        <Route path="/" element={<AppLayout />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/settings" element={<Settings />}></Route>
+      </Routes>
+    </>
+  );
+};
 
-export default App
+export default App;
