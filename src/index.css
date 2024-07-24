@@ -16,7 +16,12 @@
     margin-left: 30px;
 }
 
-.dashboard-nav .left .link {
+.dashboard-nav .left ul {
+    display: flex;
+    list-style: none;
+}
+
+.dashboard-nav .left ul li .link {
     text-decoration: none;
     color:#171A1F;
     font-size: 14px;
@@ -27,7 +32,7 @@
 
 }
 
-.dashboard-nav .left .link:hover {
+.dashboard-nav .left ul li .link:hover {
     color: #7F00FF;
 }
 

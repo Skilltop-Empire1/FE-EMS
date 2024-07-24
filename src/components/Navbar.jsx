@@ -7,15 +7,35 @@ const Navbar = () => {
   return (
     <nav className="dashboard-nav">
       <div className="left">
-        <Link className="link">Home</Link>
-        <Link className="link">Organization</Link>
-        <Link className="link">Staff</Link>
-        <Link className="link">Patients</Link>
-        <Link className="link">Appointments</Link>
-        <Link className="link">Account</Link>
-        <Link className="link">Reports</Link>
-        <Link className="link">Settings</Link>
-        <Link className="link">Help</Link>
+        <ul>
+          <li>
+           <Link className="link">Home</Link>
+          </li>
+          <li>
+           <Link className="link">Organization</Link>
+          </li>
+          <li>
+            <Link className="link">Staff</Link>
+          </li>
+          <li>
+            <Link className="link">Patients</Link>
+          </li>
+          <li>
+            <Link className="link">Appointments</Link>
+          </li>
+          <li>    
+            <Link className="link">Account</Link>
+          </li>
+          <li>
+           <Link className="link">Reports</Link>
+          </li>
+          <li>
+            <Link className="link">Settings</Link>
+          </li>
+          <li>
+            <Link className="link">Help</Link>
+          </li>
+        </ul>
       </div>
       <div className="right">
         <img src={profileImg} alt="profileImage" />
