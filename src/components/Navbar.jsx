@@ -18,7 +18,7 @@ const Navbar = () => {
         <Link className="link">Help</Link>
       </div>
       <div className="right">
-        <img src={profileImg} alt="" />
+        {/* <img src={profileImg} alt="" /> */}
         <FaSortDown className="dashboard-icon" />
       </div>
     </nav>
