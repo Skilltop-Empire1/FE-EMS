@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import profileImg from './profile.png'
+// import profileImg from "./profile.png";
 import { FaSortDown } from "react-icons/fa";
 
 const Navbar = () => {
@@ -19,11 +19,10 @@ const Navbar = () => {
       </div>
       <div className="right">
         <img src={profileImg} alt="" />
-        <FaSortDown className="dashboard-icon"/>
+        <FaSortDown className="dashboard-icon" />
       </div>
     </nav>
-  )
-      ;
+  );
 };
 
 export default Navbar;
