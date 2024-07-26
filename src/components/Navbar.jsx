@@ -5,7 +5,7 @@ import { FaSortDown } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <nav className="dashboard-nav">
+    <nav className="dashboard-nav sticky-top">
       <div className="left">
         <ul>
           <li>
