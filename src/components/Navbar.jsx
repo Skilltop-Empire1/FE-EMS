@@ -1,24 +1,56 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import profileImg from "./profile.png";
+import profileImg from "./profile.png";
+import Logo from "./EMS logo-Transparent.png";
+import style from "./navBarStyle.module.css";
+
+// import profileImg from './profile.png'
+
 import { FaSortDown } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <nav className="dashboard-nav">
-      <div className="left">
-        <Link className="link">Home</Link>
-        <Link className="link">Organization</Link>
-        <Link className="link">Staff</Link>
-        <Link className="link">Patients</Link>
-        <Link className="link">Appointments</Link>
-        <Link className="link">Account</Link>
-        <Link className="link">Reports</Link>
-        <Link className="link">Settings</Link>
-        <Link className="link">Help</Link>
+    <nav className={style.dashboardNav}>
+      <div className={style.left}>
+        <Link to="/">
+          <img src={Logo} alt="" className={style.img} />
+        </Link>
+        <ul className={style.ull}>
+          <li>
+            <Link className={style.link} to="/">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link className={style.link}>Organization</Link>
+          </li>
+          <li>
+            <Link className={style.link}>Staff</Link>
+          </li>
+          <li>
+            <Link className={style.link}>Patients</Link>
+          </li>
+          <li>
+            <Link className={style.link}>Appointments</Link>
+          </li>
+          <li>
+            <Link className={style.link}>Account</Link>
+          </li>
+          <li>
+            <Link className={style.link}>Reports</Link>
+          </li>
+          <li>
+            <Link className={style.link} to="/settings">
+              Settings
+            </Link>
+          </li>
+          <li>
+            <Link className={style.link}>Help</Link>
+          </li>
+        </ul>
       </div>
       <div className="right">
-        {/* <img src={profileImg} alt="" /> */}
+        <img src={profileImg} alt="" />
         <FaSortDown className="dashboard-icon" />
       </div>
     </nav>
