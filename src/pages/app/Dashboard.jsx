@@ -1,9 +1,30 @@
 import React from "react";
+import html2pdf from 'html2pdf.js';
 
 const Dashboard = () => {
+
+  const handleDownloadPdf = () => {
+    const element = document.getElementById('content-to-print');
+    const options = {
+      margin: 0.5,
+      filename: 'my-document.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(element).save();
+  };
+
+
+
+
   return (
-    <div className="dashboard">
-      <h2 className="title">Dashboard</h2>
+    <div className="dashboard" id="content-to-print">
+      <div className="top">
+        <h2 className="title">Dashboard</h2>
+        <button onClick={handleDownloadPdf}>Download PDF</button>
+      </div>
       <div className="boxes">
         <div className="box">
           <h2>Number of Organisations</h2>
