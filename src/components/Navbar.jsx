@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import profileImg from './profile.png'
 import Logo from './EMS logo-Transparent.png'
+
+// import profileImg from './profile.png'
+
 import { FaSortDown } from "react-icons/fa";
 
 const Navbar = () => {
@@ -32,7 +35,7 @@ const Navbar = () => {
            <Link className="link">Reports</Link>
           </li>
           <li>
-            <Link className="link">Settings</Link>
+            <Link className="link" to='/settings'>Settings</Link>
           </li>
           <li>
             <Link className="link">Help</Link>
@@ -40,12 +43,14 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="right">
+
         <img src={profileImg} alt="profileImage" />
         <FaSortDown className="dashboard-icon"/>
+  {/* <img src={profileImg} alt="" /> */}
+
       </div>
     </nav>
-  )
-      ;
+  );
 };
 
 export default Navbar;
