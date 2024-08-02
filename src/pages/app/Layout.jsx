@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
-import Dashboard from "./Dashboard";
+import Dashboard from "./Dashboard/Dashboard";
+import { Outlet } from "react-router-dom";
 
 function Layout() {
   return (

@@ -1,5 +1,6 @@
 import React from "react";
 import html2pdf from 'html2pdf.js';
+import styles from './dashboardStyle.module.css'
 
 const Dashboard = () => {
 
@@ -20,31 +21,33 @@ const Dashboard = () => {
 
 
   return (
-    <div className="dashboard" id="content-to-print">
-      <div className="top">
-        <h2 className="title">Dashboard</h2>
+    <div className={styles.body}>
+
+    <div className={styles.dashboard} id="content-to-print">
+      <div className={styles.top}>
+        <h2 className={styles.title}>Dashboard</h2>
         <button onClick={handleDownloadPdf}>Download PDF</button>
       </div>
-      <div className="boxes">
-        <div className="box">
+      <div className={styles.boxes}>
+        <div className={styles.box}>
           <h2>Number of Organisations</h2>
           <p>5</p>
         </div>
-        <div className="box">
+        <div className={styles.box}>
           <h2>Number of Nurses</h2>
           <p></p>
         </div>
-        <div className="box">
+        <div className={styles.box}>
           <h2>Number of Doctors</h2>
           <p>2</p>
         </div>
-        <div className="box">
+        <div className={styles.box}>
           <h2>Number of Patients</h2>
           <p></p>
         </div>
       </div>
-      <div className="content">
-        <div className="table-container">
+      <div className={styles.content}>
+        <div className={styles.tableContainer}>
           <h2>Recent Appointments</h2>
           <table>
             <thead>
@@ -81,19 +84,19 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
-        <div className="recent-doctors">
-          <div className="doc-list">
+        <div className={styles.recentDoctor}>
+          <div className={styles.docList}>
             <h2>Recently Added Doctors</h2>
-            <ul>
+            <ul className={styles.ul}>
               <li>
-                <div className="doc-icon">
+                <div className={styles.docIcon}>
                   <i className="fa-solid fa-person"></i>
                 </div>
                 <span>Dr. Pankaj</span>
                 <span>Cardiologist</span>
               </li>
               <li>
-                <div className="doc-icon">
+                <div className={styles.docIcon}>
                   <i className="fa-solid fa-person"></i>
                 </div>
                 <span>Doctor A</span>
@@ -103,6 +106,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

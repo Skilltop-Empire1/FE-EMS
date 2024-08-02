@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+.body {
+    background-color: #F7F8FC;
+
+
+}
+
+.body{
+    font-family: 'Noto Sans', sans-serif;
+}
+* {
+    margin: 0;
+    padding: 0;
+    
+}
+
+.dashboardNav {
+    display: flex;
+    justify-content: space-between;
+    font-family: "Manrope", sans-serif;
+    background-color: #FEFEFE;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: sticky;
+    top: 0;
+    align-items: center;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.img {
+  width: 50px;
+  aspect-ratio: 1/1;
+  margin-right: 20px;
+}
+
+.ull {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+ .link {
+    text-decoration: none;
+    color:#171A1F;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+    margin: 0 20px ;
+
+}
+
+ .link:hover {
+    color: #7F00FF;
+}
+
+.img2 {
+    width: 50px;
+    aspect-ratio: 1/1;
+    margin-right: 20px;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
