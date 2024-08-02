@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/app/Dashboard";
-import Settings from "./pages/app/Settings";
+import Settings from "./pages/app/SettingsPage/Settings";
 import AppLayout from "./pages/app/AppLayout";
 
 const App = () => {
