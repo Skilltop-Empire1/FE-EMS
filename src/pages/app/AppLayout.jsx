@@ -4,7 +4,7 @@ import Layout from "./Layout";
 
 function AppLayout() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  return <>{<Layout /> }</>;
+  return <>{isLoggedIn ? <Layout /> : <LandingPageLayout />}</>;
 }
 
 export default AppLayout;
