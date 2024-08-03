@@ -69,27 +69,27 @@ button {
   width: 100%;
 }
 
-table {
+.table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 50px;
   border-radius: 20px;
 }
 
-table,
-th,
-td {
+.table,
+.th,
+.td {
   border: 1px solid #dee1e6;
   /* border-collapse: collapse; */
 }
 
-th,
-td {
+.th,
+.td {
   background-color: #ebeffa;
   /* border: 10px solid #DEE1E6; */
 }
 
-th {
+.th {
   background-color: white;
   padding: 10px;
   text-align: left;
@@ -101,7 +101,7 @@ th {
   border: 1px solid #dee1e6;
 }
 
-td {
+.td {
   padding: 10px;
   text-align: left;
   font-size: 14px;
