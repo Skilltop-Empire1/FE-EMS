@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import profileImg from "./profile.png";
 import Logo from "./EMS logo-Transparent.png";
+import style from "./navBarStyle.module.css";
+
 import { FaSortDown } from "react-icons/fa";
 import DropDown from "./DropDown";
 
@@ -9,85 +11,49 @@ const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
   return (
     <>
-      <nav className="dashboard-nav sticky-top">
-        <div className="left">
-          <img src={Logo} alt="" />
-          <ul>
+      <nav className={style.dashboardNav}>
+        <div className={style.left}>
+          <Link to="/">
+            <img src={Logo} alt="" className={style.img} />
+          </Link>
+          <ul className={style.ull}>
             <li>
-              <NavLink
-                className={({ isActive }) => (isActive ? "active" : "link")}
-                to="home"
-              >
+              <Link className={style.link} to="/">
                 Home
-              </NavLink>
+              </Link>
             </li>
             <li>
-              <NavLink
-                to="/organization"
-                className={({ isActive }) => (isActive ? "active" : "link")}
-              >
-                Organization
-              </NavLink>
+              <Link className={style.link}>Organization</Link>
             </li>
             <li>
-              <NavLink
-                to="/staff"
-                className={({ isActive }) => (isActive ? "active" : "link")}
-              >
-                Staff
-              </NavLink>
+              <Link className={style.link}>Staff</Link>
             </li>
             <li>
-              <NavLink
-                to="/patients"
-                className={({ isActive }) => (isActive ? "active" : "link")}
-              >
-                Patients
-              </NavLink>
+              <Link className={style.link}>Patients</Link>
             </li>
             <li>
-              <NavLink
-                to="/appointments"
-                className={({ isActive }) => (isActive ? "active" : "link")}
-              >
-                Appointments
-              </NavLink>
+              <Link className={style.link}>Appointments</Link>
             </li>
             <li>
-              <NavLink
-                to="/account"
-                className={({ isActive }) => (isActive ? "active" : "link")}
-              >
-                Account
-              </NavLink>
+              <Link className={style.link}>Account</Link>
             </li>
             <li>
-              <NavLink
-                to="/reports"
-                className={({ isActive }) => (isActive ? "active" : "link")}
-              >
-                Reports
-              </NavLink>
+              <Link className={style.link}>Reports</Link>
             </li>
             <li>
-              <NavLink
-                to="/settings"
-                className={({ isActive }) => (isActive ? "active" : "link")}
-              >
+              <Link className={style.link} to="/settings">
                 Settings
-              </NavLink>
+              </Link>
             </li>
             <li>
-              <NavLink to="/help" className="link">
-                Help
-              </NavLink>
+              <Link className={style.link}>Help</Link>
             </li>
           </ul>
         </div>
         <div className="right">
           <img src={profileImg} alt="" />
           <FaSortDown
-            onClick={() => setIsDropdown((prevValue) => !prevValue)}
+            onClick={() => setIsDropdown((prev) => !prev)}
             className="dashboard-icon"
           />
         </div>

@@ -18,19 +18,34 @@ function DropDown() {
         fontWeight: "400",
         display: "flex",
         flexDirection: "row",
+        position: "fixed",
       }}
     >
       <div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginBottom: "10px",
+            cursor: "pointer",
+          }}
+        >
           <UpdateProfileIcon />
           <p>Update Profile Pic</p>
         </div>
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginBottom: "10px",
+            cursor: "pointer",
+          }}
+        >
           <ChangePassIcon />
           <p>Change Password</p>
         </div>
-        <div>
-          <p style={{ marginLeft: "16px" }}>Logout</p>
+        <div style={{ marginLeft: "16px", cursor: "pointer" }}>
+          <p>Logout</p>
         </div>
       </div>
       <div>
