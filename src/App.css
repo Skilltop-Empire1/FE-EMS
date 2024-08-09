@@ -1,0 +1,649 @@
+/* Header styling start */
+
+*{
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+
+body{
+  width:100%;
+  height:auto;
+  line-height: 1.5;
+  color:black;
+  background-color: white;
+}
+
+.Headers img{
+  width: 130px;
+  margin-top: -45px;
+  border-radius: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.Headers img:hover{
+  box-shadow: 0 0 0 8px #3F51B5;
+  transition: 0.4s ease-in-out;
+  -webkit-transform: rotate(360deg) translate(0);
+  border-radius: 50px;
+}
+
+.Headers nav{
+  width: 100%;
+}
+
+nav{
+  text-align: center;
+}
+
+nav ul{
+  width: 100%;
+  text-align: center;
+  display:flex;
+  flex-wrap: wrap;
+  padding-left: 10px;
+  margin-top: 60px;
+  list-style-type: none;
+}
+
+nav ul li{
+  margin-left: 50px;
+  margin-right: 0px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  padding: 7px;
+  text-align: center;
+  cursor: pointer;
+  height: 30px;
+}
+
+nav ul li a{
+  color: black;
+  font-size: 18px;
+  padding: 0px;
+}
+
+.Headers nav ul li a:hover{
+  color: white;
+}
+
+.Headers nav ul li:hover{
+  background-color:  #eb574d;
+  transition: 0.5s ease-in-out;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.Headers nav .navs:hover{
+  padding-left: 23px;
+  padding-right: 23px;
+}
+
+.Headers nav .naf:hover{
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.Headers nav .nad:hover{
+  padding-left: 17px;
+  padding-right: 17px;
+}
+
+.Headers .class{
+  padding-left: 500px;
+  padding-right: 0px;
+}
+
+.Headers .class button{
+  background-color: #079A6A;
+  border: none;
+  margin-left: 0px;
+  border-radius: 15px;
+  padding: 15px;
+  justify-content:space-between;
+  float: inline-end;
+  cursor: pointer;
+  color: white;
+}
+
+ .Headers .class button:hover{
+  background-color:  #F44336;
+}
+
+
+/* Header styling end*/
+
+/* Dropdown styling start */
+
+
+.Contains{
+  width: 100%;
+  justify-content: center;
+  display:flex;
+}
+
+.contain{
+  background-color: #079A6A;
+  margin-top: 100px;
+  width: 600px;
+  justify-content: center;
+  border-radius: 15px;
+}
+
+.login h2{
+  padding-top: 40px;
+  padding-left: 110px;
+  padding-right: 110px;
+  font-size:30px;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.row{
+  padding-left: 110px;
+  padding-right: 110px;
+}
+
+.row input{
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.row input[type='text']{
+  padding-right: 200px;
+  border: none;
+  border-radius: 14px;
+}
+
+.row input[type='password']{
+  padding-right: 200px;
+  border: none;
+  border-radius: 14px;
+}
+
+::placeholder{
+  font-size: 15px;
+}
+
+label[for="check"]{
+  padding-left: 7px;
+}
+
+.heads .forgett{
+  padding: 10px;
+  background-color: #F76E30;
+  border: none;
+  border-radius: 15px;
+  margin-top: 15px;
+}
+
+.heads .forgett a{
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  color: white;
+  padding: 5px;
+}
+
+.heads .forgett:hover{
+  background-color: #DDDDF5;
+
+}
+
+.heads .forgett a:hover{
+  color: black;
+}
+
+.heads .forgott{
+  margin-left: 10px;
+  margin-bottom: 30px;
+  border:none;
+  background-color: transparent;
+}
+
+.heads .forgott a{
+  color: #f44336;
+  font-size: 15px;
+}
+
+
+/* Dropdown styling end */
+
+/* Landing-page styling start */
+
+
+.landing-page .contents{
+  display: flex;
+  padding-top: 30px;
+  justify-content: space-between;
+  margin-top: 60px;
+}
+
+.landing-page .contentt img{
+  width: 500px;
+  margin-top: 0px;
+  height: 900px;
+}
+
+.landing-page .contents{
+  justify-content: space-between;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.content .containers{
+  background-color: #3F51B5;
+  padding: 40px;
+  width: 440px;
+  color: white;
+  padding-left: 30px;
+  padding-right: 10px;
+  border-radius: 28px;;
+  margin-top: 30px;
+}
+
+.content .containers h5{
+  font-size: 19px;
+  font-weight: lighter;
+}
+
+
+.content .containers h2{ 
+  color: #F84C69;
+}
+
+.content .containers p{
+  font-size: 20px;
+}
+
+.text{
+  padding-top: 40px;
+  font-family: "Amita", serif;
+}
+
+.text p{
+  font-family: "Playwrite RO", cursive;
+  padding-left: 30px;
+  padding-top: 10px;
+}
+
+.landing-page .content .socials img{
+  width: 30px;
+  height: 30px;
+}
+
+.contents h1{
+  font-size: 65px;
+  color: #3F51B5;
+}
+
+.contents button{
+  margin-top: 40px;
+  padding: 10px;
+  border:none;
+  border-radius: 6px;
+  background-color: #F84C69;
+}
+
+ input:checked{
+  background-color: black;
+  color: yellow;
+}
+
+.contents button[type="forget"]{
+  margin-left: 15px;
+  padding:15px;
+  background-color: #F44336;
+}
+
+.contents button[type="forgot"]{
+  margin-left: 20px;
+}
+
+.contents button a{
+  color: white;
+  padding: 3px;
+}
+
+.contents button:hover{
+  background-color: #3F51B5;
+}
+
+.socials{
+  margin-bottom: 30px;
+  display:flex;
+  margin-top: 30px;
+}
+
+.socials img{
+  padding-left: 30px;
+  width: 50px;
+}
+
+.socials h5{
+  margin-top: 10px;
+}
+
+.socials h5 a{
+  color: black;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Landing-page styling end */
+
+@media(max-width: 756px){
+  body{
+    width: 100%;
+  }
+
+  .Headers nav img{
+    width: 50px;
+    height: 50px;
+    margin-top: 0px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  .Headers img:hover{
+    box-shadow: 0 0 0 10px #3F51B5;
+    transition: 0.4s ease-in-out;
+    -webkit-transform: rotate(360deg) translate(0);
+    border-radius: 40px;
+  }
+
+  .Headers nav{
+    width: 100%;
+  }
+  
+  nav{
+    text-align: center;
+  }
+
+  .images{
+    display: flex;
+  }
+  
+  nav ul{
+    width: 100%;
+    text-align: center;
+    display:flex;
+    flex-wrap: wrap;
+    padding-left: 0px;
+    margin-top: 20px;
+    list-style-type: none;
+  }
+  
+  nav ul li{
+    margin-left: 11px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 18px;
+    font-weight: bold;
+    padding: 0px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  nav ul li a{
+    color: black;
+    font-size: 10px;
+    padding: 0px;
+  }
+  
+  .Headers nav ul li a:hover{
+    color: white;
+  }
+
+  .Headers nav .navs:hover{
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .Headers nav .naf:hover{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .Headers nav .nad:hover{
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .Headers .class button{
+    background-color: #079A6A;
+    border: none;
+    display: flex;
+    margin-top: 13px;
+    margin-left: 7px;
+    margin-right: 0px;
+    border-radius: 15px;
+    padding: 9px;
+    justify-content: flex-end;
+    float: inline-end;
+    cursor: pointer;
+    font-size: 8px;
+    font-weight: bolder;
+    color: white;
+  }
+
+  .Headers .class{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+
+   .Headers .class button:hover{
+    background-color: #f44336;
+  }
+
+  /* Header styling end*/
+
+  .landing-page .contents{
+    display: flex;
+    padding-top: 30px;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .landing-page .contentt img{
+    width: 200px;
+    height: 450px;
+  }
+
+  .landing-page .contents{
+    justify-content: space-around;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .content .containers{
+    background-color: #3F51B5;
+    padding: 10px;
+    width: 140px;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 28px;
+    margin-top: 30px;
+  }
+
+  .content .containers h2{ 
+    color: #F84C69;
+    font-size: 15px;
+  }
+
+  .content .containers p{
+    font-size: 12px;
+  }
+
+  .content .containers h5{
+    font-size: 10px;
+    font-weight: lighter;
+  }
+
+  .text{
+    padding-top: 40px;
+    font-family: "Amita", serif;
+  }
+
+  .text p{
+    font-family: "Playwrite RO", cursive;
+    font-size: 9px;
+    padding-left: 10px;
+  }
+
+  .landing-page .content .socials img{
+    width: 25px;
+    height: 25px;
+  }
+
+  .contents h1{
+    font-size: 20px;
+    color: #3F51B5;
+  }
+
+  .contents button{
+    margin-top: 20px;
+    padding: 5px;
+    border:none;
+    border-radius: 6px;
+    background-color: #F84C69;
+  }
+
+  .contents button[type="forget"]{
+    margin-left: 5px;
+    padding: 8px;
+    background-color: #F44336;
+  }
+
+  .contents button[type="forgot"]{
+    margin-left: 3px;
+  }
+
+  .contents button a{
+    color: white;
+    font-size: 8px;
+  }
+
+  .contents button:hover{
+    background-color: #3F51B5;
+  }
+
+  .socials{
+    display:flex;
+    margin-top: 10px;
+  }
+
+  .socials img{
+    padding-left: 20px;
+  }
+
+  .socials h5{
+    margin-top: 7px;
+    display: none;
+    font-size: 10px;
+  }
+
+  .socials h5 a{
+    color: black;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  /* Landing-page styling end */
+
+  .Contains{
+    width: 100%;
+    justify-content: center;
+    display:flex;
+
+  }
+
+  .contain{
+    background-color: #079A6A;
+    margin-top: 70px;
+    width: 300px;
+    justify-content: center;
+    border-radius: 30px;
+  }
+
+  .login h2{
+    padding-top: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 20px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+  }
+
+  .row{
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .row input{
+    padding: 12px;
+    margin-top: 14px;
+  }
+
+  .row input[type='text']{
+    padding-right: 60px;
+    border: none;
+    border-radius: 14px;
+  }
+
+  .row input[type='password']{
+    padding-right: 60px;
+    border: none;
+    border-radius: 14px;
+  }
+
+  ::placeholder{
+    font-size: 12px;
+  }
+
+
+  label[for="check"]{
+    padding-left: 7px;
+  }
+
+  .heads .forgett{
+    padding: 8px;
+    background-color: #F44336;
+    border: none;
+    border-radius: 15px;
+    margin-top: 15px;
+  }
+
+  .heads .forgett a{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: white;
+    padding: 5px;
+  }
+
+  .heads .forgett:hover{
+    background-color: #DDDDF5;
+  }
+
+  .heads .forgett a:hover{
+    color: black;
+  }
+
+  .heads .forgott{
+    margin-left: 10px;
+    border:none;
+    background-color: transparent;
+  }
+
+  .heads .forgott a{
+    color: #F76E30;
+    font-size: 13px;
+  }
+
+  input:checked{
+    background-color: black;
+    color: yellow;
+  }
+
+  /* Dropdown styling end */
+}
