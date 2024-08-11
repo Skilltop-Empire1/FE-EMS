@@ -6,9 +6,17 @@ import style from "./navBarStyle.module.css";
 
 import { FaSortDown } from "react-icons/fa";
 import DropDown from "./DropDown";
+import ModalContainer from "../modals/ModalContainer";
+import { MODAL_TYPES, useModal } from "../context/ModalContext";
 
 const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
+  const { openModal, isShowModal, image } = useModal();
+
+  const handleShowModal = (type) => {
+    openModal(type);
+  };
+  const handlePasswordChange = () => {};
   return (
     <>
       <nav className={style.dashboardNav}>
@@ -23,22 +31,34 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link className={style.link}>Organization</Link>
+              <Link to="/organization" className={style.link}>
+                Organization
+              </Link>
             </li>
             <li>
-              <Link className={style.link}>Staff</Link>
+              <Link to="/staff" className={style.link}>
+                Staff
+              </Link>
             </li>
             <li>
-              <Link className={style.link}>Patients</Link>
+              <Link to="/patients" className={style.link}>
+                Patients
+              </Link>
             </li>
             <li>
-              <Link className={style.link}>Appointments</Link>
+              <Link to="/appointments" className={style.link}>
+                Appointments
+              </Link>
             </li>
             <li>
-              <Link className={style.link}>Account</Link>
+              <Link to="/account" className={style.link}>
+                Account
+              </Link>
             </li>
             <li>
-              <Link className={style.link}>Reports</Link>
+              <Link to="/reports" className={style.link}>
+                Reports
+              </Link>
             </li>
             <li>
               <Link className={style.link} to="/settings">
@@ -46,19 +66,33 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link className={style.link}>Help</Link>
+              <Link to="/help" className={style.link}>
+                Help
+              </Link>
             </li>
           </ul>
         </div>
-        <div className="right">
-          <img src={profileImg} alt="" />
+        <div className={style.profileImgContainer}>
+          <div className={style.right}>
+            <img
+              src={image || profileImg}
+              alt="Profile"
+              className={style.profileImg}
+            />
+          </div>
           <FaSortDown
             onClick={() => setIsDropdown((prev) => !prev)}
-            className="dashboard-icon"
+            className={style[`dashboard-icon`]}
           />
         </div>
       </nav>
-      {isDropdown && <DropDown />}
+      {isDropdown && (
+        <DropDown
+          handlePasswordChange={() => handleShowModal(MODAL_TYPES.TYPE2)}
+          handleProfileImageChange={() => handleShowModal(MODAL_TYPES.TYPE1)}
+        />
+      )}
+      {isShowModal && <ModalContainer />}
     </>
   );
 };

@@ -27,7 +27,7 @@ export function ChangePassIcon() {
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
     >
       <rect width="15" height="15" rx="4" fill="url(#pattern0_1_2145)" />
       <defs>
@@ -38,7 +38,7 @@ export function ChangePassIcon() {
           height="1"
         >
           <use
-            xlink:href="#image0_1_2145"
+            xlinkHref="#image0_1_2145"
             transform="scale(0.0384615 0.0395062)"
           />
         </pattern>
@@ -46,7 +46,7 @@ export function ChangePassIcon() {
           id="image0_1_2145"
           width="26"
           height="27"
-          xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAbCAYAAABiFp9rAAAAAXNSR0IArs4c6QAAAeFJREFUSEtj/P///38GOgDGQWbRb4ZXd84zXLl+ieHBB6j3BeQZDDUNGQxVRIgKDyJ9dI5hXtwMhp0YRhox1C7KYNAhwqrBZNFvhg+PtjJMrtnGcAXD5UoMsS1ZDD5yfAT9hOqjv88ZdrbXMyz+bcNQnBvJYMh0nmHxxIUMW+7/xmsQq6INQ3F+HIPhv1MMiycvZNjJ6s3QV+nFIMaM0IZk0W+GK4tLGZp3f4PLsrIyMPzGbwfCJFYGBtbfDAww5QKuuQxTYnUZWKEqEBY9Wc1QVLWb4SnBQCBWgQhDeFsbQ5AMRD3Uot8Mp2ZmM/QeJdYQ4tSxWqcwzE83A/sKYtHn/Qwd2csZzuPTz8rPYOjlxhBkZc4gzfCM4eSxDQzrt91jeIU3aJUYcqdWMNjwIvno1fnlDL3TjzA8+IHFNlY5htiWcgYfSViIQ9U838BQW7ON4RY2yzgkGXwycxliDSEZGi3V3WBYXNzHsOUdqmXSwRUMff5KWP37dGMVQ9HaN6hyQjYMzb1xDGrYUx1ILfYSwL1sFkMSrux/ZQZDeNc5NEdglhhoJQO9LPpL86D7zUCfxEDP5E2fDAtKM/QpgkA20atQBdlFn2oCV0FHi4oPZ6E6vNoMkIRCp+YWcRUdPlUA7MpjvyJcCpIAAAAASUVORK5CYII="
+          xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAbCAYAAABiFp9rAAAAAXNSR0IArs4c6QAAAeFJREFUSEtj/P///38GOgDGQWbRb4ZXd84zXLl+ieHBB6j3BeQZDDUNGQxVRIgKDyJ9dI5hXtwMhp0YRhox1C7KYNAhwqrBZNFvhg+PtjJMrtnGcAXD5UoMsS1ZDD5yfAT9hOqjv88ZdrbXMyz+bcNQnBvJYMh0nmHxxIUMW+7/xmsQq6INQ3F+HIPhv1MMiycvZNjJ6s3QV+nFIMaM0IZk0W+GK4tLGZp3f4PLsrIyMPzGbwfCJFYGBtbfDAww5QKuuQxTYnUZWKEqEBY9Wc1QVLWb4SnBQCBWgQhDeFsbQ5AMRD3Uot8Mp2ZmM/QeJdYQ4tSxWqcwzE83A/sKYtHn/Qwd2csZzuPTz8rPYOjlxhBkZc4gzfCM4eSxDQzrt91jeIU3aJUYcqdWMNjwIvno1fnlDL3TjzA8+IHFNlY5htiWcgYfSViIQ9U838BQW7ON4RY2yzgkGXwycxliDSEZGi3V3WBYXNzHsOUdqmXSwRUMff5KWP37dGMVQ9HaN6hyQjYMzb1xDGrYUx1ILfYSwL1sFkMSrux/ZQZDeNc5NEdglhhoJQO9LPpL86D7zUCfxEDP5E2fDAtKM/QpgkA20atQBdlFn2oCV0FHi4oPZ6E6vNoMkIRCp+YWcRUdPlUA7MpjvyJcCpIAAAAASUVORK5CYII="
         />
       </defs>
     </svg>
@@ -66,14 +66,14 @@ export function EditIcon() {
         d="M13.7144 6L18.0001 10.2857"
         stroke="#171A1F"
         strokeWidth="2.05714"
-        strokeWiterlimit="10"
+        strokewiterlimit="10"
       />
       <path
         d="M9.42847 18.8571L3.42847 20.5714L5.14275 14.5714L15.7833 3.93078C16.4528 3.26135 17.5379 3.26135 18.2073 3.93078L20.069 5.7925C20.7385 6.46193 20.7385 7.54707 20.069 8.2165L9.42847 18.8571Z"
         stroke="#171A1F"
         strokeWidth="2.05714"
-        strokeWiterlimit="10"
-        strokeWinecap="square"
+        strokewiterlimit="10"
+        strokewinecap="square"
       />
     </svg>
   );

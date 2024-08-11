@@ -21,9 +21,7 @@ const PermissionsTable = ({
             <h3>Roles</h3>
             <EditPen />
           </div>
-          <thead>
-            <tr> </tr>
-          </thead>
+
           <table>
             <tbody>
               {rolesData.map((role, index) => (

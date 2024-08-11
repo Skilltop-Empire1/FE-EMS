@@ -5,7 +5,7 @@ import {
   UpdateProfileIcon,
 } from "../assets/ProfileIcons";
 
-function DropDown() {
+function DropDown({ handleProfileImageChange, handlePasswordChange }) {
   return (
     <div
       style={{
@@ -29,6 +29,7 @@ function DropDown() {
             marginBottom: "10px",
             cursor: "pointer",
           }}
+          onClick={handleProfileImageChange}
         >
           <UpdateProfileIcon />
           <p>Update Profile Pic</p>
@@ -40,6 +41,7 @@ function DropDown() {
             marginBottom: "10px",
             cursor: "pointer",
           }}
+          onClick={handlePasswordChange}
         >
           <ChangePassIcon />
           <p>Change Password</p>
