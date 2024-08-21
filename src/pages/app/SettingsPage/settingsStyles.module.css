@@ -1,0 +1,136 @@
+.hidden {
+  display: none;
+}
+
+.switch-label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.body {
+  padding-left: 56px;
+  padding-right: 62px;
+}
+
+.user-details-container {
+  width: 1050px;
+  height: 231px;
+}
+
+.user-details-container h3 {
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.form-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: flex-start;
+}
+
+.form-content input {
+  border: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 85px;
+}
+
+.container h3 {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.rolesContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 490px;
+  height: 385px;
+  background-color: #f4f3f3;
+  padding-top: 25px;
+  padding-left: 6px;
+  border-radius: 14px;
+}
+
+.roles {
+  display: flex;
+  flex-direction: row;
+  padding-top: 22px;
+  padding-left: 6px;
+}
+
+.roles label {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.permissionsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 580px;
+  height: 385px;
+  padding: 25px 6px 38px 35px;
+}
+
+.permissionsHeader {
+  display: flex;
+  flex-direction: row;
+}
+
+.permissionsHeader h3 {
+  margin-right: 27px;
+}
+
+.permissionsContainer h3 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 36px;
+  text-align: left;
+  margin-bottom: 29px;
+}
+
+.permissionsContainer th {
+  font-weight: 400;
+  font-size: 13px;
+  padding-bottom: 15px;
+}
+
+.permissionsContainer tr {
+  font-weight: 400;
+  font-size: 15px;
+  text-align: left;
+}
+
+.permissionsItems {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-right: 36px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.permissionsBtn {
+  width: 119px;
+  height: 37px;
+  border-radius: 20px;
+  font-size: 12px;
+  background-color: #3f51b5;
+  margin-top: 15px;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  align-self: flex-end;
+  text-align: center;
+}
+
+.togglesIcons {
+}

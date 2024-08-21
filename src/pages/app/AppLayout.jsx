@@ -3,7 +3,7 @@ import LandingPageLayout from "../landingPage/LandingPageLayout";
 import Layout from "./Layout";
 
 function AppLayout() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   return <>{isLoggedIn ? <Layout /> : <LandingPageLayout />}</>;
 }
 
