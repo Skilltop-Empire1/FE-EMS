@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import profileImg from "./profile.png";
 import Logo from "./EMS logo-Transparent.png";
 import style from "./navBarStyle.module.css";
@@ -21,54 +21,99 @@ const Navbar = () => {
     <>
       <nav className={style.dashboardNav}>
         <div className={style.left}>
-          <Link to="/">
+          <NavLink to="/">
             <img src={Logo} alt="" className={style.img} />
-          </Link>
+          </NavLink>
           <ul className={style.ull}>
             <li>
-              <Link className={style.link} to="/">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+                to="/"
+              >
                 Home
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/organization" className={style.link}>
+              <NavLink
+                to="/organization"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
                 Organization
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/staff" className={style.link}>
+              <NavLink
+                to="/staff"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
                 Staff
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/patients" className={style.link}>
+              <NavLink
+                to="/patients"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
                 Patients
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/appointments" className={style.link}>
+              <NavLink
+                to="/appointments"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
                 Appointments
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/account" className={style.link}>
+              <NavLink
+                to="/account"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
                 Account
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/reports" className={style.link}>
+              <NavLink
+                to="/reports"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
                 Reports
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link className={style.link} to="/settings">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+                to="/settings"
+              >
                 Settings
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link to="/help" className={style.link}>
+              <NavLink
+                to="/help"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
                 Help
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>
