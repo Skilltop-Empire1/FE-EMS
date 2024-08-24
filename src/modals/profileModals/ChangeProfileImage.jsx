@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import style from "./popUp.module.css";
-import { useModal } from "../context/ModalContext";
+import { useModal } from "../../context/ModalContext";
 
 function ChangeProfileImage() {
   const fileInputRef = useRef(null);

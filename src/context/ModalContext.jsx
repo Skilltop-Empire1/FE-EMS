@@ -6,6 +6,8 @@ export const MODAL_TYPES = {
   TYPE1: "CHANGE_IMAGE",
   TYPE2: "CHANGE_PASSWORD",
   TYPE3: "LOGOUT_CONFIRMATION",
+  TYPE4: "ADD_ORGANIZATION",
+  TYPE5: "UPDATE_ORGANIZATION",
 };
 
 const ModalProvider = ({ children }) => {
