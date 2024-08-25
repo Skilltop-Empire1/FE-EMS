@@ -1,0 +1,135 @@
+.container {
+  padding: 33px 18px 50px;
+}
+
+.container button {
+  cursor: pointer;
+}
+
+.header {
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 38px;
+  text-align: left;
+}
+.searchContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 9px 0;
+}
+
+.searchContainer input {
+  width: 217px;
+  height: 52px;
+  gap: 0px;
+  border-radius: 2px;
+  opacity: 0px;
+  border: 1px solid #ced4da;
+  outline: none;
+  text-align: center;
+}
+
+.searchContainer button {
+  height: 46px;
+  top: 18px;
+  left: 918px;
+  padding: 11.5px 25.5px;
+  border-radius: 6px;
+  opacity: 0px;
+  background-color: #3f51b5;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 23px;
+  text-align: left;
+}
+
+.table {
+  width: 100%;
+}
+
+.table tr {
+  height: 50px;
+}
+
+.table tr td {
+  padding: 12px 11px !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: left;
+}
+
+.table tbody tr td:last-child {
+  text-align: right;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #ecf0fa;
+}
+
+.table tbody tr button {
+  width: 41px;
+  height: 31px;
+  top: 10px;
+  left: 11px;
+  padding: 5px 10px 5px 10px;
+  border-radius: 3px;
+  margin-left: 2px;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0;
+}
+
+.viewButton {
+  background-color: #00bdff;
+}
+
+.editButton {
+  background-color: #1100af;
+}
+
+.deleteButton {
+  background-color: #ef3f3f;
+}
+
+.pagination {
+  display: flex;
+  justify-content: left;
+  padding: 20px 0;
+}
+
+.pagination button {
+  color: #71aafe;
+  font-family: Manrope;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  margin-right: 2px;
+}
+
+.pageButton {
+  width: 51px;
+  height: 34px;
+  padding: 5px 8.5px 5px 8.5px;
+  border-radius: 2px;
+  border: 1px solid #71aafe;
+  background-color: #ffffff;
+}
+
+.pageNextButton {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: center;
+  background-color: #ffffff;
+}

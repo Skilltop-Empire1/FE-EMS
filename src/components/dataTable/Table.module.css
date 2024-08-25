@@ -1,0 +1,96 @@
+.table {
+  width: 100%;
+}
+
+.table thead tr {
+  text-align: left;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+.table tr {
+  height: 50px;
+}
+
+.table tr td {
+  padding: 12px 11px !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: left;
+}
+
+.table tbody tr td:last-child {
+  text-align: right;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #ecf0fa;
+}
+
+.table tbody tr button {
+  width: 41px;
+  height: 31px;
+  top: 10px;
+  left: 11px;
+  padding: 5px 10px 5px 10px;
+  border-radius: 3px;
+  margin-left: 2px;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0;
+  align-items: center;
+}
+
+.viewButton {
+  background-color: #00bdff;
+}
+
+.editButton {
+  background-color: #1100af;
+}
+
+.deleteButton {
+  background-color: #ef3f3f;
+}
+
+.pagination {
+  display: flex;
+  justify-content: left;
+  padding: 20px 0;
+}
+
+.pagination button {
+  color: #71aafe;
+  font-family: Manrope;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  margin-right: 2px;
+}
+
+.pageButton {
+  width: 51px;
+  height: 34px;
+  padding: 5px 8.5px 5px 8.5px;
+  border-radius: 2px;
+  border: 1px solid #71aafe;
+  background-color: #ffffff;
+}
+
+.pageNextButton {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: center;
+  background-color: #ffffff;
+}
