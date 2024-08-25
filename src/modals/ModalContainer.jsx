@@ -1,8 +1,11 @@
 import React, { useState, useRef } from "react";
-import style from "./popUp.module.css";
-import ChangeProfileImage from "./ChangeProfileImage";
-import ChangePassword from "./ChangePassword";
-import LogoutConfirmation from "./LogoutConfirmation";
+import style from "./profileModals/popUp.module.css";
+import ChangeProfileImage from "./profileModals/ChangeProfileImage";
+import ChangePassword from "./profileModals/ChangePassword";
+import LogoutConfirmation from "./profileModals/LogoutConfirmation";
+import AddOrganization from "./organisationModals/AddOrganization";
+import UpdateOrganization from "./organisationModals/UpdateOrganization";
+
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
 
 function ModalContainer() {
@@ -17,6 +20,12 @@ function ModalContainer() {
 
       case MODAL_TYPES.TYPE3:
         return <LogoutConfirmation {...modalProps} />;
+
+      case MODAL_TYPES.TYPE4:
+        return <AddOrganization {...modalProps} />;
+
+      case MODAL_TYPES.TYPE5:
+        return <UpdateOrganization {...modalProps} />;
 
       default:
         return null;
