@@ -3,8 +3,16 @@ import { Link, NavLink } from "react-router-dom";
 import profileImg from "./profile.png";
 import Logo from "./EMS logo-Transparent.png";
 import style from "./navBarStyle.module.css";
-
+import { MdHome } from "react-icons/md";
+import { GoOrganization } from "react-icons/go";
+import { MdOutlineSick } from "react-icons/md";
+import { SiGoogleclassroom } from "react-icons/si";
 import { FaSortDown } from "react-icons/fa";
+import { TbReportMedical } from "react-icons/tb";
+import { IoMdSettings } from "react-icons/io";
+import { IoMdPerson } from "react-icons/io";
+import { IoMdHelpCircle } from "react-icons/io";
+import { MdAccountCircle } from "react-icons/md";
 import DropDown from "./DropDown";
 import ModalContainer from "../modals/ModalContainer";
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
@@ -32,7 +40,7 @@ const Navbar = () => {
                 }
                 to="/"
               >
-                Home
+               <MdHome /> Home
               </NavLink>
             </li>
             <li>
@@ -42,7 +50,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-                Organization
+                <GoOrganization /> Organization
               </NavLink>
             </li>
             <li>
@@ -52,7 +60,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-                Staff
+               <IoMdPerson /> Staff
               </NavLink>
             </li>
             <li>
@@ -62,7 +70,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-                Patients
+               <MdOutlineSick /> Patients
               </NavLink>
             </li>
             <li>
@@ -72,7 +80,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-                Appointments
+              <SiGoogleclassroom />  Appointments
               </NavLink>
             </li>
             <li>
@@ -82,7 +90,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-                Account
+              <MdAccountCircle />  Account
               </NavLink>
             </li>
             <li>
@@ -92,7 +100,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-                Reports
+              <TbReportMedical />  Reports
               </NavLink>
             </li>
             <li>
@@ -102,7 +110,7 @@ const Navbar = () => {
                 }
                 to="/settings"
               >
-                Settings
+              <IoMdSettings />  Settings
               </NavLink>
             </li>
             <li>
@@ -112,7 +120,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-                Help
+              <IoMdHelpCircle />  Help
               </NavLink>
             </li>
           </ul>

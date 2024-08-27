@@ -4,196 +4,100 @@ import { CiCirclePlus } from "react-icons/ci";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
+import Table from '../../../components/dataTable/Table';
+import { tableHeader, tableData } from './staffData';
+import { MODAL_TYPES } from '../../../context/ModalContext';
+import Button from '../../../components/Button/Button';
+import AddStaff from '../../../modals/staffModals/AddStaff';
+import Table2 from '../../../components/dataTable2/Table2';
+
 
 const Staff = () => {
 
   const [showForm, setShowForm] = useState(false);
+  const [data, setData] = useState(tableData);
+  const [searchText, setSearchText] = useState('');
+  const [specializationFilter, setSpecializationFilter] = useState('');
+  const [practiceFilter, setPracticeFilter] = useState('');
+  // const [stayOpen, setStayOpen] = useState(false);
 
-  // Step 2: Toggle form visibility when button is clicked
+  const keepOpen = ()=> {
+      setShowForm(!showForm)
+  }
+
   const toggleForm = () => {
     setShowForm(!showForm);
-    
+  };
+
+  const handleSearch = (event) => {
+    setSearchText(event.target.value);
+    filterData(event.target.value, specializationFilter, practiceFilter);
+  };
+
+  const handleSpecializationChange = (event) => {
+    setSpecializationFilter(event.target.value);
+    filterData(searchText, event.target.value, practiceFilter);
+  };
+
+  const handlePracticeChange = (event) => {
+    setPracticeFilter(event.target.value);
+    filterData(searchText, specializationFilter, event.target.value);
+  };
+
+  const filterData = (searchText, specialization, practice) => {
+    const filteredData = tableData.filter((item) => {
+      const matchesSearch = item.Name.toLowerCase().includes(searchText.toLowerCase());
+      const matchesSpecialization = specialization ? item.Specialization === specialization : true;
+      const matchesPractice = practice ? item.Practice === practice : true;
+      return matchesSearch && matchesSpecialization && matchesPractice;
+    });
+    setData(filteredData);
   };
 
   return (
     <div className={style.body}>
       <div>
         <div className={style.top}>
-        <h2 className={style.header}>Doctors</h2>
+        <h2 className={style.header}>Staffs</h2>
         <div className={style.sticky}>
-         <button onClick={toggleForm} disabled={showForm} className={style.topIcon} >
-          <CiCirclePlus />
-         </button>
-          <div className={style.staff}>Add staff</div>
+          <Button onClick={toggleForm} disabled={showForm} add={'Add Staff'}/>
         </div>
         </div>
       </div>
       <div className={style.info}>
         <div >
-          <input type="text" placeholder='Name' className={style.filter}/> 
-          <select name="Profession" id="filterText" className={style.filter}>
-            <option value="Doctor">Select Specializtion</option>
-            <option value="profession">Dentist</option>
-            <option value="profession">Opthamologist</option>
-            <option value="profession">Dermatologist</option>
+          <input type="text" placeholder='Name' className={style.filter} onChange={handleSearch}/> 
+          <select
+            name="Specialization"
+            className={style.filter}
+            value={specializationFilter}
+            onChange={handleSpecializationChange}
+          >
+            <option value="">Select Specialization</option>
+            <option value="Dentist">Dentist</option>
+            <option value="Ophthalmologist">Ophthalmologist</option>
+            <option value="Dermatologist">Dermatologist</option>
           </select>
-          <select name="Profession" id="filterText" className={style.filter}>
-            <option value="Doctor">Select Practice</option>
-            <option value="profession">Dentist</option>
-            <option value="profession">Opthamologist</option>
-            <option value="profession">Dermatologist</option>
+          <select
+            name="Practice"
+            className={style.filter}
+            value={practiceFilter}
+            onChange={handlePracticeChange}
+          >
+            <option value="">Select Practice</option>
+            <option value="Dentist">Dentist</option>
+            <option value="Ophthalmologist">Ophthalmologist</option>
+            <option value="Dermatologist">Dermatologist</option>
           </select>
         </div>
-        <table className={style.table}>
-          <thead className={style.thead}>
-            <tr>
-              <th className={style.th}>Name</th>
-              <th className={style.th}>Email</th>
-              <th className={style.th}>Gender</th>
-              <th className={style.th}>Mobile Number</th>
-              <th className={style.th}>Practice</th>
-              <th className={style.th}>Specialization</th>
-              <th className={style.th}>Action</th>
-            </tr>
-          </thead>
-          <tbody className={style.tbody}>
-            <tr>
-              <td className={style.td}>Parangeet</td>
-              <td className={style.td}>Test@gmail.com</td>
-              <td className={style.td}>Male</td>
-              <td className={style.td}>+234Number</td>
-              <td className={style.td}>prandk.zcj k</td>
-              <td className={style.td}>prandk.zcj k</td>
-              <td className={style.td}>
-                <div className={style.mamaIcons}>
-                  <div className={style.actionIcons}>
-                    <FaEye />
-                  </div >
-                  <div className={style.actionIcons}>
-                   <MdModeEditOutline />
-                  </div>
-                  <div className={style.actionIcons}>
-                   <RiDeleteBinLine /> 
-                  </div>
-                </div>
-              </td>
-            </tr>
-             <tr>
-              <td className={style.td}>Parangeet</td>
-              <td className={style.td}>Test@gmail.com</td>
-              <td className={style.td}>Male</td>
-              <td className={style.td}>+234Number</td>
-              <td className={style.td}>prandk.zcj k</td>
-              <td className={style.td}>prandk.zcj k</td>
-              <td className={style.td}>
-                <div className={style.mamaIcons}>
-                  <div className={style.actionIcons}>
-                    <FaEye />
-                  </div >
-                  <div className={style.actionIcons}>
-                   <MdModeEditOutline />
-                  </div>
-                  <div className={style.actionIcons}>
-                   <RiDeleteBinLine /> 
-                  </div>
-                </div>
-              </td>
-            </tr> 
-            <tr>
-              <td className={style.td}>Parangeet</td>
-              <td className={style.td}>Test@gmail.com</td>
-              <td className={style.td}>Male</td>
-              <td className={style.td}>+234Number</td>
-              <td className={style.td}>prandk.zcj k</td>
-              <td className={style.td}>prandk.zcj k</td>
-              <td className={style.td}>
-                <div className={style.mamaIcons}>
-                  <div className={style.actionIcons}>
-                    <FaEye />
-                  </div >
-                  <div className={style.actionIcons}>
-                   <MdModeEditOutline />
-                  </div>
-                  <div className={style.actionIcons}>
-                   <RiDeleteBinLine /> 
-                  </div>
-                </div>
-              </td>
-            </tr> 
-            <tr>
-              <td className={style.td}>Parangeet</td>
-              <td className={style.td}>Test@gmail.com</td>
-              <td className={style.td}>Male</td>
-              <td className={style.td}>+234Number</td>
-              <td className={style.td}>prandk.zcj k</td>
-              <td className={style.td}>prandk.zcj k</td>
-              <td className={style.td}>
-                <div className={style.mamaIcons}>
-                  <div className={style.actionIcons}>
-                    <FaEye />
-                  </div >
-                  <div className={style.actionIcons}>
-                   <MdModeEditOutline />
-                  </div>
-                  <div className={style.actionIcons}>
-                   <RiDeleteBinLine /> 
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <Table2 data={data} Role={'Specialization'}/>
+        {/* <Table headers={tableHeader} data={tableData} itemsPerPage={6} renderRow={renderRow} modalType={MODAL_TYPES.TYPE4}/> */}
+
       </div>
 
       { showForm &&
-        <div className={style.addInfo}>
-            <div className={style.addInfoTop}>
-              <h3>Doctors</h3>
-              <button onClick={toggleForm} className={style.close}>X</button>
-            </div>
-            <form className={style.form}> 
-              <div className={style.formChild}>
-                <label htmlFor="name">Full Name</label>
-                <input type="text" id="name" name="name"  className={style.input}/>
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="address">Address</label>
-                <input type="text" id="address" name="address"  className={style.input} />
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" name="email" className={style.input}/>
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="qualification">Educational Qualification</label>
-                <input type="text" id="qualification" name="qualification"  className={style.input}/>
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="number">Mobile Number</label>
-                <input type="number" id="number" name="number"  className={style.input}/>
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="specialization">Specialization</label>
-                <input type="text" id="specialization" name="specialization"  className={style.input}/>
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="gender">Gender</label>
-                <input type="text" id="gender" name="gender"  className={style.input}/>
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="practice">Practice</label>
-                <input type="text" id="practice" name="practice"  className={style.input}/>
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="date">Date Of Birth</label>
-                <input type="date" id="date" name="date"  className={style.input}/>
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="organization">Organization</label>
-                <input type="text" id="organization" name="organization"  className={style.input}/>
-              </div>
-              <button type="submit" className={style.submit}>Save Staff</button>
-            </form>
+        <div>
+          <AddStaff toggleForm={toggleForm} />
         </div>
       }
     </div>
