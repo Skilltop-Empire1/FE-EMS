@@ -10,7 +10,7 @@ function DropDown({ handleProfileImageChange, handlePasswordChange }) {
     <div
       style={{
         width: "160px",
-        height: "46px",
+        height: "86px",
         zIndex: "100",
         position: "absolute",
         right: "0",
@@ -19,6 +19,9 @@ function DropDown({ handleProfileImageChange, handlePasswordChange }) {
         display: "flex",
         flexDirection: "row",
         position: "fixed",
+        backgroundColor: "#fff",
+        boxShadow: '0px 0px 10px 0px #171A1F1F',
+        padding: '15px'
       }}
     >
       <div>

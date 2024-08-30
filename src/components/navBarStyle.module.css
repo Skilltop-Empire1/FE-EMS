@@ -29,6 +29,7 @@
   position: sticky;
   top: 0;
   align-items: center;
+  z-index: 1;
 }
 
 .left {
@@ -71,14 +72,18 @@
 
 .profileImgContainer {
   position: relative;
+  display: flex;
+  align-items: center;
 }
+
+
 
 .right {
   display: flex;
   align-items: center;
   margin-right: 30px;
-  width: 65px;
-  height: 65px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   overflow: hidden;
   justify-content: center;
