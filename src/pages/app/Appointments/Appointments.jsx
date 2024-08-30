@@ -5,7 +5,7 @@ import { MODAL_TYPES, useModal } from "../../../context/ModalContext";
 
 import Table from "../../../components/dataTable/Table";
 
-function Organizations() {
+function Appointment() {
   const [data, setData] = useState(initialData);
   const { openModal } = useModal();
 
@@ -44,7 +44,7 @@ function Organizations() {
           placeholder="Enter name to search"
         />
         <input type="text" />
-        <button onClick={() => openModal(MODAL_TYPES.TYPE4)} type="submit">
+        <button onClick={() => openModal(MODAL_TYPES.TYPE6)} type="submit">
           Add Appointment
         </button>
       </div>
@@ -53,9 +53,10 @@ function Organizations() {
         data={data}
         itemsPerPage={5}
         renderRow={renderRow}
+        modalType={MODAL_TYPES.TYPE6}
       />
     </div>
   );
 }
 
-export default Organizations;
+export default Appointment;
