@@ -13,10 +13,11 @@
 
 .active {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 22px;
   text-decoration: none;
   color: #7f00ff;
+  margin: 0 20px;
 }
 
 .dashboardNav {

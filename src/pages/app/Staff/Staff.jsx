@@ -1,12 +1,6 @@
 import React, {useState} from 'react'
 import style from './staffStyle.module.css'
-import { CiCirclePlus } from "react-icons/ci";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { FaEye } from "react-icons/fa";
-import { MdModeEditOutline } from "react-icons/md";
-import Table from '../../../components/dataTable/Table';
 import { tableHeader, tableData } from './staffData';
-import { MODAL_TYPES } from '../../../context/ModalContext';
 import Button from '../../../components/Button/Button';
 import AddStaff from '../../../modals/staffModals/AddStaff';
 import Table2 from '../../../components/dataTable2/Table2';
@@ -109,7 +103,7 @@ const Staff = () => {
         <div >
           <input type="text" placeholder='Name' className={style.filter} onChange={handleSearch}/> 
           <SelectFilter onChange={handleSpecializationChange} data={item} Filter={specializationFilter}/>
-          <SelectFilter onChange={handleSpecializationChange} data={item2} Filter={practiceFilter}/>
+          <SelectFilter onChange={handlePracticeChange} data={item2} Filter={practiceFilter}/>
         </div>
         <Table2 data={data} Role={'Specialization'}/>
         {/* <Table headers={tableHeader} data={tableData} itemsPerPage={6} renderRow={renderRow} modalType={MODAL_TYPES.TYPE4}/> */}
