@@ -3,8 +3,6 @@
       "Patient", "Consulting Doctor", "Appointment Date", "Appointment Time", "Reason", "Practice", "Organization", "Action"
     ];
 
-    export const practice = ["doctor", "Nurse", "Laboratory", "Radiology", "Pharmacy",]
-
 
 
     export const initialData = [

@@ -4,18 +4,11 @@ import { initialData, table } from "./data";
 import { MODAL_TYPES, useModal } from "../../../context/ModalContext";
 
 import Table from "../../../components/dataTable/Table";
+import SelectionFilter from "../../../components/selectionFilter/SelectionFilter";
 
 function Appointment() {
   const [data, setData] = useState(initialData);
   const { openModal } = useModal();
-
-  const handleSearch = (event) => {
-    const filteredData = data.filter((item) =>
-      item.username.toLowerCase().includes(event.target.value.toLowerCase())
-    );
-    setData(filteredData);
-    setCurrentPage(1);
-  };
 
   const renderRow = (item) => (
     <>
@@ -35,19 +28,19 @@ function Appointment() {
         <h3 className={style.header}>Appointments</h3>
       </div>
       <div className={style.searchContainer}>
-        <div>
-          <select name="" id=""></select>
-        </div>
-        <input
-          onChange={handleSearch}
-          type="text"
-          placeholder="Enter name to search"
+        <SelectionFilter data={data} setData={setData} field="practice" />
+        <SelectionFilter data={data} setData={setData} field="patient" />
+        <SelectionFilter
+          data={data}
+          setData={setData}
+          field="consultingDoctor"
         />
-        <input type="text" />
+
         <button onClick={() => openModal(MODAL_TYPES.TYPE6)} type="submit">
           Add Appointment
         </button>
       </div>
+
       <Table
         headers={table}
         data={data}

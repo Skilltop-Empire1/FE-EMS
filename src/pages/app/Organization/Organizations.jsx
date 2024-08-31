@@ -1,19 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./organisation.module.css";
 import { initialData, table } from "./data";
 import { MODAL_TYPES, useModal } from "../../../context/ModalContext";
-import ViewIcon from "../../../assets/ViewIcon";
-import EditIcon from "../../../assets/EditIcon";
-import DeleteIcon from "../../../assets/DeleteIcon";
 import Table from "../../../components/dataTable/Table";
 
 function Organizations() {
   const [data, setData] = useState(initialData);
+  const [query, setQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const { openModal } = useModal();
 
   const handleSearch = (event) => {
-    const filteredData = data.filter((item) =>
-      item.username.toLowerCase().includes(event.target.value.toLowerCase())
+    event.preventDefault();
+    const value = event.target.value;
+    setQuery(value);
+
+    if (!value) {
+      setData(initialData);
+      return;
+    }
+
+    const filteredData = initialData.filter((item) =>
+      item.username.toLowerCase().includes(value.toLowerCase())
     );
     setData(filteredData);
     setCurrentPage(1);
@@ -29,8 +37,9 @@ function Organizations() {
           onChange={handleSearch}
           type="text"
           placeholder="Enter name to search"
+          value={query}
         />
-        <button onClick={() => openModal(MODAL_TYPES.TYPE4)} type="submit">
+        <button onClick={() => openModal(MODAL_TYPES.TYPE4)} type="button">
           Add organisation
         </button>
       </div>
