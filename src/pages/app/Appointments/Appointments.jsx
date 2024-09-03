@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import style from "./Appointment.module.css";
 import { initialData, table } from "./data";
 import { MODAL_TYPES, useModal } from "../../../context/ModalContext";
-
 import Table from "../../../components/dataTable/Table";
 import SelectionFilter from "../../../components/selectionFilter/SelectionFilter";
 
@@ -28,15 +27,28 @@ function Appointment() {
         <h3 className={style.header}>Appointments</h3>
       </div>
       <div className={style.searchContainer}>
-        <SelectionFilter data={data} setData={setData} field="practice" />
-        <SelectionFilter data={data} setData={setData} field="patient" />
-        <SelectionFilter
-          data={data}
-          setData={setData}
-          field="consultingDoctor"
-        />
+        <div>
+          <SelectionFilter
+            data={data}
+            setData={setData}
+            field="practice"
+            query="practice"
+          />
+          <SelectionFilter
+            data={data}
+            setData={setData}
+            field="organization"
+            query="organization"
+          />
+          <SelectionFilter
+            data={data}
+            setData={setData}
+            field="patient"
+            query="patient"
+          />
+        </div>
 
-        <button onClick={() => openModal(MODAL_TYPES.TYPE6)} type="submit">
+        <button onClick={() => openModal(MODAL_TYPES.TYPE6)} type="button">
           Add Appointment
         </button>
       </div>

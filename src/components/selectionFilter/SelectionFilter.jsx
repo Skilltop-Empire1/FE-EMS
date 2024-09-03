@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import style from "./selectStyle.module.css";
 
-const SelectionFilter = ({ data, field, setData }) => {
-  const entries = data;
+const SelectionFilter = ({ data, setData, field, query }) => {
+  // Memoize unique values to avoid unnecessary recalculations
+  const uniqueValues = useMemo(() => {
+    const values = [...new Set(data.map((item) => item[field]))];
+    return values;
+  }, [data, field]);
 
-  const uniqueValues = [...new Set(entries.map((entry) => entry[field]))];
+  // Keep the original data in a state
+  const [originalData] = useState(data);
+  const [selectedValue, setSelectedValue] = useState(query);
 
-  const [selectedValue, setSelectedValue] = useState("");
+  // Memoize the handleChange function
+  const handleChange = useCallback((e) => {
+    setSelectedValue(e.target.value);
+  }, []);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setSelectedValue(value);
+  useEffect(() => {
+    // Filter data based on selected value
+    const filteredData =
+      selectedValue === query
+        ? originalData
+        : originalData.filter((item) => item[field] === selectedValue);
 
-    const filteredData = value
-      ? data.filter((entry) => entry[field] === value)
-      : data;
+    // Update data with filtered data
     setData(filteredData);
-    setCurrentPage(1);
-  };
+  }, [selectedValue, field, setData, originalData]); // Include originalData
 
   return (
     <select
@@ -26,6 +35,7 @@ const SelectionFilter = ({ data, field, setData }) => {
       value={selectedValue}
       onChange={handleChange}
     >
+      <option value={query}>{query}</option>
       {uniqueValues.map((item, index) => (
         <option value={item} key={index}>
           {item}
