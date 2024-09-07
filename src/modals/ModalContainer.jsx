@@ -7,6 +7,7 @@ import AddOrganization from "./organisationModals/AddOrganization";
 import UpdateOrganization from "./organisationModals/UpdateOrganization";
 
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
+import AddAppointment from "./appointmentModals/AddAppointment";
 
 function ModalContainer() {
   const { modalType, modalProps, closeModal, handleFile } = useModal();
@@ -26,6 +27,9 @@ function ModalContainer() {
 
       case MODAL_TYPES.TYPE5:
         return <UpdateOrganization {...modalProps} />;
+
+      case MODAL_TYPES.TYPE6:
+        return <AddAppointment {...modalProps} />;
 
       default:
         return null;

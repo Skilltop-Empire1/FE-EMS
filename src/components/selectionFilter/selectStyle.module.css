@@ -1,0 +1,17 @@
+.filter {
+    height: 50px;
+    width: 200px;
+    margin-right: 10px;
+    border: 1px solid #CED4DA;
+    padding: 0 5px;
+    color: #CED4DA;
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.filter option {
+    color: #000;
+    text-align: left;
+}

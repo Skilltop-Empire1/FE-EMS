@@ -8,6 +8,7 @@ export const MODAL_TYPES = {
   TYPE3: "LOGOUT_CONFIRMATION",
   TYPE4: "ADD_ORGANIZATION",
   TYPE5: "UPDATE_ORGANIZATION",
+  TYPE6: "ADD_APPOINTMENT",
 };
 
 const ModalProvider = ({ children }) => {
