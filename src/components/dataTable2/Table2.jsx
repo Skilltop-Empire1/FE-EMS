@@ -3,8 +3,24 @@ import style from './table2.module.css'
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
+import { deletePatient } from '../../hooks/Api'; 
 
-const Table2 = ({data, Role}) => {
+const Table2 = ({data, Role, patients, staff, deleteFunction, refreshList}) => {
+
+  //running deleting for patients
+
+  const handleDeletePatient = async (mobile_no) => {
+    const confirmation = window.confirm('Are you sure you want to delete this patient?');
+    if (confirmation) {
+      try {
+        const result = await deletePatient(mobile_no);
+        console.log('Patient deleted:', result);
+        // Refresh your data or update the UI accordingly
+      } catch (error) {
+        console.error('Error deleting patient:', error.message);
+      }
+    }
+  };
 
     const itemsPerPage = 5;
     const [currentPage, setCurrentPage] = useState(1);
@@ -37,6 +53,14 @@ const Table2 = ({data, Role}) => {
     const goToLastPage = () => {
       setCurrentPage(totalPages);
     };
+
+    //run delete 
+    const handleDelete = async (id) => {
+      console.log("Deleting ID:", id);
+      await deleteFunction(id);
+      //to refresh the data after deletion
+      refreshList()
+  };
   
 
 
@@ -57,13 +81,13 @@ const Table2 = ({data, Role}) => {
           </thead>
           <tbody className={style.tbody}>
            {currentData.map((item, idx) => (
-             <tr key={idx}>
-                <td className={style.td}>{item.Name}</td>
-                <td className={style.td}>{item.Email}</td>
-                <td className={style.td}>{item.Gender}</td>
-                <td className={style.td}>{item.MobileNumber}</td>
-                <td className={style.td}>{item.Practice}</td>
-                <td className={style.td}>{item.Specialization}</td>
+             <tr key={idx} style={{display : patients}}>
+                <td className={style.td}>{`${item.firstName} ${item.lastName}`}</td>
+                <td className={style.td}>{item.email}</td>
+                <td className={style.td}>{item.gender}</td>
+                <td className={style.td}>{item.phone}</td>
+                <td className={style.td}>{item.role}</td>
+                <td className={style.td}>{item.organization}</td>
                 <td className={style.td}>
                <div className={style.mamaIcons}>
                  <div className={style.actionIcons}>
@@ -72,7 +96,30 @@ const Table2 = ({data, Role}) => {
                  <div className={style.actionIcons}>
                   <MdModeEditOutline />
                  </div>
+                 <div className={style.actionIcons} onClick={() => handleDeletePatient(item.mobile_no)}>
+                  <RiDeleteBinLine /> 
+                 </div>
+               </div>
+             </td>
+           </tr>
+           ))}
+            {currentData.map((item, idx) => (
+             <tr key={idx} style={{display: staff}}>
+                <td className={style.td}>{`${item.firstName} ${item.lastName}`}</td>
+                <td className={style.td}>{item.email}</td>
+                <td className={style.td}>{item.gender}</td>
+                <td className={style.td}>{item.mobileNumber}</td>
+                <td className={style.td}>{item.practice}</td>
+                <td className={style.td}>{item.specialization}</td>
+                <td className={style.td}>
+               <div className={style.mamaIcons}>
                  <div className={style.actionIcons}>
+                   <FaEye />
+                 </div >
+                 <div className={style.actionIcons}>
+                  <MdModeEditOutline />
+                 </div>
+                 <div className={style.actionIcons} onClick={()=>handleDelete(item.id)}>
                   <RiDeleteBinLine /> 
                  </div>
                </div>

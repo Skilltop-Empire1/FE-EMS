@@ -86,11 +86,12 @@
     align-items: center;
     border-radius: 7px;
     transition: all .3s ease-in-out;
+    background-color: #3f51b5;
+    color: #fff;
 }
 
 .submit:hover {
-    background-color: #00BDFF;
-    color: #fff;
+    background-color: #2d3980;;
 }
 
 .addAnother {

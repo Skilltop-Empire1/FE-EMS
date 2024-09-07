@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import style from './addPatientStyle.module.css'
+import { createPatient } from '../../hooks/Api';
 
 
 const AddPatients = ({ toggleForm}) => {
@@ -10,15 +11,45 @@ const AddPatients = ({ toggleForm}) => {
       setKeepOpen(e.target.checked);
     };
   
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      //form submission logic here
-  
-      // If the checkbox is not checked, close the form
-      if (!keepOpen) {
-        toggleForm();
+    
+      const formData = {
+        firstName: e.target.firstname.value,
+        lastName: e.target.surname.value,
+        address: e.target.address.value,
+        email: e.target.email.value,
+        education_qualification: e.target.education_qualification.value,
+        phone: e.target.mobile_no.value,
+        gender: e.target.gender.value,
+        dateOfBirh: e.target.dob.value,
+        role: e.target.role.value,
+      };
+      console.log('Form Data:', formData); // Log the payload to verify
+    
+      try {
+        const response = await createPatient(formData);
+        if (response) {
+          // Optionally reset the form if needed
+          e.target.reset();
+    
+          // Show a success message or handle the success
+          alert('Staff created successfully')
+          console.log('Staff created successfully:', response);
+    
+          // Close the form if the checkbox is not checked
+          if (!keepOpen) {
+            toggleForm();
+          }
+        }
+      } catch (error) {
+        alert('Failed to create staff')
+        console.error('Failed to create staff:', error);
+        // Optionally display an error message to the user
       }
     };
+
+    
 
   return (
     <div className={style.addInfo}>
@@ -28,8 +59,12 @@ const AddPatients = ({ toggleForm}) => {
             </div>
             <form className={style.form} onSubmit={handleSubmit}> 
               <div className={style.formChild}>
-                <label htmlFor="name">Full Name</label>
-                <input type="text" id="name" name="name"  className={style.input}/>
+                <label htmlFor="firstname">Firstname</label>
+                <input type="text" id="name" name="firstname"  className={style.input}/>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="surname">Lastname</label>
+                <input type="text" id="name" name="surname"  className={style.input}/>
               </div>
               <div className={style.formChild}>
                 <label htmlFor="address">Address</label>
@@ -40,28 +75,24 @@ const AddPatients = ({ toggleForm}) => {
                 <input type="email" id="email" name="email" className={style.input}/>
               </div>
               <div className={style.formChild}>
-                <label htmlFor="qualification">Educational Qualification</label>
-                <input type="text" id="qualification" name="qualification"  className={style.input}/>
+                <label htmlFor="education_qualification">Educational Qualification</label>
+                <input type="text" id="qualification" name="education_qualification"  className={style.input}/>
               </div>
               <div className={style.formChild}>
-                <label htmlFor="number">Mobile Number</label>
-                <input type="number" id="number" name="number"  className={style.input}/>
+                <label htmlFor="mobile_no">Mobile Number</label>
+                <input type="number" id="number" name="mobile_no"  className={style.input}/>
               </div>
               <div className={style.formChild}>
                 <label htmlFor="gender">Gender</label>
                 <input type="text" id="gender" name="gender"  className={style.input}/>
               </div>
               <div className={style.formChild}>
-                <label htmlFor="practice">Practice</label>
-                <input type="text" id="practice" name="practice"  className={style.input}/>
+                <label htmlFor="dob">Date Of Birth</label>
+                <input type="date" id="date" name="dob"  className={style.input}/>
               </div>
               <div className={style.formChild}>
-                <label htmlFor="date">Date Of Birth</label>
-                <input type="date" id="date" name="date"  className={style.input}/>
-              </div>
-              <div className={style.formChild}>
-                <label htmlFor="organization">Organization</label>
-                <input type="text" id="organization" name="organization"  className={style.input}/>
+                <label htmlFor="role">Role</label>
+                <input type="text" id="role" name="role"  className={style.input}/>
               </div>
               <br />
               <button type="submit" className={style.submit}>Save Staff</button>
