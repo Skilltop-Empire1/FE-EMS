@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const usePostRequest = (url, config = {}) => {
-  const [data, setData] = useState(initialData);
+const usePostRequest = (url,) => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -11,7 +11,7 @@ const usePostRequest = (url, config = {}) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(url, payload, config);
+      const response = await axios.post(url, payload);
       setData(response.data);
     } catch (err) {
       setError(err);
@@ -25,12 +25,3 @@ const usePostRequest = (url, config = {}) => {
 
 export default usePostRequest;
 
-
-// to call the hook like this by destructuring as below
-// const { data, loading, error: apiError, postRequest } = usePostRequest('/api/appointments', {}, {
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Default Authorization header
-//     },
-//     timeout: 5000, // Default timeout of 5 seconds
-//   });

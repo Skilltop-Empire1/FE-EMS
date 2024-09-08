@@ -1,40 +1,47 @@
-
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 
-const useFetchRequest = (url, initialData = {}, config = {}) => {
-  const [data, setData] = useState(initialData);
+function useFetchRequest(url) {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
     const fetchData = async () => {
       setLoading(true);
       setError(null);
+
       try {
-        const response = await axios.get(url, config);
-        setData(response.data);
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status
+            
+          }`);
+        }
+        const result = await response.json();
+        setData(result);
       } catch (err) {
-        setError(err);
+        if (err.name === 'AbortError') {
+          setError(new Error('Request timed out.'));
+        } else {
+          setError(err);
+        }
       } finally {
         setLoading(false);
       }
     };
 
-
     fetchData();
-  }, [url, config]);
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, [url]);
 
   return { data, loading, error };
-};
+}
 
 export default useFetchRequest;
-
-// use case as below
-
-// const { data, loading, error } = useFetchRequest('/api/appointments', [], {
-//     headers: {
-//       'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Example header
-//     },
-//     timeout: 5000, // Example timeout
-//   });

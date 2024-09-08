@@ -5,6 +5,7 @@ import EditIcon from "../../assets/EditIcon";
 import DeleteIcon from "../../assets/DeleteIcon";
 
 import style from "./Table.module.css";
+import Loader from "../loader/Loader";
 
 const ActionCell = ({ item, onView, onEdit, onDelete }) => (
   <td className={style.buttonRow}>
@@ -20,7 +21,15 @@ const ActionCell = ({ item, onView, onEdit, onDelete }) => (
   </td>
 );
 
-function Table({ headers, data, itemsPerPage = 5, modalType, renderRow }) {
+function Table({
+  headers,
+  data,
+  itemsPerPage = 5,
+  modalType,
+  renderRow,
+  isLoading,
+  error,
+}) {
   const [currentPage, setCurrentPage] = useState(1);
   const { openModal } = useModal();
 
@@ -49,6 +58,8 @@ function Table({ headers, data, itemsPerPage = 5, modalType, renderRow }) {
 
   return (
     <>
+      {isLoading && <Loader />}
+      {error && <p>{error.message}</p>}
       <table className={style.table}>
         <thead>
           <tr>
@@ -58,29 +69,30 @@ function Table({ headers, data, itemsPerPage = 5, modalType, renderRow }) {
           </tr>
         </thead>
         <tbody>
-          {currentItems.map((item) => (
-            <tr key={item.id}>
-              {renderRow ? (
-                renderRow(item)
-              ) : (
-                <>
-                  <td>{item.name}</td>
-                  <td>{item.username}</td>
-                  <td>{item.mobileNumber}</td>
-                  <td>{item.address}</td>
-                  <td>{item.city}</td>
-                  <td>{item.state}</td>
-                  <td>{item.zipCode}</td>
-                </>
-              )}
-              <ActionCell
-                item={item}
-                onView={handleView}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            </tr>
-          ))}
+          {data &&
+            currentItems.map((item) => (
+              <tr key={item.id}>
+                {renderRow ? (
+                  renderRow(item)
+                ) : (
+                  <>
+                    <td>{item.name}</td>
+                    <td>{item.username}</td>
+                    <td>{item.mobileNumber}</td>
+                    <td>{item.address}</td>
+                    <td>{item.city}</td>
+                    <td>{item.state}</td>
+                    <td>{item.zipCode}</td>
+                  </>
+                )}
+                <ActionCell
+                  item={item}
+                  onView={handleView}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              </tr>
+            ))}
         </tbody>
       </table>
       <div className={style.pagination}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useModal } from "../../context/ModalContext";
-
+import usePostRequest from "../../hooks/postRequestApi";
 import style from "./OrganisationModals.module.css";
 
 const AddOrganisation = () => {
@@ -9,7 +9,6 @@ const AddOrganisation = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
     mobileNumber: "",
     address: "",
     city: "",
@@ -20,6 +19,15 @@ const AddOrganisation = () => {
   const { closeModal, modalProps } = useModal();
   console.log(modalProps);
 
+  const {
+    data,
+    loading,
+    error: apiError,
+    postRequest,
+  } = usePostRequest(
+    " https://be-ems-production-2721.up.railway.app/api/v1/organization/update/"
+  );
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -28,13 +36,12 @@ const AddOrganisation = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
       !formData.name ||
       !formData.email ||
-      !formData.password ||
       !formData.mobileNumber ||
       !formData.address ||
       !formData.city ||
@@ -46,16 +53,13 @@ const AddOrganisation = () => {
       return;
     }
 
-    const isSuccess = true;
-
-    if (isSuccess) {
+    try {
+      await postRequest(formData);
       setMessage("Saved successfully.");
       setError("");
-
       setFormData({
         name: "",
         email: "",
-        password: "",
         mobileNumber: "",
         address: "",
         city: "",
@@ -63,7 +67,7 @@ const AddOrganisation = () => {
         zipcode: "",
       });
       setTimeout(() => closeModal(), 2000);
-    } else {
+    } catch (err) {
       setError("An error occurred while saving. Please try again.");
       setMessage("");
     }
@@ -73,7 +77,6 @@ const AddOrganisation = () => {
     setFormData({
       name: "",
       email: "",
-      password: "",
       mobileNumber: "",
       address: "",
       city: "",
@@ -89,9 +92,12 @@ const AddOrganisation = () => {
       <div className={style.header}>
         <h3>Add Organization</h3>
       </div>
+      {loading && <div style={{ color: "blue" }}>Loading...</div>}
       {message && <div style={{ color: "green" }}>{message}</div>}
       {error && <div style={{ color: "red" }}>{error}</div>}
+      {apiError && <div style={{ color: "red" }}>{apiError.message}</div>}
       <div className={style.formContainer}>
+        {/* Form Fields */}
         <div className={style.inputContent}>
           <div className={style.inputField}>
             <label htmlFor="name">Name</label>
@@ -104,7 +110,6 @@ const AddOrganisation = () => {
               placeholder="Name"
             />
           </div>
-
           <div>
             <label htmlFor="email">Email</label>
             <input
@@ -118,18 +123,6 @@ const AddOrganisation = () => {
           </div>
         </div>
         <div className={style.inputContent}>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Password"
-            />
-          </div>
-
           <div>
             <label htmlFor="mobileNumber">Mobile Number</label>
             <input
@@ -197,7 +190,9 @@ const AddOrganisation = () => {
       </div>
 
       <div className={style.formButton}>
-        <button type="submit">Save</button>
+        <button type="submit" disabled={loading}>
+          Save
+        </button>
         <button type="button" onClick={handleCancel}>
           Cancel
         </button>
