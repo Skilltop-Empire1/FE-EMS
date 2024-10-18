@@ -1,0 +1,25 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+    isVisible: false,
+    actionData: null
+}
+const actionCellSlice = createSlice({
+    name: "actionCell",
+    initialState,
+    reducers:{
+        toggleActionCell: (state, action) =>{
+            state.isVisible = !state.isVisible
+            if (state.isVisible) {
+                state.actionData = action.payload;
+              } else {
+                state.actionData = null;
+              }
+        }
+    }
+
+})
+
+export const {toggleActionCell} = actionCellSlice.actions
+
+export default actionCellSlice.reducer

@@ -1,0 +1,82 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 65px 0 65px;
+}
+
+.header {
+  text-align: left;
+  /* margin-top: 25px; */
+}
+
+.header h3 {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 26px;
+  text-align: left;
+}
+
+.inputContent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 27px;
+}
+
+.inputContent label {
+  display: block;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 27px;
+  color: #565d6d;
+}
+
+.inputContent input {
+  width: 290px;
+  height: 24px;
+  padding: 10.5px;
+  border-radius: 2px;
+  border: 1px solid #ced4da;
+  outline: none;
+}
+
+.formButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formButton button {
+  width: 150px;
+  height: 57px;
+  top: 442px;
+  left: 234px;
+  padding: 15.5px 47px;
+  border-radius: 3px;
+  margin: 3px;
+}
+
+.formButton :first-child {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.formButton :last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+.dateInput {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.dateInput:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

@@ -4,17 +4,16 @@ import App from "./App.jsx";
 
 import "./index.css";
 
-import { BrowserRouter } from "react-router-dom";
 import ModalProvider from "./context/ModalContext";
-
-// import "bootstrap/dist/css/bootstrap.min.css";
+import { Provider } from "react-redux";
+import store from "./redux/store.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Provider store={store}>
       <ModalProvider>
         <App />
       </ModalProvider>
-    </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );

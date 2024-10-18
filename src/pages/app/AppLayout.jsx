@@ -1,10 +1,17 @@
 import React, { useState } from "react";
-import LandingPageLayout from "../landingPage/LandingPageLayout";
-import Layout from "./Layout";
+import Navbar from "../../components/Navbar";
+import MainContainer from "../../components/mainContainer/MainContainer";
+import { Outlet } from "react-router-dom";
 
 function AppLayout() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  return <>{isLoggedIn ? <Layout /> : <LandingPageLayout />}</>;
+  return (
+    <>
+      <Navbar />
+      <MainContainer>
+        <Outlet />
+      </MainContainer>
+    </>
+  );
 }
 
 export default AppLayout;

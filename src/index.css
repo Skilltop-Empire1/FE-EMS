@@ -9,3 +9,13 @@
 .body {
   background-color: #f7f8fc;
 }
+
+button {
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  outline: none;
+}

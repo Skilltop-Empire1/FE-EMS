@@ -1,10 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import profileImg from "./profile.png";
 import Logo from "./EMS logo-Transparent.png";
 import style from "./navBarStyle.module.css";
-
+import { MdHome } from "react-icons/md";
+import { GoOrganization } from "react-icons/go";
+import { MdOutlineSick } from "react-icons/md";
+import { SiGoogleclassroom } from "react-icons/si";
 import { FaSortDown } from "react-icons/fa";
+import { TbReportMedical } from "react-icons/tb";
+import { IoMdSettings } from "react-icons/io";
+import { IoMdPerson } from "react-icons/io";
+import { IoMdHelpCircle } from "react-icons/io";
+import { MdAccountCircle } from "react-icons/md";
 import DropDown from "./DropDown";
 import ModalContainer from "../modals/ModalContainer";
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
@@ -21,54 +29,99 @@ const Navbar = () => {
     <>
       <nav className={style.dashboardNav}>
         <div className={style.left}>
-          <Link to="/">
+          <NavLink to="/">
             <img src={Logo} alt="" className={style.img} />
-          </Link>
+          </NavLink>
           <ul className={style.ull}>
             <li>
-              <Link className={style.link} to="/">
-                Home
-              </Link>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+                to="/"
+              >
+               <MdHome /> Home
+              </NavLink>
             </li>
             <li>
-              <Link to="/organization" className={style.link}>
-                Organization
-              </Link>
+              <NavLink
+                to="/organization"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+                <GoOrganization /> Organization
+              </NavLink>
             </li>
             <li>
-              <Link to="/staff" className={style.link}>
-                Staff
-              </Link>
+              <NavLink
+                to="/staff"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+               <IoMdPerson /> Staff
+              </NavLink>
             </li>
             <li>
-              <Link to="/patients" className={style.link}>
-                Patients
-              </Link>
+              <NavLink
+                to="/patients"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+               <MdOutlineSick /> Patients
+              </NavLink>
             </li>
             <li>
-              <Link to="/appointments" className={style.link}>
-                Appointments
-              </Link>
+              <NavLink
+                to="/appointments"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+              <SiGoogleclassroom />  Appointments
+              </NavLink>
             </li>
             <li>
-              <Link to="/account" className={style.link}>
-                Account
-              </Link>
+              <NavLink
+                to="/account"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+              <MdAccountCircle />  Account
+              </NavLink>
             </li>
             <li>
-              <Link to="/reports" className={style.link}>
-                Reports
-              </Link>
+              <NavLink
+                to="/reports"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+              <TbReportMedical />  Reports
+              </NavLink>
             </li>
             <li>
-              <Link className={style.link} to="/settings">
-                Settings
-              </Link>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+                to="/settings"
+              >
+              <IoMdSettings />  Settings
+              </NavLink>
             </li>
             <li>
-              <Link to="/help" className={style.link}>
-                Help
-              </Link>
+              <NavLink
+                to="/help"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+              <IoMdHelpCircle />  Help
+              </NavLink>
             </li>
           </ul>
         </div>
