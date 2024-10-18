@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import { useModal } from "../../context/ModalContext";
-
+import usePostRequest from "../../hooks/postRequestApi";
 import style from "./OrganisationModals.module.css";
 
 const AddOrganisation = () => {
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const [formData, setFormData] = useState({
+  const initialData = {
     name: "",
     email: "",
-    password: "",
     mobileNumber: "",
     address: "",
     city: "",
     state: "",
-    zipcode: "",
-  });
+    zipCode: "",
+    username: "",
+  };
 
-  const { closeModal, modalProps } = useModal();
-  console.log(modalProps);
+  const [formData, setFormData] = useState(initialData);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const { closeModal } = useModal();
+  const URL = "http://localhost:5000/organisationData";
+  const { loading, error: apiError, postRequest } = usePostRequest(URL);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,59 +31,29 @@ const AddOrganisation = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !formData.name ||
-      !formData.email ||
-      !formData.password ||
-      !formData.mobileNumber ||
-      !formData.address ||
-      !formData.city ||
-      !formData.state ||
-      !formData.zipcode
-    ) {
+    if (Object.values(formData).some((value) => !value)) {
       setError("Please fill in all fields.");
       setMessage("");
       return;
     }
 
-    const isSuccess = true;
-
-    if (isSuccess) {
+    try {
+      await postRequest(formData);
       setMessage("Saved successfully.");
       setError("");
-
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        mobileNumber: "",
-        address: "",
-        city: "",
-        state: "",
-        zipcode: "",
-      });
+      setFormData(initialData);
       setTimeout(() => closeModal(), 2000);
-    } else {
+    } catch (err) {
       setError("An error occurred while saving. Please try again.");
       setMessage("");
     }
   };
 
   const handleCancel = () => {
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-      mobileNumber: "",
-      address: "",
-      city: "",
-      state: "",
-      zipcode: "",
-    });
-
+    setFormData(initialData);
     closeModal();
   };
 
@@ -89,8 +62,10 @@ const AddOrganisation = () => {
       <div className={style.header}>
         <h3>Add Organization</h3>
       </div>
+      {loading && <div style={{ color: "blue" }}>Loading...</div>}
       {message && <div style={{ color: "green" }}>{message}</div>}
       {error && <div style={{ color: "red" }}>{error}</div>}
+      {apiError && <div style={{ color: "red" }}>{apiError.message}</div>}
       <div className={style.formContainer}>
         <div className={style.inputContent}>
           <div className={style.inputField}>
@@ -104,7 +79,6 @@ const AddOrganisation = () => {
               placeholder="Name"
             />
           </div>
-
           <div>
             <label htmlFor="email">Email</label>
             <input
@@ -119,18 +93,6 @@ const AddOrganisation = () => {
         </div>
         <div className={style.inputContent}>
           <div>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Password"
-            />
-          </div>
-
-          <div>
             <label htmlFor="mobileNumber">Mobile Number</label>
             <input
               type="tel"
@@ -141,9 +103,6 @@ const AddOrganisation = () => {
               placeholder="Mobile Number"
             />
           </div>
-        </div>
-
-        <div className={style.inputContent}>
           <div>
             <label htmlFor="address">Address</label>
             <input
@@ -155,7 +114,9 @@ const AddOrganisation = () => {
               placeholder="Address"
             />
           </div>
+        </div>
 
+        <div className={style.inputContent}>
           <div>
             <label htmlFor="city">City</label>
             <input
@@ -167,9 +128,6 @@ const AddOrganisation = () => {
               placeholder="City"
             />
           </div>
-        </div>
-
-        <div className={style.inputContent}>
           <div>
             <label htmlFor="state">State</label>
             <input
@@ -181,23 +139,38 @@ const AddOrganisation = () => {
               placeholder="State"
             />
           </div>
+        </div>
 
+        <div className={style.inputContent}>
           <div>
-            <label htmlFor="zipcode">Zipcode</label>
+            <label htmlFor="zipCode">Zipcode</label>
             <input
               type="text"
-              id="zipcode"
-              name="zipcode"
-              value={formData.zipcode}
+              id="zipCode"
+              name="zipCode"
+              value={formData.zipCode}
               onChange={handleChange}
               placeholder="Zipcode"
+            />
+          </div>
+          <div>
+            <label htmlFor="username">User Name</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="User Name"
             />
           </div>
         </div>
       </div>
 
       <div className={style.formButton}>
-        <button type="submit">Save</button>
+        <button type="submit" disabled={loading}>
+          Save
+        </button>
         <button type="button" onClick={handleCancel}>
           Cancel
         </button>

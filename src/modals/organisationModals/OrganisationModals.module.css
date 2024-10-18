@@ -6,7 +6,6 @@
 
 .header {
   text-align: left;
-  /* margin-top: 25px; */
 }
 
 .header h3 {
@@ -35,13 +34,10 @@
 .inputContent input {
   width: 290px;
   height: 24px;
-  /* top: 28px; */
   padding: 10.5px;
-  /* gap: 0px; */
   border-radius: 2px;
   border: 1px solid #ced4da;
   outline: none;
-  /* opacity: 0px; */
 }
 
 .formButton button {

@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./organisation.module.css";
-import { initialData, table } from "./data";
+import { table } from "./data";
 import { MODAL_TYPES, useModal } from "../../../context/ModalContext";
 import Table from "../../../components/dataTable/Table";
+import useFetchRequest from "../../../hooks/fetchRequestApi";
 
 function Organizations() {
-  const [data, setData] = useState(initialData);
+  const URL = "http://localhost:5000/organisationData";
+  // const URL =     " https://be-ems-production-2721.up.railway.app/api/v1/organization/list"
+
+  const { data: fetchedData, loading, error } = useFetchRequest(URL);
+  const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { openModal } = useModal();
+
+  console.log("organisation data fetched", fetchedData);
+
+  useEffect(() => {
+    if (fetchedData && !loading && !error) {
+      setData(fetchedData);
+    }
+  }, [fetchedData, loading, error]);
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -16,11 +29,12 @@ function Organizations() {
     setQuery(value);
 
     if (!value) {
-      setData(initialData);
+      setData(fetchedData);
+      console.log("Fetched data", fetchedData);
       return;
     }
 
-    const filteredData = initialData.filter((item) =>
+    const filteredData = fetchedData.filter((item) =>
       item.username.toLowerCase().includes(value.toLowerCase())
     );
     setData(filteredData);
@@ -40,10 +54,16 @@ function Organizations() {
           value={query}
         />
         <button onClick={() => openModal(MODAL_TYPES.TYPE4)} type="button">
-          Add organisation
+          Add Department
         </button>
       </div>
-      <Table headers={table} data={data} modalType={MODAL_TYPES.TYPE4} />
+      <Table
+        headers={table}
+        data={data}
+        modalType={MODAL_TYPES.TYPE4}
+        isLoading={loading}
+        error={error}
+      />
     </div>
   );
 }

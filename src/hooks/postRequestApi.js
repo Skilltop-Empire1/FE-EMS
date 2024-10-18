@@ -1,18 +1,29 @@
-
 import { useState } from 'react';
-import axios from 'axios';
 
-const usePostRequest = (url, config = {}) => {
-  const [data, setData] = useState(initialData);
+const usePostRequest = (url) => {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const postRequest = async (payload) => {
     setLoading(true);
     setError(null);
+
     try {
-      const response = await axios.post(url, payload, config);
-      setData(response.data);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      setData(responseData);
     } catch (err) {
       setError(err);
     } finally {
@@ -24,13 +35,3 @@ const usePostRequest = (url, config = {}) => {
 };
 
 export default usePostRequest;
-
-
-// to call the hook like this by destructuring as below
-// const { data, loading, error: apiError, postRequest } = usePostRequest('/api/appointments', {}, {
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Default Authorization header
-//     },
-//     timeout: 5000, // Default timeout of 5 seconds
-//   });
