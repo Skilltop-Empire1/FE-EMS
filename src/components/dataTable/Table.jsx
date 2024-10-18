@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { useModal } from "../../context/ModalContext";
-import ViewIcon from "../../assets/ViewIcon";
-import EditIcon from "../../assets/EditIcon";
-import DeleteIcon from "../../assets/DeleteIcon";
-
 import style from "./Table.module.css";
 import Loader from "../loader/Loader";
+import { MoreHorizontal } from "lucide-react";
 
 const ActionCell = ({ item, onView, onEdit, onDelete }) => (
   <td className={style.buttonRow}>
-    <button onClick={() => onView(item.id)} className={style.viewButton}>
-      <ViewIcon />
-    </button>
-    <button onClick={() => onEdit(item)} className={style.editButton}>
-      <EditIcon />
-    </button>
-    <button onClick={() => onDelete(item.id)} className={style.deleteButton}>
-      <DeleteIcon />
-    </button>
+    <ul>
+      <li onClick={() => onView(item.id)}>View</li>
+      <hr />
+      <li onClick={() => onEdit(item.id)}>Edit</li>
+      <hr />
+      <li onClick={() => onPrint(item.id)}>Print</li>
+      <hr />
+      <li onClick={() => onInvite(item.id)}>Invite</li>
+      <hr />
+      <li onClick={() => onDelete(item.id)}>Delete</li>
+    </ul>
   </td>
 );
 
@@ -31,6 +30,7 @@ function Table({
   error,
 }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeActionCell, setActiveActionCell] = useState(null);
   const { openModal } = useModal();
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -46,6 +46,8 @@ function Table({
 
   const handleEdit = (item) => {
     openModal(modalType, item);
+    console.log(item);
+    console.log("Edit action for id:", item.id);
   };
 
   const handleView = (id) => {
@@ -53,6 +55,14 @@ function Table({
   };
 
   const handleDelete = (id) => {
+    console.log("Delete action for id:", id);
+  };
+
+  const handlePrint = (id) => {
+    console.log("Delete action for id:", id);
+  };
+
+  const handleInvite = (id) => {
     console.log("Delete action for id:", id);
   };
 
@@ -85,12 +95,28 @@ function Table({
                     <td>{item.zipCode}</td>
                   </>
                 )}
-                <ActionCell
-                  item={item}
-                  onView={handleView}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                />
+                <div
+                  className={style.ActionCell}
+                  onClick={() =>
+                    setActiveActionCell(
+                      activeActionCell === item.id ? null : item.id
+                    )
+                  }
+                >
+                  <div>
+                    <MoreHorizontal size={24} color="currentColor" />
+                  </div>
+                  {activeActionCell === item.id && (
+                    <ActionCell
+                      item={item}
+                      onView={handleView}
+                      onEdit={handleEdit}
+                      onDelete={handleDelete}
+                      onPrint={handlePrint}
+                      onInvite={handleInvite}
+                    />
+                  )}
+                </div>
               </tr>
             ))}
         </tbody>

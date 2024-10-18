@@ -1,12 +1,11 @@
-import React, { useState, useRef } from "react";
-import { MODAL_TYPES, useModal } from "../../context/ModalContext";
-
+import React, { useState } from "react";
+import { useModal } from "../../context/ModalContext";
+import usePostRequest from "../../hooks/postRequestApi";
 import style from "./AppointmentModal.module.css";
 
 const AddAppointment = () => {
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const [formData, setFormData] = useState({
+  const URL = "http://localhost:5000/appointmentData";
+  const initialState = {
     patient: "",
     consultingDoctor: "",
     dateOfAppointment: "",
@@ -14,10 +13,14 @@ const AddAppointment = () => {
     reason: "",
     practice: "",
     organization: "",
-  });
+  };
 
-  const { closeModal, openModal } = useModal();
-  const formRef = useRef(null);
+  const [formData, setFormData] = useState(initialState);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const { closeModal } = useModal();
+  const { loading, error: apiError, postRequest } = usePostRequest(URL);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,80 +36,57 @@ const AddAppointment = () => {
     return Object.values(formData).every((field) => field.trim() !== "");
   };
 
-  const handleSubmit = () => {
-    if (!validateForm) {
+  const handleSubmit = async () => {
+    if (!validateForm()) {
       setError("Please fill in all fields.");
       setMessage("");
-      return false;
+      return;
     }
 
-    const isSuccess = true;
-
-    if (isSuccess) {
-      setMessage(" Your appointment has been scheduled successfully.");
+    try {
+      await postRequest(formData);
+      setMessage("Saved successfully.");
       setError("");
-
-      setFormData({
-        patient: "",
-        consultingDoctor: "",
-        dateOfAppointment: "",
-        timeOfAppointment: "",
-        reason: "",
-        practice: "",
-        organization: "",
-      });
-
+      setFormData(initialState);
       setTimeout(() => closeModal(), 2000);
-      return true;
-    } else {
-      setError("An error occurred while setting a schedule. Please try again.");
+    } catch (err) {
+      setError("An error occurred while saving. Please try again.");
       setMessage("");
-      return false;
     }
   };
 
-  const handleAddMore = () => {
-    if (!validateForm) {
+  const handleAddMore = async () => {
+    if (!validateForm()) {
       setError("Please fill in all fields.");
       setMessage("");
-      return false;
+      return;
     }
 
-    const isSuccess = true;
-
-    if (isSuccess) {
-      setMessage(" Your appointment has been scheduled successfully."),
-        setError("");
-
-      setFormData({
-        patient: "",
-        consultingDoctor: "",
-        dateOfAppointment: "",
-        timeOfAppointment: "",
-        reason: "",
-        practice: "",
-        organization: "",
-      });
-
+    try {
+      await postRequest(formData);
+      setMessage(
+        "Your appointment has been scheduled successfully. You can add more appointments."
+      );
+      setError("");
+      setFormData(initialState);
       setTimeout(() => {
         setMessage("");
       }, 3000);
-
-      return true;
-    } else {
-      setError("An error occurred while setting a schedule. Please try again.");
+    } catch (err) {
+      setError("An error occurred while scheduling. Please try again.");
       setMessage("");
-      return false;
     }
   };
 
   return (
-    <form ref={formRef} onSubmit={(e) => e.preventDefault()}>
+    <form onSubmit={(e) => e.preventDefault()}>
       <div className={style.header}>
         <h3>Add Appointment</h3>
       </div>
+      {loading && <div style={{ color: "blue" }}>Loading...</div>}
       {message && <div style={{ color: "green" }}>{message}</div>}
       {error && <div style={{ color: "red" }}>{error}</div>}
+      {apiError && <div style={{ color: "red" }}>{apiError.message}</div>}
       <div className={style.formContainer}>
         <div className={style.inputContent}>
           <div className={style.inputField}>
@@ -122,10 +102,10 @@ const AddAppointment = () => {
           </div>
 
           <div>
-            <label htmlFor="consulting-doctor">Consulting Doctor</label>
+            <label htmlFor="consultingDoctor">Consulting Doctor</label>
             <input
               type="text"
-              id="consulting-doctor"
+              id="consultingDoctor"
               name="consultingDoctor"
               value={formData.consultingDoctor}
               onChange={handleChange}
@@ -135,10 +115,10 @@ const AddAppointment = () => {
         </div>
         <div className={style.inputContent}>
           <div>
-            <label htmlFor="date-of-appointment">Date of Appointment</label>
+            <label htmlFor="dateOfAppointment">Date of Appointment</label>
             <input
               type="date"
-              id="date-of-appointment"
+              id="dateOfAppointment"
               name="dateOfAppointment"
               value={formData.dateOfAppointment}
               onChange={handleChange}
@@ -148,10 +128,10 @@ const AddAppointment = () => {
           </div>
 
           <div>
-            <label htmlFor="time-of-appointment">Time of Appointment</label>
+            <label htmlFor="timeOfAppointment">Time of Appointment</label>
             <input
               type="time"
-              id="time-of-appointment"
+              id="timeOfAppointment"
               name="timeOfAppointment"
               value={formData.timeOfAppointment}
               onChange={handleChange}
@@ -202,11 +182,11 @@ const AddAppointment = () => {
       </div>
 
       <div className={style.formButton}>
-        <button type="submit" onClick={handleSubmit}>
+        <button type="button" onClick={handleSubmit} disabled={loading}>
           Schedule
         </button>
-        <button type="button" onClick={handleAddMore}>
-          More
+        <button type="button" onClick={handleAddMore} disabled={loading}>
+          Add More
         </button>
       </div>
     </form>

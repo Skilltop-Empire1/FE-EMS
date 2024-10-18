@@ -1,0 +1,278 @@
+{
+  "appointmentData": [
+    {
+      "id": 1,
+      "patient": "John Doe",
+      "consultingDoctor": "Dr. Smith",
+      "dateOfAppointment": "2024-08-30",
+      "timeOfAppointment": "09:00 AM",
+      "reason": "Annual Check-up",
+      "practice": "Internal Medicine",
+      "organization": "Health Clinic"
+    },
+    {
+      "id": 2,
+      "patient": "Jane Doe",
+      "consultingDoctor": "Dr. Lee",
+      "dateOfAppointment": "2024-08-31",
+      "timeOfAppointment": "10:00 AM",
+      "reason": "Follow-up",
+      "practice": "Cardiology",
+      "organization": "HeartCare Center"
+    },
+    {
+      "id": 3,
+      "patient": "Alice Johnson",
+      "consultingDoctor": "Dr. Brown",
+      "dateOfAppointment": "2024-09-01",
+      "timeOfAppointment": "11:00 AM",
+      "reason": "Blood Test Review",
+      "practice": "General Practice",
+      "organization": "MedCare Clinic"
+    },
+    {
+      "id": 4,
+      "patient": "Bob Williams",
+      "consultingDoctor": "Dr. Clark",
+      "dateOfAppointment": "2024-09-02",
+      "timeOfAppointment": "01:00 PM",
+      "reason": "Routine Check-up",
+      "practice": "Pediatrics",
+      "organization": "Kids Health"
+    },
+    {
+      "id": 5,
+      "patient": "Carol Evans",
+      "consultingDoctor": "Dr. Patel",
+      "dateOfAppointment": "2024-09-03",
+      "timeOfAppointment": "02:00 PM",
+      "reason": "Consultation",
+      "practice": "Dermatology",
+      "organization": "Skin Health"
+    },
+    {
+      "id": 6,
+      "patient": "Dave Miller",
+      "consultingDoctor": "Dr. Davis",
+      "dateOfAppointment": "2024-09-04",
+      "timeOfAppointment": "03:00 PM",
+      "reason": "Physical Therapy",
+      "practice": "Rehabilitation",
+      "organization": "MoveWell Center"
+    },
+    {
+      "id": 7,
+      "patient": "Emma Thompson",
+      "consultingDoctor": "Dr. Scott",
+      "dateOfAppointment": "2024-09-05",
+      "timeOfAppointment": "04:00 PM",
+      "reason": "Specialist Consultation",
+      "practice": "Neurology",
+      "organization": "Brain Health"
+    },
+    {
+      "id": 8,
+      "patient": "Frank Garcia",
+      "consultingDoctor": "Dr. Martin",
+      "dateOfAppointment": "2024-09-06",
+      "timeOfAppointment": "09:30 AM",
+      "reason": "Allergy Testing",
+      "practice": "Allergy Clinic",
+      "organization": "Allergy Experts"
+    },
+    {
+      "id": 9,
+      "patient": "Grace Martinez",
+      "consultingDoctor": "Dr. Lee",
+      "dateOfAppointment": "2024-09-07",
+      "timeOfAppointment": "10:30 AM",
+      "reason": "Preventive Care",
+      "practice": "Family Medicine",
+      "organization": "Wellness Center"
+    },
+    {
+      "id": 10,
+      "patient": "Henry Wilson",
+      "consultingDoctor": "Dr. White",
+      "dateOfAppointment": "2024-09-08",
+      "timeOfAppointment": "11:30 AM",
+      "reason": "Eye Examination",
+      "practice": "Ophthalmology",
+      "organization": "Vision Clinic"
+    },
+    {
+      "id": 11,
+      "patient": "Irene Davis",
+      "consultingDoctor": "Dr. Lewis",
+      "dateOfAppointment": "2024-09-09",
+      "timeOfAppointment": "01:30 PM",
+      "reason": "Cardiac Check",
+      "practice": "Cardiology",
+      "organization": "HeartCare Center"
+    },
+    {
+      "id": 12,
+      "patient": "Jack Taylor",
+      "consultingDoctor": "Dr. Walker",
+      "dateOfAppointment": "2024-09-10",
+      "timeOfAppointment": "02:30 PM",
+      "reason": "Diabetes Management",
+      "practice": "Endocrinology",
+      "organization": "Diabetes Clinic"
+    },
+    {
+      "id": 13,
+      "patient": "Kelly Anderson",
+      "consultingDoctor": "Dr. Hall",
+      "dateOfAppointment": "2024-09-11",
+      "timeOfAppointment": "03:30 PM",
+      "reason": "Chronic Illness Review",
+      "practice": "Internal Medicine",
+      "organization": "Health Clinic"
+    },
+    {
+      "id": 14,
+      "patient": "Liam Jackson",
+      "consultingDoctor": "Dr. Adams",
+      "dateOfAppointment": "2024-09-12",
+      "timeOfAppointment": "04:30 PM",
+      "reason": "Orthopedic Consultation",
+      "practice": "Orthopedics",
+      "organization": "Bone Health"
+    },
+    {
+      "id": 15,
+      "patient": "Mia Roberts",
+      "consultingDoctor": "Dr. Taylor",
+      "dateOfAppointment": "2024-09-13",
+      "timeOfAppointment": "09:00 AM",
+      "reason": "Mental Health Support",
+      "practice": "Psychiatry",
+      "organization": "MindCare Center"
+    },
+    {
+      "id": "9c25",
+      "patient": "idris",
+      "consultingDoctor": "Dr. Smith",
+      "dateOfAppointment": "2024-09-18",
+      "timeOfAppointment": "21:27",
+      "reason": "general check up",
+      "practice": "internal medicine",
+      "organization": "Health Centre yaba"
+    }
+  ],
+  "organisationData": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "username": "johndoe",
+      "mobileNumber": "+234811######",
+      "address": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001",
+      "action": [
+        "Edit",
+        "View",
+        "Delete"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "username": "janesmith",
+      "mobileNumber": "+234811######",
+      "address": "456 Elm St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zipCode": "90001",
+      "action": [
+        "Edit",
+        "View",
+        "Delete"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Mike Johnson",
+      "username": "mikejohnson",
+      "mobileNumber": "+234811######",
+      "address": "789 Oak St",
+      "city": "Chicago",
+      "state": "IL",
+      "zipCode": "60601",
+      "action": [
+        "Edit",
+        "View",
+        "Delete"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "John Doe",
+      "username": "johndoe",
+      "mobileNumber": "+234811######",
+      "address": "123 Main St",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001",
+      "action": [
+        "Edit",
+        "View",
+        "Delete"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Jane Smith",
+      "username": "janesmith",
+      "mobileNumber": "+234811######",
+      "address": "456 Elm St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zipCode": "90001",
+      "action": [
+        "Edit",
+        "View",
+        "Delete"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Mike Johnson",
+      "username": "mikejohnson",
+      "mobileNumber": "+234811######",
+      "address": "789 Oak St",
+      "city": "Chicago",
+      "state": "IL",
+      "zipCode": "60601",
+      "action": [
+        "Edit",
+        "View",
+        "Delete"
+      ]
+    },
+    {
+      "id": "26c5",
+      "name": "Idris Balogun",
+      "email": "iebalorg@gmail.com",
+      "mobileNumber": "08112356177",
+      "address": "9 Olokobi",
+      "city": "Ajangbadi",
+      "state": "Oyo",
+      "zipCode": "200257",
+      "username": "idbalorg"
+    },
+    {
+      "id": "5108",
+      "name": "Idris Balogun",
+      "email": "igbalorg@gmail.com",
+      "mobileNumber": "07067264153",
+      "address": "9 Olokobi",
+      "city": "Ajangbadi",
+      "state": "ogun",
+      "zipCode": "200257",
+      "username": "idrisbalogun02"
+    }
+  ]
+}
