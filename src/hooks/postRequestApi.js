@@ -1,8 +1,6 @@
-
 import { useState } from 'react';
-import axios from 'axios';
 
-const usePostRequest = (url,) => {
+const usePostRequest = (url) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -10,9 +8,22 @@ const usePostRequest = (url,) => {
   const postRequest = async (payload) => {
     setLoading(true);
     setError(null);
+
     try {
-      const response = await axios.post(url, payload);
-      setData(response.data);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      setData(responseData);
     } catch (err) {
       setError(err);
     } finally {
@@ -24,4 +35,3 @@ const usePostRequest = (url,) => {
 };
 
 export default usePostRequest;
-

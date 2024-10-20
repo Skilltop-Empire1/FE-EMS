@@ -41,6 +41,12 @@
   outline: none;
 }
 
+.formButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .formButton button {
   width: 150px;
   height: 57px;
