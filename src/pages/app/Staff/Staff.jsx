@@ -10,7 +10,7 @@ import { MODAL_TYPES } from "../../../context/ModalContext";
 import Button from "../../../components/Button/Button";
 import AddStaff from "../../../modals/staffModals/AddStaff";
 import Table2 from "../../../components/dataTable2/Table2";
-import SelectFilter from "../../../components/SelectFilter";
+import SelectFilter from "@src/components/SelectFilter";
 
 const Staff = () => {
   const item = [
@@ -96,40 +96,37 @@ const Staff = () => {
   };
 
   return (
-    <div className={style.body}>
-      <div>
-        <div className={style.top}>
-          <h2 className={style.header}>Staffs</h2>
-          <div className={style.sticky}>
-            <Button
-              onClick={toggleForm}
-              disabled={showForm}
-              add={"Add Staff"}
+    <div className="w-full px-10 py-5 flex flex-col space-y-4">
+      <div className="my-4">
+        <h2 className="text-2xl font-bold text-left">Staffs</h2>
+      </div>
+      <div className="flex flex-wrap items-center justify-between">
+        <div>
+          <div>
+            <input
+              type="text"
+              placeholder="Name"
+              className={style.filter}
+              onChange={handleSearch}
+            />
+            <SelectFilter
+              onChange={handleSpecializationChange}
+              data={item}
+              Filter={specializationFilter}
+            />
+            <SelectFilter
+              onChange={handleSpecializationChange}
+              data={item2}
+              Filter={practiceFilter}
             />
           </div>
         </div>
-      </div>
-      <div className={style.info}>
-        <div>
-          <input
-            type="text"
-            placeholder="Name"
-            className={style.filter}
-            onChange={handleSearch}
-          />
-          <SelectFilter
-            onChange={handleSpecializationChange}
-            data={item}
-            Filter={specializationFilter}
-          />
-          <SelectFilter
-            onChange={handleSpecializationChange}
-            data={item2}
-            Filter={practiceFilter}
-          />
+        <div className={style.sticky}>
+          <Button onClick={toggleForm} disabled={showForm} add={"Add Staff"} />
         </div>
+      </div>
+      <div>
         <Table2 data={data} Role={"Specialization"} />
-        {/* <Table headers={tableHeader} data={tableData} itemsPerPage={6} renderRow={renderRow} modalType={MODAL_TYPES.TYPE4}/> */}
       </div>
 
       {showForm && (

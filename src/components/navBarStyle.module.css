@@ -13,7 +13,7 @@
 
 .active {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 22px;
   text-decoration: none;
   color: #7f00ff;
@@ -75,8 +75,6 @@
   display: flex;
   align-items: center;
 }
-
-
 
 .right {
   display: flex;

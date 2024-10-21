@@ -3,7 +3,9 @@ import style from "./Loader.module.css";
 
 function Loader() {
   return (
-    <div className={style["lds-facebook-wrapper"]}>
+    <div
+      className={`${style["lds-facebook-wrapper"]} flex justify-center items-center w-full h-screen`}
+    >
       <div className={style["lds-facebook"]}>
         <div></div>
         <div></div>

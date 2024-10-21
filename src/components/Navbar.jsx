@@ -16,6 +16,7 @@ import { MdAccountCircle } from "react-icons/md";
 import DropDown from "./DropDown";
 import ModalContainer from "../modals/ModalContainer";
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
+import { ChevronDown, ChevronUp, House } from "lucide-react";
 
 const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
@@ -27,101 +28,73 @@ const Navbar = () => {
   const handlePasswordChange = () => {};
   return (
     <>
-      <nav className={style.dashboardNav}>
+      <nav className={`${style.dashboardNav} border-b !bg-gray-200`}>
         <div className={style.left}>
           <NavLink to="/">
             <img src={Logo} alt="" className={style.img} />
           </NavLink>
-          <ul className={style.ull}>
+          <ul className="flex gap-5 items-center flex-wrap">
             <li>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-                to="/"
-              >
-               <MdHome /> Home
-              </NavLink>
+              <CustomLink label="Home" icon={<House size={14} />} path="/" />
             </li>
             <li>
-              <NavLink
-                to="/organization"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-                <GoOrganization /> Organization
-              </NavLink>
+              <CustomLink
+                label="Organization"
+                icon={<GoOrganization />}
+                path="/organization"
+              />
             </li>
             <li>
-              <NavLink
-                to="/staff"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-               <IoMdPerson /> Staff
-              </NavLink>
+              <CustomLinkWithDropdown
+                label="Staff"
+                icon={<IoMdPerson />}
+                path="/staff"
+                dropdownItems={[
+                  { path: "/staff/doctors", label: "Doctors" },
+                  { path: "/staff/nurses", label: "Nurses" },
+                  { path: "/staff/pharmacists", label: "Pharmacists" },
+                  { path: "/staff/lab-scientist", label: "Lab. Scientist" },
+                  { path: "/staff/radiographers", label: "Radiographers" },
+                ]}
+              />
             </li>
             <li>
-              <NavLink
-                to="/patients"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-               <MdOutlineSick /> Patients
-              </NavLink>
+              <CustomLink
+                label="Patients"
+                icon={<MdOutlineSick />}
+                path="/patients"
+              />
             </li>
             <li>
-              <NavLink
-                to="/appointments"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-              <SiGoogleclassroom />  Appointments
-              </NavLink>
+              <CustomLink
+                label="Appointments"
+                icon={<SiGoogleclassroom />}
+                path="/appointments"
+              />
             </li>
             <li>
-              <NavLink
-                to="/account"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-              <MdAccountCircle />  Account
-              </NavLink>
+              <CustomLink
+                label="Account"
+                icon={<MdAccountCircle />}
+                path="/account"
+              />
             </li>
             <li>
-              <NavLink
-                to="/reports"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-              <TbReportMedical />  Reports
-              </NavLink>
+              <CustomLink
+                label="Reports"
+                icon={<TbReportMedical />}
+                path="/reports"
+              />
             </li>
             <li>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-                to="/settings"
-              >
-              <IoMdSettings />  Settings
-              </NavLink>
+              <CustomLink
+                label="Settings"
+                icon={<IoMdSettings />}
+                path="/settings"
+              />
             </li>
             <li>
-              <NavLink
-                to="/help"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-              <IoMdHelpCircle />  Help
-              </NavLink>
+              <CustomLink label="Help" icon={<IoMdHelpCircle />} path="/help" />
             </li>
           </ul>
         </div>
@@ -151,3 +124,73 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const CustomLink = ({ path, icon, label }) => {
+  return (
+    <NavLink
+      to={path}
+      className={({ isActive }) =>
+        `${isActive && "text-purple-600"} flex gap-1 items-center text-sm`
+      }
+    >
+      {icon} <span>{label}</span>
+    </NavLink>
+  );
+};
+
+const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  return (
+    <div
+      className="relative group"
+      onMouseEnter={() => setIsDropdownOpen(true)}
+      onMouseLeave={() => setIsDropdownOpen(false)}
+    >
+      <NavLink
+        to={path}
+        className={({ isActive }) =>
+          `${
+            isActive ? "text-purple-600" : "text-gray-800"
+          } flex gap-1 items-center text-sm`
+        }
+      >
+        {icon}
+        <span>{label}</span>
+        {/* Conditionally render Chevron icons based on dropdown state */}
+        {dropdownItems && dropdownItems.length > 0 && (
+          <span className="ml-2">
+            {isDropdownOpen ? <ChevronUp /> : <ChevronDown />}
+          </span>
+        )}
+      </NavLink>
+
+      {/* Dropdown */}
+      {dropdownItems && dropdownItems.length > 0 && (
+        <div
+          className={`absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md z-10 transition-all duration-300 ease-in-out origin-top transform ${
+            isDropdownOpen
+              ? "scale-100 opacity-100"
+              : "scale-95 opacity-0 pointer-events-none"
+          }`}
+          onMouseEnter={() => setIsDropdownOpen(true)}
+          onMouseLeave={() => setIsDropdownOpen(false)}
+        >
+          {dropdownItems.map((item, index) => (
+            <NavLink
+              key={index}
+              to={item.path}
+              className={({ isActive }) =>
+                `block px-4 py-2 text-sm ${
+                  isActive ? "bg-purple-600 text-white" : "text-gray-800"
+                } hover:bg-gray-100`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};

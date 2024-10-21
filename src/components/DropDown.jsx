@@ -13,7 +13,7 @@ function DropDown({ handleProfileImageChange, handlePasswordChange }) {
         fontWeight: "500",
         display: "flex",
         flexDirection: "column",
-        position: "fixed",
+        // position: "fixed",
         backgroundColor: "#fff",
         borderRadius: "8px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
