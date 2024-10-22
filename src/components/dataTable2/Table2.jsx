@@ -5,7 +5,8 @@ import { FaEye } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
 import { deletePatient } from '../../hooks/Api'; 
 
-const Table2 = ({data, Role, patients, staff, deleteFunction, refreshList}) => {
+
+const Table2 = ({data=[], Role, patients, staff, deleteFunction, refreshList}) => {
 
   //running deleting for patients
 
