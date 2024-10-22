@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const usePostRequest = (url) => {
   const [data, setData] = useState(null);
@@ -11,9 +11,9 @@ const usePostRequest = (url) => {
 
     try {
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
