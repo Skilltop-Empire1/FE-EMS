@@ -1,0 +1,18 @@
+import React from 'react';
+
+const ConfirmationModal = ({ page, toggle }) => {
+  return (
+    <div className='fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50'>
+      <div className='shadow-lg w-1/3 flex flex-col justify-center items-center py-14 gap-5 bg-white relative'>
+        <p className='text-emsRed hover:text-red-700 hover:cursor-pointer text-lg absolute top-2 right-4' onClick={toggle}>X</p>
+        <p>Are you sure you want to delete this {page} detail?</p>
+        <div className='flex gap-3'>
+          <button className='bg-emsBlue p-4 w-28 text-white rounded-md'>Yes</button>
+          <button className='bg-emsRed p-4 w-28 text-white rounded-md' onClick={toggle}>Cancel</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ConfirmationModal;

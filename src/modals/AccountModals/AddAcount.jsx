@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import style from './addPatientStyle.module.css'
+import style from './addAccountStyle.module.css'
 import { createPatient } from '../../hooks/Api';
 
-const AddPatients = ({ toggleForm }) => {
+const AddAccount = ({ toggleForm }) => {
     const [keepOpen, setKeepOpen] = useState(false);
 
     const handleCheckboxChange = (e) => {
@@ -56,7 +56,7 @@ const AddPatients = ({ toggleForm }) => {
     <div className={` fixed inset-0 flex justify-center items-center  bg-gray-800 bg-opacity-50 z-40`}>
         <div className={`${style.addInfo} fixed  bg-gray-800 bg-opacity-50 z-50`}>
         <div className={style.addInfoTop}>
-          <h3>Add Patients</h3>
+          <h3>Add account</h3>
           {/* Update the close button to call handleClose */}
           <button onClick={handleClose} className={style.close}>X</button>
         </div>
@@ -74,41 +74,45 @@ const AddPatients = ({ toggleForm }) => {
             <input type="text" id="address" name="address" className={style.input} />
           </div>
           <div className={style.formChild}>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Payment Method</label>
             <input type="email" id="email" name="email" className={style.input}/>
           </div>
           <div className={style.formChild}>
-            <label htmlFor="educationQualification">Last Visit</label>
+            <label htmlFor="educationQualification">Next Payment Date</label>
             <input type="date" id="qualification" name="educationQualification" className={style.input}/>
           </div>
           <div className={style.formChild}>
-            <label htmlFor="phone">Mobile Number</label>
+            <label htmlFor="phone">Payment Provider</label>
             <input type="number" id="number" name="phone" className={style.input}/>
           </div>
           <div className={style.formChild}>
-            <label htmlFor="educationQualification">Medical Condition</label>
+            <label htmlFor="educationQualification">Payment Reference Number</label>
             <input type="text" id="qualification" name="educationQualification" className={style.input}/>
           </div>
           <div className={style.formChild}>
-            <label htmlFor="gender">Gender</label>
+            <label htmlFor="gender">Amount paid</label>
             <input type="text" id="gender" name="gender" className={style.input}/>
           </div>
           <div className={style.formChild}>
-            <label htmlFor="gender">Doctor Assigned</label>
+            <label htmlFor="gender">Oustanding Balance</label>
             <input type="text" id="gender" name="gender" className={style.input}/>
           </div>
           <div className={style.formChild}>
-            <label htmlFor="dateOfBirth" >Date Of Birth</label>
-            <input type="date" id="date" name="dateOfBirth" className={style.input}/>
+            <label htmlFor="dateOfBirth" >Service/Treatment Type</label>
+            <input type="text" id="date" name="dateOfBirth" className={style.input}/>
           </div>
           <div className={style.formChild}>
-            <label htmlFor="organization">Department</label>
+            <label htmlFor="organization">Payment Status</label>
             <input type="text" id="role" name="organization" className={style.input}/>
           </div>
-          <br />
+          <div className={style.formChild}>
+            <label htmlFor="organization">Description</label>
+            <input type="text" id="role" name="organization" className={style.input}/>
+          </div>
+        
           <div className={`${style.addAnother} text-blue-500`}>
             <input type="checkbox" checked={keepOpen} onChange={handleCheckboxChange}    className={`accent-blue-500 hover:accent-blue-700 focus:ring-2 focus:ring-blue-500 ${style.tick}`}/>
-            <label htmlFor="checkbox" className={` text-emsBlue`}> Add another patient</label>
+            <label htmlFor="checkbox" className={` text-emsBlue`}> Create another account</label>
           </div>
           <div className='flex gap-3'>
             <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>Save</button>
@@ -120,4 +124,4 @@ const AddPatients = ({ toggleForm }) => {
   );
 };
 
-export default AddPatients;
+export default AddAccount;

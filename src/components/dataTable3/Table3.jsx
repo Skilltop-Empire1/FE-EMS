@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import style from './table2.module.css'
+import style from './table3.module.css'
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
 import { deletePatient } from '../../hooks/Api'; 
 
-const Table2 = ({data = [], patients, staff, deleteFunction, refreshList, runToggle, runView}) => {
+const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runToggle, runView}) => {
 
     const [action, setAction] = useState({})
   //running deleting for patients
@@ -196,4 +196,4 @@ const Table2 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
   )
 }
 
-export default Table2
+export default Table3

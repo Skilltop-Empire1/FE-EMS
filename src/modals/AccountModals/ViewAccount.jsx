@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import style from './addPatientStyle.module.css'
+import style from './addAccountStyle.module.css'
 import { createPatient } from '../../hooks/Api';
 
-const AddPatients = ({ toggleForm }) => {
+const ViewAccount = ({ toggleForm }) => {
     const [keepOpen, setKeepOpen] = useState(false);
 
     const handleCheckboxChange = (e) => {
@@ -46,10 +46,9 @@ const AddPatients = ({ toggleForm }) => {
     // Handle close confirmation only when "X" button is clicked
     const handleClose = (e) => {
       e.preventDefault();  // Prevent any default behavior from the button
-      const confirmation = window.confirm('Are you sure you want to close the form?');
-      if (confirmation) {
+      
         toggleForm(); // Close form if confirmed
-      }
+
     };
 
   return (
@@ -120,4 +119,4 @@ const AddPatients = ({ toggleForm }) => {
   );
 };
 
-export default AddPatients;
+export default ViewAccount;
