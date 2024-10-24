@@ -89,9 +89,13 @@ const AddPatients = ({ toggleForm }) => {
             <label htmlFor="educationQualification">Medical Condition</label>
             <input type="text" id="qualification" name="educationQualification" className={style.input}/>
           </div>
-          <div className={style.formChild}>
-            <label htmlFor="gender">Gender</label>
-            <input type="text" id="gender" name="gender" className={style.input}/>
+          <div className={`mt-2 ${style.formChild}`}>
+          <label htmlFor="gender">Gender</label>
+           <select name="" id=""className={`${style.input}`}>
+            <option value="">Select Gender</option>
+            <option value="">Male</option>
+            <option value="">Female</option>
+           </select>
           </div>
           <div className={style.formChild}>
             <label htmlFor="gender">Doctor Assigned</label>

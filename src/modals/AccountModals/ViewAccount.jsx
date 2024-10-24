@@ -55,7 +55,7 @@ const ViewAccount = ({ toggleForm }) => {
     <div className={` fixed inset-0 flex justify-center items-center  bg-gray-800 bg-opacity-50 z-40`}>
         <div className={`${style.addInfo} fixed  bg-gray-800 bg-opacity-50 z-50`}>
         <div className={style.addInfoTop}>
-          <h3>Add Patients</h3>
+          <h3>Edit Account</h3>
           {/* Update the close button to call handleClose */}
           <button onClick={handleClose} className={style.close}>X</button>
         </div>
@@ -110,7 +110,7 @@ const ViewAccount = ({ toggleForm }) => {
             <label htmlFor="checkbox" className={` text-emsBlue`}> Add another patient</label>
           </div>
           <div className='flex gap-3'>
-            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>Save</button>
+            <button type="submit" className={`text-white bg-emsBlue  ${style.submit}`}>Edit account</button>
             <button  className={`text-white bg-emsRed ${style.submit}`} onClick={handleClose}>Cancel</button>
             </div>
         </form>

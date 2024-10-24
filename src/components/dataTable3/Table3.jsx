@@ -102,26 +102,26 @@ const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
    <table className={style.table}>
           <thead className={style.thead}>
             <tr>
-              <th className={style.th}>Name</th>
-              <th className={style.th}>Phone</th>
-              <th className={style.th}>Email</th>
-              <th className={style.th}>Gender</th>
-              <th className={style.th}>Date Of Birth</th>
-              <th className={style.th}>Last visit Date</th>
-              <th className={style.th}>Department</th>
+              <th className={style.th}>Patient Name</th>
+              <th className={style.th}>Payment Method</th>
+              <th className={style.th}>Payment Provider</th>
+              <th className={style.th}>Amount</th>
+              <th className={style.th}>Outstanding balance</th>
+              <th className={style.th}>payment Date</th>
+              <th className={style.th}>Payment Status</th>
               <th className={style.th}>Action</th>
             </tr>
           </thead>
           <tbody className={style.tbody}>
            {currentData.map((item, idx) => (
              <tr key={idx} style={{display : patients}}>
-                <td className={style.td}>{`${item.name}`}</td>
-                <td className={style.td}>{item.mobileNumber}</td>
-                <td className={style.td}>{item.email}</td>
-                <td className={style.td}>{item.gender}</td>
-                <td className={style.td}>{item.gender}</td>
-                <td className={style.td}>{item.role}</td>
-                <td className={style.td}>{item.organization}</td>
+                <td className={style.td}>{`${item.patientName}`}</td>
+                <td className={style.td}>{item.paymentMethod}</td>
+                <td className={style.td}>{item.paymentProvider}</td>
+                <td className={style.td}>{item.amount}</td>
+                <td className={style.td}>{item.outstandingBalance}</td>
+                <td className={style.td}>{item.paymentDate}</td>
+                <td className={style.td}>{item.paymentStatus}</td>
                 <td className={`${style.td} `}>
                {/* <div className={style.mamaIcons}>
                  <div className={style.actionIcons}>
@@ -139,9 +139,9 @@ const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
               </div>
 
               { action[idx] && <div className={`${style.action}`}>
-                <p onClick={runView}>View</p>
+                <p>View</p>
                 <hr />
-                <p>Edit</p>
+                <p onClick={runView}>Edit</p>
                 <hr />
                 <p>Print</p>
                 <hr />

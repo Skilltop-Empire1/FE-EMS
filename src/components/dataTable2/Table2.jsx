@@ -139,9 +139,9 @@ const Table2 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
               </div>
 
               { action[idx] && <div className={`${style.action}`}>
-                <p onClick={runView}>View</p>
+                <p>View</p>
                 <hr />
-                <p>Edit</p>
+                <p onClick={runView}>Edit</p>
                 <hr />
                 <p>Print</p>
                 <hr />

@@ -55,7 +55,7 @@ const ViewPatients = ({ toggleForm }) => {
     <div className={` fixed inset-0 flex justify-center items-center  bg-gray-800 bg-opacity-50 z-40`}>
         <div className={`${style.addInfo} fixed  bg-gray-800 bg-opacity-50 z-50`}>
         <div className={style.addInfoTop}>
-          <h3>Add Patients</h3>
+          <h3>Edit Patients</h3>
           {/* Update the close button to call handleClose */}
           <button onClick={handleClose} className={style.close}>X</button>
         </div>
@@ -89,8 +89,12 @@ const ViewPatients = ({ toggleForm }) => {
             <input type="text" id="qualification" name="educationQualification" className={style.input}/>
           </div>
           <div className={style.formChild}>
-            <label htmlFor="gender">Gender</label>
-            <input type="text" id="gender" name="gender" className={style.input}/>
+          <label htmlFor="gender">Gender</label>
+           <select name="" id=""className={`${style.input}`}>
+            <option value="">Select Gender</option>
+            <option value="">Male</option>
+            <option value="">Female</option>
+           </select>
           </div>
           <div className={style.formChild}>
             <label htmlFor="gender">Doctor Assigned</label>
@@ -106,11 +110,10 @@ const ViewPatients = ({ toggleForm }) => {
           </div>
           <br />
           <div className={`${style.addAnother} text-blue-500`}>
-            <input type="checkbox" checked={keepOpen} onChange={handleCheckboxChange}    className={`accent-blue-500 hover:accent-blue-700 focus:ring-2 focus:ring-blue-500 ${style.tick}`}/>
-            <label htmlFor="checkbox" className={` text-emsBlue`}> Add another patient</label>
+            
           </div>
           <div className='flex gap-3'>
-            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>Save</button>
+            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>Update Details</button>
             <button  className={`text-white bg-emsRed ${style.submit}`} onClick={handleClose}>Cancel</button>
             </div>
         </form>

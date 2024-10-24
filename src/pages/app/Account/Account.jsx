@@ -39,116 +39,54 @@ const Account = () => {
 };
 
 
-  const randomUsers = [
-    {
-      name: "John Doe",
-      email: "johndoe@example.com",
-      gender: "Male",
-      mobileNumber: "123-456-7890",
-      practice: "Dentistry",
-      role: "Doctor",
-      action: "View"
-    },
-    {
-      name: "Jane Smith",
-      email: "janesmith@example.com",
-      gender: "Female",
-      mobileNumber: "098-765-4321",
-      practice: "Pediatrics",
-      role: "Nurse",
-      action: "Edit"
-    },
-    {
-      name: "Robert Johnson",
-      email: "robertj@example.com",
-      gender: "Male",
-      mobileNumber: "456-123-7890",
-      practice: "Orthopedics",
-      role: "Surgeon",
-      action: "Delete"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    }
-  ];
+const randomPayments = [
+  {
+    patientName: "John Doe",
+    paymentMethod: "Credit Card",
+    paymentProvider: "Visa",
+    outstandingBalance: "₦50.00",
+    amount: "₦100.00",
+    paymentDate: "2024-10-22",
+    paymentStatus: "Paid"
+  },
+  {
+    patientName: "Jane Smith",
+    paymentMethod: "Cash",
+    paymentProvider: "N/A",
+    outstandingBalance: "₦0.00",
+    amount: "₦200.00",
+    paymentDate: "2024-10-20",
+    paymentStatus: "Paid"
+  },
+  {
+    patientName: "Robert Johnson",
+    paymentMethod: "Bank Transfer",
+    paymentProvider: "Chase",
+    outstandingBalance: "₦150.00",
+    amount: "₦350.00",
+    paymentDate: "2024-10-18",
+    paymentStatus: "Pending"
+  },
+  {
+    patientName: "Emily Clark",
+    paymentMethod: "Debit Card",
+    paymentProvider: "Mastercard",
+    outstandingBalance: "₦30.00",
+    amount: "₦120.00",
+    paymentDate: "2024-10-15",
+    paymentStatus: "Paid"
+  },
+  {
+    patientName: "Michael Lee",
+    paymentMethod: "Credit Card",
+    paymentProvider: "American Express",
+    outstandingBalance: "₦70.00",
+    amount: "₦250.00",
+    paymentDate: "2024-10-10",
+    paymentStatus: "Partial"
+  }
+];
+
 
   // setPatients(randomUsers)
   
@@ -194,7 +132,7 @@ const Account = () => {
         </div>
         <Table3
           Role={"Organization"}
-          data={randomUsers}
+          data={randomPayments}
           staff={"none"}
           patients={""}
           deleteFunction={deletePatient}
