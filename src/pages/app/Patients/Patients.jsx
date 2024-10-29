@@ -6,6 +6,7 @@ import AddPatients from "../../../modals/patientsModals/AddPatients";
 import { listPatients, deletePatient } from "../../../hooks/Api";
 import ConfirmationModal from "@src/modals/ConfirmationModal/ConfirmationModal";
 import ViewPatients from "@src/modals/patientsModals/ViewPatients";
+import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
 
 const Patients = () => {
   const [showForm, setShowForm] = useState(false);
@@ -14,6 +15,9 @@ const Patients = () => {
   const [searchText, setSearchText] = useState("");
   const [patients, setPatients] = useState([]);
   const [filteredPatients, setFilteredPatients] = useState([]);
+
+  //fetching the patient data
+  const { data: patientData, error: patientError, isLoading: patientLoading } = useFetchResourceQuery("/api/v1/patient/list");
 
   // Unified toggleForm function with confirmation when closing
   const toggleForm = () => {
@@ -37,123 +41,8 @@ const Patients = () => {
     filterData(searchValue);
   }
 };
-
-
-  const randomUsers = [
-    {
-      name: "John Doe",
-      email: "johndoe@example.com",
-      gender: "Male",
-      mobileNumber: "123-456-7890",
-      practice: "Dentistry",
-      role: "Doctor",
-      action: "View"
-    },
-    {
-      name: "Jane Smith",
-      email: "janesmith@example.com",
-      gender: "Female",
-      mobileNumber: "098-765-4321",
-      practice: "Pediatrics",
-      role: "Nurse",
-      action: "Edit"
-    },
-    {
-      name: "Robert Johnson",
-      email: "robertj@example.com",
-      gender: "Male",
-      mobileNumber: "456-123-7890",
-      practice: "Orthopedics",
-      role: "Surgeon",
-      action: "Delete"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    },
-    {
-      name: "Emily Clark",
-      email: "emilyc@example.com",
-      gender: "Female",
-      mobileNumber: "321-654-9870",
-      practice: "Neurology",
-      role: "Assistant",
-      action: "View"
-    }
-  ];
-
-  // setPatients(randomUsers)
   
-  
-
+// filter data
   const filterData = (searchValue) => {
     const filteredData = randomUsers.filter((item) => {
       // Check if firstname exists
@@ -192,16 +81,29 @@ const Patients = () => {
                 </div>
           </div>
         </div>
-        <Table2
+        {patientLoading ? (
+          <div>
+            Loading...
+          </div>
+        )
+          :
+        patientError ? (
+          <div>Failed to Load patient data</div>
+        ) 
+        :
+          (patientData.length > 0 ? (
+          <Table2
           Role={"Organization"}
-          data={randomUsers}
+          data={patientData}
           staff={"none"}
           patients={""}
           deleteFunction={deletePatient}
           refreshList={listPatients}
           runToggle={toggleconfirm}
           runView={toggleView}
-        />
+        />) :
+          <div>no data yet</div>
+     ) }
       </div>
 
       {showForm && (

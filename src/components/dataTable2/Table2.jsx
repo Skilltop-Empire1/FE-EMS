@@ -3,25 +3,12 @@ import style from './table2.module.css'
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
-import { deletePatient } from '../../hooks/Api'; 
 
 const Table2 = ({data = [], patients, staff, deleteFunction, refreshList, runToggle, runView}) => {
 
     const [action, setAction] = useState({})
   //running deleting for patients
 
-  const handleDeletePatient = async (phone) => {
-    const confirmation = window.confirm('Are you sure you want to delete this patient?');
-    if (confirmation) {
-      try {
-        const result = await deletePatient(phone);
-        console.log('Patient deleted:', result);
-        // Refresh your data or update the UI accordingly
-      } catch (error) {
-        console.error('Error deleting patient:', error.message);
-      }
-    }
-  };
 
 
     //set up the table pages

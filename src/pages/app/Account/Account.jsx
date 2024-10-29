@@ -6,6 +6,7 @@ import AddAccount from "@src/modals/AccountModals/AddAcount";
 import { listPatients, deletePatient } from "../../../hooks/Api";
 import ConfirmationModal from "@src/modals/ConfirmationModal/ConfirmationModal";
 import ViewAccount from "@src/modals/AccountModals/ViewAccount";
+import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
 
 const Account = () => {
   const [showForm, setShowForm] = useState(false);
@@ -14,6 +15,9 @@ const Account = () => {
   const [searchText, setSearchText] = useState("");
   const [patients, setPatients] = useState([]);
   const [filteredPatients, setFilteredPatients] = useState([]);
+
+  //fetching the account data
+  const {data: accountData, error: accountError, isLoading: accountLoading} = useFetchResourceQuery('/api/v1/account')
 
   // Unified toggleForm function with confirmation when closing
   const toggleForm = () => {
@@ -38,57 +42,6 @@ const Account = () => {
   }
 };
 
-
-const randomPayments = [
-  {
-    patientName: "John Doe",
-    paymentMethod: "Credit Card",
-    paymentProvider: "Visa",
-    outstandingBalance: "₦50.00",
-    amount: "₦100.00",
-    paymentDate: "2024-10-22",
-    paymentStatus: "Paid"
-  },
-  {
-    patientName: "Jane Smith",
-    paymentMethod: "Cash",
-    paymentProvider: "N/A",
-    outstandingBalance: "₦0.00",
-    amount: "₦200.00",
-    paymentDate: "2024-10-20",
-    paymentStatus: "Paid"
-  },
-  {
-    patientName: "Robert Johnson",
-    paymentMethod: "Bank Transfer",
-    paymentProvider: "Chase",
-    outstandingBalance: "₦150.00",
-    amount: "₦350.00",
-    paymentDate: "2024-10-18",
-    paymentStatus: "Pending"
-  },
-  {
-    patientName: "Emily Clark",
-    paymentMethod: "Debit Card",
-    paymentProvider: "Mastercard",
-    outstandingBalance: "₦30.00",
-    amount: "₦120.00",
-    paymentDate: "2024-10-15",
-    paymentStatus: "Paid"
-  },
-  {
-    patientName: "Michael Lee",
-    paymentMethod: "Credit Card",
-    paymentProvider: "American Express",
-    outstandingBalance: "₦70.00",
-    amount: "₦250.00",
-    paymentDate: "2024-10-10",
-    paymentStatus: "Partial"
-  }
-];
-
-
-  // setPatients(randomUsers)
   
   
 
@@ -130,16 +83,25 @@ const randomPayments = [
                 </div>
           </div>
         </div>
-        <Table3
-          Role={"Organization"}
-          data={randomPayments}
-          staff={"none"}
-          patients={""}
-          deleteFunction={deletePatient}
-          refreshList={listPatients}
-          runToggle={toggleconfirm}
-          runView={toggleView}
-        />
+        {accountLoading ? (
+          <div>Loading...</div>
+        ) :
+        accountError ? (
+          <div>Failed to load account data</div>
+        ) :
+         ( accountData.length > 0 ? (
+         <Table3
+            Role={"Organization"}
+            data={accountData}
+            staff={"none"}
+            patients={""}
+            deleteFunction={deletePatient}
+            refreshList={listPatients}
+            runToggle={toggleconfirm}
+            runView={toggleView}
+          />) :
+          <div>no data yet</div>
+          )}
       </div>
 
       {showForm && (
