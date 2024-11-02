@@ -18,6 +18,9 @@
   text-decoration: none;
   color: #7f00ff;
   margin: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .dashboardNav {
@@ -52,6 +55,9 @@
 }
 
 .link {
+  display: flex;
+  gap: 10px;
+  align-items: center ;
   text-decoration: none;
   color: #171a1f;
   font-size: 14px;
@@ -76,6 +82,8 @@
   display: flex;
   align-items: center;
 }
+
+
 
 .right {
   display: flex;

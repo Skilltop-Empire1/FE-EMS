@@ -1,9 +1,18 @@
 import React from "react";
 import html2pdf from 'html2pdf.js';
 import styles from './dashboardStyle.module.css'
+import { PersonStanding, HouseIcon, Notebook,  } from "lucide-react";
+import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
+import { NavLink } from "react-router-dom";
 
 const Dashboard = () => {
 
+  const {data: patientList, error: patientError, isLoading: patientLoading} = useFetchResourceQuery('/api/v1/patient/list')
+  const {data: doctorList, error: doctorError, isLoading: doctorLoading} = useFetchResourceQuery('/api/v1/staff/doctor/all')
+  const {data: nurseList, error: nurseError, isLoading: nurseLoading} = useFetchResourceQuery('/api/v1/staff/nurses/all')
+  const {data: appointmentList, error: appointmentError, isLoading: appointmentLoading} = useFetchResourceQuery('/api/v1/appointments')
+  const {data: departmentList, error: departmentError, isLoading: departmentLoading} = useFetchResourceQuery('api/v1/departments/list')
+  console.log(patientList)
   const handleDownloadPdf = () => {
     const element = document.getElementById('content-to-print');
     const options = {
@@ -30,20 +39,30 @@ const Dashboard = () => {
       </div>
       <div className={styles.boxes}>
         <div className={styles.box}>
-          <h2>Number of Organisations</h2>
-          <p>5</p>
+          <p><HouseIcon/></p>
+          <h2>Number of Department</h2>
+          {/* <p>{departmentList.length}</p> */}
         </div>
         <div className={styles.box}>
+          <p><PersonStanding/></p>
           <h2>Number of Nurses</h2>
+          <p>{nurseList?.nurse?.length}</p>
           <p></p>
         </div>
         <div className={styles.box}>
+          <p><PersonStanding/></p>
           <h2>Number of Doctors</h2>
-          <p>2</p>
+          <p>{doctorList?.totalDoctors}</p>
         </div>
         <div className={styles.box}>
+          <p><Notebook/></p>
+          <h2>Number of Appointment Booked</h2>
+          {/* <p>{appointmentList.length}</p> */}
+        </div>
+        <div className={styles.box}>
+          <p><PersonStanding/></p>
           <h2>Number of Patients</h2>
-          <p></p>
+          <p>{patientList?.length}</p>
         </div>
       </div>
       <div className={styles.content}>
@@ -86,15 +105,28 @@ const Dashboard = () => {
         </div>
         <div className={styles.recentDoctor}>
           <div className={styles.docList}>
-            <h2>Recently Added Doctors</h2>
+            <div className="flex justify-between ">
+            <h2 className="text-md">Recently Added Doctors</h2>
+            <NavLink to="doctors"><p className="font-light underline">See full list</p></NavLink>
+            </div>
             <ul className={styles.ul}>
-              <li>
-                <div className={styles.docIcon}>
-                  <i className="fa-solid fa-person"></i>
-                </div>
-                <span>Dr. Pankaj</span>
-                <span>Cardiologist</span>
-              </li>
+              {doctorLoading ? (
+              <div>Loading</div>
+              ) :
+              doctorError ? (
+              <div> Error loading doctors</div>
+              ) :
+              doctorList.doctors.map((doctor, idx)=> {
+                return (<li key={idx} className='my-2'>
+                  <div className={styles.docIcon}>
+                    <i className="fa-solid fa-person"></i>
+                  </div>
+                  <p>Name: {doctor.firstName} {doctor.lastName}</p>
+                  <p>Contact: {doctor.phone}</p>
+                  <p>Speciality: {doctor.departmentName}</p>
+                </li>)
+              })
+              }
               <li>
                 <div className={styles.docIcon}>
                   <i className="fa-solid fa-person"></i>

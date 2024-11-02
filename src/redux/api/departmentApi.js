@@ -23,6 +23,14 @@ const departmentApi = createApi({
         headers: { 'Content-Type': 'application/json' },
       }),
     }),
+
+
+     deleteResource: builder.mutation({
+      query: (url) => ({
+        url,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
@@ -30,6 +38,7 @@ export const {
   useFetchResourceQuery,
   useEditResourceMutation,
   usePostResourceMutation,
+  useDeleteResourceMutation,
 } = departmentApi;
 
 export default departmentApi;

@@ -53,6 +53,19 @@
 
 .formChild label {
     font-size: 16px;
+    font-weight: bold;
+}
+.formChild p {
+    font-weight: 200;
+}
+
+.formChild input, select {
+    font-weight: 200;
+}
+
+.addInfoTop h3 {
+    font-weight: bold;
+    font-size: 25px;
 }
 
 .input {
@@ -77,7 +90,7 @@
 .submit {
     width: 150px;
     margin-top: 40px;
-    padding: 20px 10px;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,3 +105,13 @@
     
 }
 
+
+/* This class will hide elements on print */
+.noPrint {
+    display: none;
+  }
+  
+
+  
+
+  

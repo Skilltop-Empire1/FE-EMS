@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import style from './table3.module.css'
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
 import { deletePatient } from '../../hooks/Api'; 
 
-const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runToggle, runView}) => {
+const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runToggle, runView, update, runInfo}) => {
 
     const [action, setAction] = useState({})
+    const actionRef = useRef(null)
   //running deleting for patients
 
   const handleDeletePatient = async (phone) => {
@@ -22,6 +23,20 @@ const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
       }
     }
   };
+
+
+    //close action div
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (actionRef.current && !actionRef.current.contains(event.target)) {
+        setAction({}); // Close all action divs
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
 
     //set up the table pages
@@ -41,13 +56,7 @@ const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
       setCurrentPage(page);
     };
 
-    //run delete 
-    const handleDelete = async (id) => {
-      console.log("Deleting ID:", id);
-      await deleteFunction(id);
-      //to refresh the data after deletion
-      refreshList()
-  };
+  
   
 
 
@@ -115,44 +124,33 @@ const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
           <tbody className={style.tbody}>
            {currentData.map((item, idx) => (
              <tr key={idx} style={{display : patients}}>
-                <td className={style.td}>{`${item.patientName}`}</td>
+                <td className={style.td}>{`${item.patName}`}</td>
                 <td className={style.td}>{item.paymentMethod}</td>
                 <td className={style.td}>{item.paymentProvider}</td>
                 <td className={style.td}>{item.amount}</td>
-                <td className={style.td}>{item.outstandingBalance}</td>
-                <td className={style.td}>{item.paymentDate}</td>
+                <td className={style.td}>{item.outstandBal}</td>
+                <td className={style.td}>{item.createdAt.substr(0,10)}</td>
                 <td className={style.td}>{item.paymentStatus}</td>
                 <td className={`${style.td} `}>
-               {/* <div className={style.mamaIcons}>
-                 <div className={style.actionIcons}>
-                   <FaEye />
-                 </div >
-                 <div className={style.actionIcons}>
-                  <MdModeEditOutline />
-                 </div>
-                 <div className={style.actionIcons} onClick={() => handleDeletePatient(item.phone)}>
-                  <RiDeleteBinLine /> 
-                 </div>
-               </div> */}
               <div  onClick={() => openAction(idx)} className={style.actionMama}>
               ...
               </div>
 
-              { action[idx] && <div className={`${style.action}`}>
-                <p>View</p>
+              { action[idx] && <div className={`${style.action}`}  ref={actionRef}>
+                <p onClick={()=> runInfo(item)}>View</p>
                 <hr />
-                <p onClick={runView}>Edit</p>
+                <p onClick={()=>runView(item)}>Edit</p>
                 <hr />
                 <p>Print</p>
                 <hr />
-                <p onClick={runToggle}>Delete</p>
+                <p onClick={()=>{console.log("Account ID to delete:", item.acctId); runToggle(item.acctId)}}>Delete</p>
                </div>}
              </td>
            </tr>
            ))}
             {currentData.map((item, idx) => (
              <tr key={idx} style={{display: staff}}>
-                <td className={style.td}>{`${item.firstName} ${item.lastName}`}</td>
+                <td className={style.td}>{`${item.patName} ${item.lastName}`}</td>
                 <td className={style.td}>{item.email}</td>
                 <td className={style.td}>{item.gender}</td>
                 <td className={style.td}>{item.mobileNumber}</td>

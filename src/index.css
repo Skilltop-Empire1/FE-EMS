@@ -24,3 +24,9 @@ select,
 textarea {
   outline: none;
 }
+
+@media print {
+  #printable-content {
+    display: flex;
+  }
+}

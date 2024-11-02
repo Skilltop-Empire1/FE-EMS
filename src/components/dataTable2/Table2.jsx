@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState,  useEffect, useRef } from 'react';
 import style from './table2.module.css'
 import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
 
-const Table2 = ({data = [], patients, staff, deleteFunction, refreshList, runToggle, runView}) => {
+const Table2 = ({data = [], patients, staff, deleteFunction, refreshList, runToggle, runView, runInfo}) => {
 
     const [action, setAction] = useState({})
+    const actionRef= useRef(null)
   //running deleting for patients
 
 
@@ -35,6 +36,20 @@ const Table2 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
       //to refresh the data after deletion
       refreshList()
   };
+
+
+   //close action div
+   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (actionRef.current && !actionRef.current.contains(event.target)) {
+        setAction({}); // Close all action divs
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   
 
 
@@ -102,12 +117,12 @@ const Table2 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
           <tbody className={style.tbody}>
            {currentData.map((item, idx) => (
              <tr key={idx} style={{display : patients}}>
-                <td className={style.td}>{`${item.name}`}</td>
-                <td className={style.td}>{item.mobileNumber}</td>
+                <td className={style.td}>{`${item.firstName} ${item.lastName}`}</td>
+                <td className={style.td}>{item.phone}</td>
                 <td className={style.td}>{item.email}</td>
                 <td className={style.td}>{item.gender}</td>
-                <td className={style.td}>{item.gender}</td>
-                <td className={style.td}>{item.role}</td>
+                <td className={style.td}>{item.dateOfBirth}</td>
+                <td className={style.td}>{item.lastVisit?.substr(0,10)}</td>
                 <td className={style.td}>{item.organization}</td>
                 <td className={`${style.td} `}>
                {/* <div className={style.mamaIcons}>
@@ -125,14 +140,14 @@ const Table2 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
               ...
               </div>
 
-              { action[idx] && <div className={`${style.action}`}>
-                <p>View</p>
+              { action[idx] && <div className={`${style.action}`}  ref={actionRef}>
+                <p onClick={()=>runInfo(item)}>View</p>
                 <hr />
-                <p onClick={runView}>Edit</p>
+                <p onClick={()=>runView(item)}>Edit</p>
                 <hr />
                 <p>Print</p>
                 <hr />
-                <p onClick={runToggle}>Delete</p>
+                <p onClick={()=>runToggle(item.patId)}>Delete</p>
                </div>}
              </td>
            </tr>

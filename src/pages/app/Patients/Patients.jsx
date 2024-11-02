@@ -3,124 +3,111 @@ import style from "./patientStyle.module.css";
 import Button from "../../../components/Button/Button";
 import Table2 from "../../../components/dataTable2/Table2";
 import AddPatients from "../../../modals/patientsModals/AddPatients";
-import { listPatients, deletePatient } from "../../../hooks/Api";
 import ConfirmationModal from "@src/modals/ConfirmationModal/ConfirmationModal";
 import ViewPatients from "@src/modals/patientsModals/ViewPatients";
-import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
+import { useFetchResourceQuery, useDeleteResourceMutation } from "@src/redux/api/departmentApi";
+import PatientInfo from "@src/modals/patientsModals/PatientInfo";
 
 const Patients = () => {
   const [showForm, setShowForm] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showView, setShowView] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [patients, setPatients] = useState([]);
   const [filteredPatients, setFilteredPatients] = useState([]);
+  const [patientToDelete, setPatientToDelete] = useState(null);
+  const [patientToUpdate, setPatientToUpdate] = useState(null);
+  const [patientToView, setPatientToView] = useState(null);
 
-  //fetching the patient data
-  const { data: patientData, error: patientError, isLoading: patientLoading } = useFetchResourceQuery("/api/v1/patient/list");
+  const { data: patientData = [], error: patientError, isLoading: patientLoading } = useFetchResourceQuery("/api/v1/patient/list");
+  const [deleteResource] = useDeleteResourceMutation();
 
-  // Unified toggleForm function with confirmation when closing
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  }
-  const toggleconfirm = () => {
-    setShowConfirm(!showConfirm);
+  useEffect(() => {
+    // Initialize filteredPatients with patientData when data is fetched
+    setFilteredPatients(patientData);
+  }, [patientData]);
+
+  const handlePatientDelete = (id) => {
+    setPatientToDelete(id);
+    setShowConfirm(true);
   };
-   const toggleView = () => {
+
+  const handleDelete = async () => {
+    try {
+      await deleteResource(`/api/v1/patient/delete/${patientToDelete}`).unwrap();
+      alert("Patient details deleted successfully");
+      setShowConfirm(false);
+      setFilteredPatients(filteredPatients.filter(patient => patient.id !== patientToDelete));
+    } catch (err) {
+      console.error("Failed to delete patient details:", err);
+    }
+  };
+
+  const toggleForm = () => setShowForm(!showForm);
+  const toggleConfirm = () => setShowConfirm(!showConfirm);
+  const toggleView = (patient) => {
+    setPatientToUpdate(patient);
     setShowView(!showView);
   };
+  const toggleInfo = (patient) => {
+    setPatientToView(patient);
+    setShowInfo(!showInfo);
+  };
 
+  const handleSearch = (event) => {
+    const searchValue = event.target.value.toLowerCase();
+    setSearchText(searchValue);
 
-
- const handleSearch = (event) => {
-  const searchValue = event.target.value;
-  setSearchText(searchValue);
-  if (searchValue === "") {
-    setFilteredPatients(patients); // Reset filtered list when search is cleared
-  } else {
-    filterData(searchValue);
-  }
-};
-  
-// filter data
-  const filterData = (searchValue) => {
-    const filteredData = randomUsers.filter((item) => {
-      // Check if firstname exists
-      const matchesSearch = item?.name?.toLowerCase().includes(
-        searchText.toLowerCase()
+    if (searchValue === "") {
+      setFilteredPatients(patientData); // Reset to original data when search is cleared
+    } else {
+      const filteredData = patientData.filter((patient) =>
+        patient.firstName?.toLowerCase().includes(searchValue)
       );
-      return matchesSearch;
-    });
-    setFilteredPatients(filteredData);
+      setFilteredPatients(filteredData);
+    }
   };
 
   return (
     <div className={style.body}>
-      <div>
-        <div className={style.top}>
-          <h2 className={style.header}>Patients</h2>
-         
-        </div>
+      <div className={style.top}>
+        <h2 className={style.header}>Patients</h2>
       </div>
       <div className={style.info}>
-        <div>
-          <div className={style.work}>
-              <input
-                type="text"
-                placeholder="Search Patient"
-                className={style.filter}
-                value={searchText}
-                onChange={handleSearch}
-              />
-              <div className={style.sticky}>
-                  <Button
-                    onClick={toggleForm}
-                    disabled={showForm}
-                    add={"Add Patient"}
-                  />
-                </div>
-          </div>
+        <div className={style.work}>
+          <input
+            type="text"
+            placeholder="Search Patient"
+            className={style.filter}
+            value={searchText}
+            onChange={handleSearch}
+          />
+          <Button onClick={toggleForm} disabled={showForm} add="Add Patient" />
         </div>
+
         {patientLoading ? (
-          <div>
-            Loading...
-          </div>
-        )
-          :
-        patientError ? (
+          <div>Loading...</div>
+        ) : patientError ? (
           <div>Failed to Load patient data</div>
-        ) 
-        :
-          (patientData.length > 0 ? (
+        ) : filteredPatients.length > 0 ? (
           <Table2
-          Role={"Organization"}
-          data={patientData}
-          staff={"none"}
-          patients={""}
-          deleteFunction={deletePatient}
-          refreshList={listPatients}
-          runToggle={toggleconfirm}
-          runView={toggleView}
-        />) :
-          <div>no data yet</div>
-     ) }
+            Role="Organization"
+            data={filteredPatients}
+            staff="none"
+            patients=""
+            runToggle={handlePatientDelete}
+            runView={toggleView}
+            runInfo={toggleInfo}
+          />
+        ) : (
+          <div>No data yet</div>
+        )}
       </div>
 
-      {showForm && (
-        <div>
-          <AddPatients toggleForm={toggleForm} />
-        </div>
-      )}
-
-        { showConfirm && (
-          <ConfirmationModal page={'Patient'} toggle={toggleconfirm}/>
-        )}
-
-        {showView && (
-          <div>
-            <ViewPatients toggleForm={toggleView}/>
-          </div>
-        )}
+      {showForm && <AddPatients toggleForm={toggleForm} />}
+      {showConfirm && <ConfirmationModal page="Patient" toggle={toggleConfirm} runDelete={handleDelete} />}
+      {showView && <ViewPatients toggleForm={toggleView} patient={patientToUpdate} />}
+      {showInfo && <PatientInfo toggleInfo={toggleInfo} infoData={patientToView} />}
     </div>
   );
 };

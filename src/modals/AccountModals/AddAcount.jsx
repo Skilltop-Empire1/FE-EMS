@@ -1,127 +1,195 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import style from './addAccountStyle.module.css'
-import { createPatient } from '../../hooks/Api';
+import { usePostResourceMutation } from '@src/redux/api/departmentApi';
+import { useFetchResourceQuery } from '@src/redux/api/departmentApi';
 
 const AddAccount = ({ toggleForm }) => {
     const [keepOpen, setKeepOpen] = useState(false);
+    const [postResource, { isSuccess, isLoading, error }] = usePostResourceMutation()
+    const { data: patientData, error: patientError, isLoading: patientLoading } = useFetchResourceQuery('/api/v1/patient/list')
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedPatient, setSelectedPatient] = useState(null);
+    const [filteredOptions, setFilteredOptions] = useState([]);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    // Filter patient options
+    useEffect(() => {
+        if (patientData) setFilteredOptions(patientData);
+    }, [patientData]);
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        setFilteredOptions(
+            patientData.filter((option) =>
+                option.firstName.toLowerCase().includes(value.toLowerCase())
+            )
+        );
+    };
+
+    const handleOptionSelect = (option) => {
+        setSelectedPatient(option);
+        setSearchTerm(`${option.firstName} ${option.lastName}`);
+        setIsDropdownOpen(false);
+    };
 
     const handleCheckboxChange = (e) => {
-      setKeepOpen(e.target.checked);
+        setKeepOpen(e.target.checked);
     };
 
     const handleSubmit = async (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
-      const patientData = {
-        firstName: e.target.firstName.value,
-        lastName: e.target.lastName.value,
-        address: e.target.address.value,
-        email: e.target.email.value,
-        educationQualification: e.target.educationQualification.value,
-        phone: e.target.phone.value,
-        gender: e.target.gender.value,
-        dateOfBirth: e.target.dateOfBirth.value, 
-        role: e.target.organization.value,
-      };
+        const accountData = {
+            // acctId: e.target.acctId.value,
+            patName: selectedPatient ? `${selectedPatient.firstName}  ${selectedPatient.lastName}` : '',
+            patId: selectedPatient ? selectedPatient.patId : '',
+            paymentMethod: e.target.paymentMethod.value,
+            paymentProvider: e.target.paymentProvider.value,
+            outstandBal: parseFloat(e.target.outstandBal.value),
+            amount: parseFloat(e.target.amount.value),
+            total: parseFloat(e.target.outstandBal.value + e.target.amount.value),
+            paymentRefNo: e.target.paymentRefNo.value,
+            address: e.target.address.value,
+            desc: e.target.description.value,
+            treatmentType: e.target.treatmentType.value,
+            paymentStatus: e.target.paymentStatus.value,
+            nextPayDueDate: e.target.nextPayDueDate.value,
+        };
 
-      console.log('Form Data:', patientData); // Correct logging here
+        console.log('Form Data:', accountData);
 
-      try {
-        const result = await createPatient(patientData);
-        console.log('Patient created successfully:', result);
-        alert('Patient created successfully')
-        e.target.reset();
+        try {
+            const result = await postResource({
+                url: '/api/v1/account/create',
+                method: 'POST',
+                data: accountData,
+            }).unwrap();
+            console.log('Account created successfully:', result);
+            alert('Account created successfully');
+            e.target.reset();
+            window.location.reload()
+            if (!keepOpen) {
+                toggleForm();
+            }
 
-        // Clear form if `keepOpen` is unchecked
-        if (!keepOpen) {
-          toggleForm(); // Close form if not keeping open
+        } catch (error) {
+            console.error('Error creating account:', error.message);
+            alert(`Error creating account: ${error.message}`);
         }
-
-      } catch (error) {
-        console.error('Error creating patient:', error.message);
-        alert(`Error creating patient: ${error.message}`);
-      }
     };
 
-    // Handle close confirmation only when "X" button is clicked
     const handleClose = (e) => {
-      e.preventDefault();  // Prevent any default behavior from the button
-      const confirmation = window.confirm('Are you sure you want to close the form?');
-      if (confirmation) {
-        toggleForm(); // Close form if confirmed
-      }
+        e.preventDefault();
+        const confirmation = window.confirm('Are you sure you want to close the form?');
+        if (confirmation) {
+            toggleForm();
+        }
     };
 
-  return (
-    <div className={` fixed inset-0 flex justify-center items-center  bg-gray-800 bg-opacity-50 z-40`}>
-        <div className={`${style.addInfo} fixed  bg-gray-800 bg-opacity-50 z-50`}>
-        <div className={style.addInfoTop}>
-          <h3>Add account</h3>
-          {/* Update the close button to call handleClose */}
-          <button onClick={handleClose} className={style.close}>X</button>
-        </div>
-        <form className={style.form} onSubmit={handleSubmit}>
-          <div className={style.formChild}>
-            <label htmlFor="firstName">Firstname</label>
-            <input type="text" id="name" name="firstName" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="lastName">Lastname</label>
-            <input type="text" id="name" name="lastName" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="address">Address</label>
-            <input type="text" id="address" name="address" className={style.input} />
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="email">Payment Method</label>
-            <input type="email" id="email" name="email" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="educationQualification">Next Payment Date</label>
-            <input type="date" id="qualification" name="educationQualification" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="phone">Payment Provider</label>
-            <input type="number" id="number" name="phone" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="educationQualification">Payment Reference Number</label>
-            <input type="text" id="qualification" name="educationQualification" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="gender">Amount paid</label>
-            <input type="text" id="gender" name="gender" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="gender">Oustanding Balance</label>
-            <input type="text" id="gender" name="gender" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="dateOfBirth" >Service/Treatment Type</label>
-            <input type="text" id="date" name="dateOfBirth" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="organization">Payment Status</label>
-            <input type="text" id="role" name="organization" className={style.input}/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="organization">Description</label>
-            <input type="text" id="role" name="organization" className={style.input}/>
-          </div>
-        
-          <div className={`${style.addAnother} text-blue-500`}>
-            <input type="checkbox" checked={keepOpen} onChange={handleCheckboxChange}    className={`accent-blue-500 hover:accent-blue-700 focus:ring-2 focus:ring-blue-500 ${style.tick}`}/>
-            <label htmlFor="checkbox" className={` text-emsBlue`}> Create another account</label>
-          </div>
-          <div className='flex gap-3'>
-            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>Save</button>
-            <button  className={`text-white bg-emsRed ${style.submit}`} onClick={handleClose}>Cancel</button>
+    return (
+        <div className={` fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-40`}>
+            <div className={`${style.addInfo} fixed bg-gray-800 bg-opacity-50 z-50`}>
+                <div className={style.addInfoTop}>
+                    <h3>Add Account</h3>
+                    <button onClick={handleClose} className={style.close}>X</button>
+                </div>
+                <form className={style.form} onSubmit={handleSubmit}>
+                    
+                    <div className={style.formChild}>
+                        <label htmlFor="searchTerm">Patient Name</label>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                placeholder='Search patient'
+                                className={`${style.input}`}
+                                required
+                            />
+                            {isDropdownOpen && (
+                                <ul className="absolute w-full max-h-40 overflow-y-auto bg-white border border-gray-300 rounded-lg mt-1">
+                                    {filteredOptions?.length > 0 ? (
+                                        filteredOptions.map((option, index) => (
+                                            <li
+                                                key={index}
+                                                onClick={() => handleOptionSelect(option)}
+                                                className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                                            >
+                                                {option.firstName} {option.lastName}
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <li className="px-4 py-2 text-gray-500">No patients found</li>
+                                    )}
+                                </ul>
+                            )}
+                        </div>
+                    </div>
+                    <div className={style.formChild}>
+                      <label htmlFor="address">Address</label>
+                      <input type="text" id="address" name="address" className={style.input} />
+                    </div>
+                    <div className={style.formChild}>
+                        <label htmlFor="paymentMethod">Payment Method</label>
+                        <select id="paymentMethod" name="paymentMethod" className={style.input} required>
+                            <option value="">Select Payment Method</option>
+                            <option value="cash">Cash</option>
+                            <option value="POS">POS</option>
+                            <option value="Transfer">Transfer</option>
+                            <option value="HMO">HMO</option>
+                        </select>
+                    </div>
+                    <div className={style.formChild}>
+                        <label htmlFor="nextPayDueDate">Next Payment Date</label>
+                        <input type="date" id="nextPayDueDate" name="nextPayDueDate" className={style.input} required />
+                    </div>
+                    <div className={style.formChild}>
+                        <label htmlFor="paymentProvider">Payment Provider</label>
+                        <input type="text" id="paymentProvider" name="paymentProvider" className={style.input} required />
+                    </div>
+                    <div className={style.formChild}>
+                      <label htmlFor="paymentRefNo">Payment Reference Number</label>
+                      <input type="text" id="paymentRefNo" name="paymentRefNo" className={style.input}/>
+                    </div>
+                    <div className={style.formChild}>
+                        <label htmlFor="amount">Amount Paid</label>
+                        <input type="number" id="amount" name="amount" className={style.input} required />
+                    </div>
+                    <div className={style.formChild}>
+                        <label htmlFor="outstandBal">Outstanding Balance</label>
+                        <input type="number" id="outstandBal" name="outstandBal" className={style.input} required />
+                    </div>
+                    <div className={style.formChild}>
+                        <label htmlFor="treatmentType">Service/Treatment Type</label>
+                        <input type="text" id="treatmentType" name="treatmentType" className={style.input} required />
+                    </div>
+                    <div className={style.formChild}>
+                        <label htmlFor="paymentStatus">Payment Status</label>
+                        <select id="paymentStatus" name="paymentStatus" className={style.input} required>
+                            <option value="">Select Payment Status</option>
+                            <option value="complete">Complete</option>
+                            <option value="incomplete">Incomplete</option>
+                        </select>
+                    </div>
+                    <div className={style.formChild}>
+                      <label htmlFor="description">Description</label>
+                      <input type="text" id="description" name="description" className={style.input}/>
+                    </div>
+                    <br />
+                    <div className={style.addAnother}>
+                        <input type="checkbox" checked={keepOpen} onChange={handleCheckboxChange} className="accent-blue-500 hover:accent-blue-700 focus:ring-2 focus:ring-blue-500" />
+                        <label className="text-emsBlue"> Create another account</label>
+                    </div>
+                    <div className='flex gap-3'>
+                        <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Saving' : 'Save'}</button>
+                        <button onClick={handleClose} className={`text-white bg-emsRed ${style.submit}`}>Cancel</button>
+                    </div>
+                </form>
             </div>
-        </form>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default AddAccount;
