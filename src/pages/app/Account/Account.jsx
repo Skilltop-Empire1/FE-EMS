@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import style from "./accountStyle.module.css";
 import Button from "../../../components/Button/Button";
-import Table3 from "@src/components/dataTable3/Table3";
-import AddAccount from "@src/modals/AccountModals/AddAcount";
-import ConfirmationModal from "@src/modals/ConfirmationModal/ConfirmationModal";
-import ViewAccount from "@src/modals/AccountModals/ViewAccount";
-import { useFetchResourceQuery, useDeleteResourceMutation } from "@src/redux/api/departmentApi";
-import AccountInfo from "@src/modals/AccountModals/AccountInfo";
+import Table3 from "src/components/dataTable3/Table3";
+import AddAccount from "src/modals/AccountModals/AddAcount";
+import ConfirmationModal from "src/modals/ConfirmationModal/ConfirmationModal";
+import ViewAccount from "src/modals/AccountModals/ViewAccount";
+import { useFetchResourceQuery, useDeleteResourceMutation } from "src/redux/api/departmentApi";
+import AccountInfo from "src/modals/AccountModals/AccountInfo";
 
 const Account = () => {
   const [showForm, setShowForm] = useState(false);

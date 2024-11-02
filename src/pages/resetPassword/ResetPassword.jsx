@@ -12,7 +12,6 @@ function ResetPassword() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!email || !newPassword || !confirmPassword) {
       setError("Please fill in all fields.");
       return;
@@ -26,7 +25,6 @@ function ResetPassword() {
       return;
     }
 
-    // Here you would typically handle the reset password logic, like calling an API
     console.log("Reset password for:", email);
     console.log("New password:", newPassword);
 

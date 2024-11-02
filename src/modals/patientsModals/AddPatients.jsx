@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import style from './addPatientStyle.module.css'
 import { createPatient } from '../../hooks/Api';
-import { useFetchResourceQuery, usePostResourceMutation } from '@src/redux/api/departmentApi';
+import { useFetchResourceQuery, usePostResourceMutation } from 'src/redux/api/departmentApi';
 
 const AddPatients = ({ toggleForm }) => {
     const{data: departmentData = [], isLoading: departmentLoading, error: departmentError} = useFetchResourceQuery('/api/v1/department/list')

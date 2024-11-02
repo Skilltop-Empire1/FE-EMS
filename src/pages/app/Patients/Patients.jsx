@@ -3,10 +3,10 @@ import style from "./patientStyle.module.css";
 import Button from "../../../components/Button/Button";
 import Table2 from "../../../components/dataTable2/Table2";
 import AddPatients from "../../../modals/patientsModals/AddPatients";
-import ConfirmationModal from "@src/modals/ConfirmationModal/ConfirmationModal";
-import ViewPatients from "@src/modals/patientsModals/ViewPatients";
-import { useFetchResourceQuery, useDeleteResourceMutation } from "@src/redux/api/departmentApi";
-import PatientInfo from "@src/modals/patientsModals/PatientInfo";
+import ConfirmationModal from "src/modals/ConfirmationModal/ConfirmationModal";
+import ViewPatients from "src/modals/patientsModals/ViewPatients";
+import { useFetchResourceQuery, useDeleteResourceMutation } from "src/redux/api/departmentApi";
+import PatientInfo from "src/modals/patientsModals/PatientInfo";
 
 const Patients = () => {
   const [showForm, setShowForm] = useState(false);
