@@ -4,10 +4,10 @@ import { table } from "./data";
 import { MODAL_TYPES, useModal } from "../../../context/ModalContext";
 import Table from "../../../components/dataTable/Table";
 import useFetchRequest from "../../../hooks/fetchRequestApi";
+import SearchQuery from "../../../components/SearchQuery/SearchQuery";
 
 function Department() {
-  const URL = "http://localhost:5000/organisationData";
-  // const URL =     " https://be-ems-production-2721.up.railway.app/api/v1/Department/list"
+  const URL = "/departments/create";
 
   const { data: fetchedData, loading, error } = useFetchRequest(URL);
   const [data, setData] = useState([]);
@@ -23,40 +23,17 @@ function Department() {
     }
   }, [fetchedData, loading, error]);
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const value = event.target.value;
-    setQuery(value);
-
-    if (!value) {
-      setData(fetchedData);
-      console.log("Fetched data", fetchedData);
-      return;
-    }
-
-    const filteredData = fetchedData.filter((item) =>
-      item.username.toLowerCase().includes(value.toLowerCase())
-    );
-    setData(filteredData);
-    setCurrentPage(1);
-  };
-
   return (
     <div className={style.container}>
       <div>
-        <h3 className={style.header}>Department Name</h3>
+        <h3 className={style.header}>Department</h3>
       </div>
-      <div className={style.searchContainer}>
-        <input
-          onChange={handleSearch}
-          type="text"
-          placeholder="Enter name to search"
-          value={query}
-        />
-        <button onClick={() => openModal(MODAL_TYPES.TYPE4)} type="button">
-          Add Department
-        </button>
-      </div>
+      <SearchQuery
+        setQuery={setQuery}
+        setData={setData}
+        setCurrentPage={setCurrentPage}
+        query={query}
+      />
       <Table
         headers={table}
         data={data}

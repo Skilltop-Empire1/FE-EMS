@@ -64,6 +64,25 @@
   color: #7f00ff;
 }
 
+.dropdownMenu {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdownItem:hover {
+  background-color: #ecf0fa;
+}
+
 .img2 {
   width: 50px;
   aspect-ratio: 1/1;
@@ -75,8 +94,6 @@
   display: flex;
   align-items: center;
 }
-
-
 
 .right {
   display: flex;

@@ -19,3 +19,11 @@ select,
 textarea {
   outline: none;
 }
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
