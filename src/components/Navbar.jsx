@@ -51,7 +51,7 @@ const Navbar = () => {
     <>
       <nav className={style.dashboardNav}>
         <div className={style.left}>
-          <NavLink to="/">
+          <NavLink to="/app">
             <img src={Logo} alt="" className={style.img} />
           </NavLink>
           <ul className={style.ull}>
@@ -60,14 +60,14 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
-                to="/"
+                to="/app"
               >
                 <MdHome /> Home
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/organization"
+                to="/app/organization"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
@@ -77,7 +77,7 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink
-                to="/staff"
+                to="/app/staff"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
@@ -87,7 +87,7 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink
-                to="/patients"
+                to="/app/patients"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
@@ -106,16 +106,16 @@ const Navbar = () => {
                 </span>
                 {isAppointmentDropdown && (
                   <div className={style.dropdownMenu}>
-                    <Link to="/appointments" className={style.dropdownItem}>
+                    <Link to="/app/appointments" className={style.dropdownItem}>
                       Appointment
                     </Link>
-                    <Link to="/admission" className={style.dropdownItem}>
+                    <Link to="/app/admission" className={style.dropdownItem}>
                       Admission
                     </Link>
-                    <Link to="/consultation" className={style.dropdownItem}>
+                    <Link to="/app/consultation" className={style.dropdownItem}>
                       Consultation
                     </Link>
-                    <Link to="/discharge" className={style.dropdownItem}>
+                    <Link to="/app/discharge" className={style.dropdownItem}>
                       Discharge
                     </Link>
                   </div>
@@ -124,7 +124,7 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink
-                to="/account"
+                to="/app/account"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
@@ -134,7 +134,7 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink
-                to="/reports"
+                to="/app/reports"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
@@ -147,14 +147,14 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
-                to="/settings"
+                to="/app/settings"
               >
                 <IoMdSettings /> Settings
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/help"
+                to="/app/help"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }

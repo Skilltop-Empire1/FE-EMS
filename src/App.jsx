@@ -7,6 +7,7 @@ import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
 
+// Lazy load app pages
 const AppLayout = lazy(() => import("./pages/app/AppLayout"));
 const Dashboard = lazy(() => import("./pages/app/Dashboard/Dashboard"));
 const Settings = lazy(() => import("./pages/app/SettingsPage/Settings"));
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
   { path: "/forgot-password", element: <ForgotPassword /> },
   { path: "/reset-password", element: <ResetPassword /> },
   {
-    path: "app",
+    path: "/app",
     element: (
       <ProtectedRoute>
         <Suspense fallback={<Loader />}>

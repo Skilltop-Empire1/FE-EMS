@@ -1,23 +1,32 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../redux/api/authApi"; // Adjust the import path as necessary
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); // Change username to email
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!username || !password) {
-      setError("Please enter both username and password.");
+    if (!email || !password) {
+      setError("Please enter both email and password."); // Update error message
       return;
     }
 
-    console.log("Logging in:", { username, password });
-    setError("");
+    try {
+      const result = await login({ email, password }).unwrap(); // Use email here
+
+      localStorage.setItem("user", JSON.stringify(result));
+
+      navigate("/app");
+    } catch (err) {
+      setError(err.data?.message || "Login failed. Please try again.");
+    }
   };
 
   return (
@@ -26,14 +35,16 @@ function Login() {
       {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
-          <label htmlFor="username" className={styles.label}>
-            Username
+          <label htmlFor="email" className={styles.label}>
+            {" "}
+            {/* Change label for email */}
+            Email
           </label>
           <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email" // Change input type to email
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
             className={styles.input}
           />
@@ -51,8 +62,8 @@ function Login() {
             className={styles.input}
           />
         </div>
-        <button type="submit" className={styles.button}>
-          Login
+        <button type="submit" className={styles.button} disabled={isLoading}>
+          {isLoading ? "Logging in..." : "Login"}
         </button>
         <p
           onClick={() => navigate("/forgot-password")}

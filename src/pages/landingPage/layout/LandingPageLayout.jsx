@@ -1,4 +1,11 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faFacebook,
+  faTwitter,
+  faInstagram,
+  faLinkedin,
+} from "@fortawesome/free-brands-svg-icons"; // Import Font Awesome icons
 import style from "./LandingPageLayout.module.css";
 
 function LandingPageLayout() {
@@ -26,7 +33,6 @@ function LandingPageLayout() {
         <section className={style.serviceSection}>
           <div className={style.serviceItem}>
             <div>
-              {" "}
               <img src="/staff.svg" alt="Staff Management" />
             </div>
             <div>
@@ -39,7 +45,6 @@ function LandingPageLayout() {
           </div>
           <div className={style.serviceItem}>
             <div>
-              {" "}
               <img src="/patient.svg" alt="Patient Records" />
             </div>
             <div>
@@ -52,7 +57,6 @@ function LandingPageLayout() {
           </div>
           <div className={style.serviceItem}>
             <div>
-              {" "}
               <img src="/appointment.svg" alt="Appointments" />
             </div>
             <div>
@@ -69,10 +73,10 @@ function LandingPageLayout() {
             <img src="/dashboard.svg" alt="Dashboard" />
           </div>
           <div className={style.performanceContent}>
-            <h2>
+            <h3>
               Track your health organization's performance with our intelligent
               system.
-            </h2>
+            </h3>
             <p>
               We provide valuable insights and strategies for optimizing
               healthcare operations and ensuring improved patient outcomes.
@@ -85,21 +89,23 @@ function LandingPageLayout() {
           </div>
         </section>
         <section className={style.insightSection}>
-          <div className={style.insightContent}>
-            <h3>Gain quick insights into patient and healthcare activity</h3>
-            <p>
-              Take immediate actions to improve efficiency. We provide
-              data-driven trends and strategies to enhance healthcare
-              operations, ensuring your decisions are data-driven.
-            </p>
-            <a href="" className={style.contactLink}>
-              <strong>
-                Contact us <span>&rarr;</span>
-              </strong>
-            </a>
-          </div>
-          <div className={style.insightImage}>
-            <img src="/homeView.svg" alt="Home View" />
+          <div className={style.insightContainer}>
+            <div className={style.insightContent}>
+              <h3>Gain quick insights into patient and healthcare activity</h3>
+              <p>
+                Take immediate actions to improve efficiency. We provide
+                data-driven trends and strategies to enhance healthcare
+                operations, ensuring your decisions are data-driven.
+              </p>
+              <a href="" className={style.contactLink}>
+                <strong>
+                  Contact us <span>&rarr;</span>
+                </strong>
+              </a>
+            </div>
+            <div className={style.insightImage}>
+              <img src="/homeView.svg" alt="Home View" />
+            </div>
           </div>
         </section>
         <section className={style.solutionsSection}>
@@ -183,6 +189,36 @@ function LandingPageLayout() {
         </section>
       </main>
       <footer className={style.footer}>
+        <div className={style.socialMedia}>
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faFacebook} size="2x" />
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faTwitter} size="2x" />
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faLinkedin} size="2x" />
+          </a>
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faInstagram} size="2x" />
+          </a>
+        </div>
         <p>All rights reserved Skilltop Empire, {currentYear}.</p>
       </footer>
     </>

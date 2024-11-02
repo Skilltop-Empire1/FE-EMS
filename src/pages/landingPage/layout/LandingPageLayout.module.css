@@ -78,29 +78,192 @@
 .performanceSection {
   display: flex;
   flex-direction: row;
-  padding: 0 130px;
-  gap: 80px;
+  padding: 0 8.125rem;
+  gap: 5rem;
 }
 
 .performanceSection img {
+  width: 520px;
+  height: 424px;
+}
+
+.performanceContent,
+.solutionsSection h3 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 2.25rem;
+  letter-spacing: -0.075rem;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.performanceContent p {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 2rem;
+  letter-spacing: -0.0125rem;
+  text-align: left;
+  margin-bottom: 2.25rem;
+}
+
+.insightSection {
+  padding: 6.25rem 10.25rem;
+}
+
+.insightContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 5rem;
+}
+
+.insightContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.insightContent h3 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+  letter-spacing: -0.075rem;
+  text-align: left;
+}
+
+.insightContent,
+.solutionsSection p {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.875rem;
+  letter-spacing: -0.0125rem;
+  text-align: left;
+}
+
+.insightImage img {
   width: 32.5rem;
   height: 26.5rem;
 }
 
-.performanceContent h2 {
-  font-size: 30px;
-  font-weight: 700;
-  line-height: 36px;
-  letter-spacing: -1.2000000476837158px;
-  text-align: left;
-  margin-bottom: 16px;
+.solutionsSection {
+  display: flex;
+  flex-direction: row;
+  padding: 0 8.125rem;
+  gap: 5rem;
 }
 
-.performanceContent p {
-  font-size: 20px;
+.solutionsSection img {
+  width: 32.5rem;
+  height: 26.5rem;
+}
+
+.solutionsContent a {
+  margin-top: 5rem;
+}
+
+.testimonialsSection {
+  display: flex;
+  flex-direction: column;
+  padding: 100px 164px;
+  gap: 30px;
+}
+
+.testimonialsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.testimonialsContent h3 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 48px;
+  letter-spacing: -1.2000000476837158px;
+  text-align: center;
+}
+
+.testimonialsContent p {
+  font-size: 19px;
   font-weight: 400;
   line-height: 32px;
   letter-spacing: -0.20000000298023224px;
+  text-align: center;
+}
+
+.testimonials {
+  display: flex;
+  flex-direction: row;
+  gap: 140px;
+  align-items: center;
+  text-align: center;
+}
+
+.testimonialItem h3 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 34px;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.testimonialItem p {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 34px;
+  letter-spacing: -0.5px;
+  text-align: center;
+}
+
+.streamlineSection {
+  padding: 10px 164px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 250px;
+  align-items: center;
+}
+
+.streamlineSection h3 {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 44px;
+  letter-spacing: -1.2000000476837158px;
   text-align: left;
-  margin-bottom: 36px;
+}
+
+.streamlineSection p {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 34px;
+  letter-spacing: -0.20000000298023224px;
+  text-align: left;
+  margin-top: 24px;
+}
+
+.streamlineButton button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 158px;
+  height: 45px;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 164px;
+}
+
+.socialMedia {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }

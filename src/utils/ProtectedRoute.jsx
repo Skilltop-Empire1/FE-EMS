@@ -6,8 +6,9 @@ import { logout } from "../redux/slice/loginSlice";
 function ProtectedRoute({ children }) {
   const [lastActive, setLastActive] = useState(Date.now());
   const dispatch = useDispatch();
-  const sessionTimeout = 30 * 60 * 1000;
-  const token = localStorage.getItem("token");
+  const sessionTimeout = 30 * 60 * 1000; // 30 minutes
+  const user = localStorage.getItem("user");
+  const token = user ? JSON.parse(user).token : null;
 
   const resetIdleTimeout = () => setLastActive(Date.now());
 
@@ -19,7 +20,7 @@ function ProtectedRoute({ children }) {
 
     const checkInactivity = setInterval(() => {
       if (Date.now() - lastActive > sessionTimeout) {
-        dispatchEvent(logout());
+        dispatch(logout());
       }
     }, 6000);
 
@@ -31,22 +32,12 @@ function ProtectedRoute({ children }) {
     };
   }, [lastActive, dispatch]);
 
-  const isValidToken = (token) => {
-    if (!token) return false;
-
-    try {
-      const decoded = jwt_decode(token);
-      const currentTime = Date.now() / 1000;
-      return decoded.exp > currentTime;
-    } catch (error) {
-      return false;
-    }
-  };
-
-  if (!token || isValidToken) {
-    <Navigate to={"/login"} />;
+  if (!token) {
+    console.log("No token");
+    return <Navigate to={"/login"} />;
   }
-  return children;
+
+  return children; // Render the protected route children if valid
 }
 
 export default ProtectedRoute;
