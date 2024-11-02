@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import forgot from '@src/components/forgot2.png'
+import forgot from 'src/components/forgot2.png'
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

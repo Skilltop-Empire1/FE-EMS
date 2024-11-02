@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./ResetPassword.module.css";
-import forgot from '@src/components/reset.png'
+import forgot from 'src/components/reset.png'
 
 function ResetPassword() {
   const [email, setEmail] = useState("");

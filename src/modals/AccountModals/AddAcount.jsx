@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import style from './addAccountStyle.module.css'
-import { usePostResourceMutation } from '@src/redux/api/departmentApi';
-import { useFetchResourceQuery } from '@src/redux/api/departmentApi';
+import { usePostResourceMutation } from 'src/redux/api/departmentApi';
+import { useFetchResourceQuery } from 'src/redux/api/departmentApi';
 
 const AddAccount = ({ toggleForm }) => {
     const [keepOpen, setKeepOpen] = useState(false);

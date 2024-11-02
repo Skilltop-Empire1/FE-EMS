@@ -2,8 +2,8 @@ import React from "react";
 import html2pdf from 'html2pdf.js';
 import styles from './dashboardStyle.module.css'
 import { PersonStanding, HouseIcon, Notebook,  } from "lucide-react";
-import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
-import logo from '@src/components/profile.png'
+import { useFetchResourceQuery } from "src/redux/api/departmentApi";
+import logo from 'src/components/profile.png'
 import { NavLink } from "react-router-dom";
 
 const Dashboard = () => {

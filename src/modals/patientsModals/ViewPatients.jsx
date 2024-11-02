@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import style from './addPatientStyle.module.css'
-import { useEditResourceMutation } from '@src/redux/api/departmentApi';
+import { useEditResourceMutation } from 'src/redux/api/departmentApi';
 
 const ViewPatients = ({ toggleForm, patient }) => {
     const [keepOpen, setKeepOpen] = useState(false);
