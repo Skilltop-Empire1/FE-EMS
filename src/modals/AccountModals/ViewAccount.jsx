@@ -86,7 +86,7 @@ const ViewAccount = ({ toggleForm, account }) => {
             console.log(formData.acctId)
             // Update existing account
             result = await editResource({
-                url: `/api/v1/account/${formData.acctId}`,
+                url: `/account/${formData.acctId}`,
                 method: 'PUT',
                 data: accountData,
             }).unwrap();
@@ -96,7 +96,7 @@ const ViewAccount = ({ toggleForm, account }) => {
         } else {
             // Create new account
             result = await postResource({
-                url: '/api/v1/account/create',
+                url: '/account/create',
                 data: accountData,
             }).unwrap();
             console.log('Account created successfully:', result);

@@ -61,7 +61,7 @@ const AddAccount = ({ toggleForm }) => {
 
         try {
             const result = await postResource({
-                url: '/api/v1/account/create',
+                url: '/account/create',
                 method: 'POST',
                 data: accountData,
             }).unwrap();

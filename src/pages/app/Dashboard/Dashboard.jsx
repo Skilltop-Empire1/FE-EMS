@@ -3,15 +3,16 @@ import html2pdf from 'html2pdf.js';
 import styles from './dashboardStyle.module.css'
 import { PersonStanding, HouseIcon, Notebook,  } from "lucide-react";
 import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
+import logo from '@src/components/profile.png'
 import { NavLink } from "react-router-dom";
 
 const Dashboard = () => {
 
-  const {data: patientList, error: patientError, isLoading: patientLoading} = useFetchResourceQuery('/api/v1/patient/list')
-  const {data: doctorList, error: doctorError, isLoading: doctorLoading} = useFetchResourceQuery('/api/v1/staff/doctor/all')
-  const {data: nurseList, error: nurseError, isLoading: nurseLoading} = useFetchResourceQuery('/api/v1/staff/nurses/all')
-  const {data: appointmentList, error: appointmentError, isLoading: appointmentLoading} = useFetchResourceQuery('/api/v1/appointments')
-  const {data: departmentList, error: departmentError, isLoading: departmentLoading} = useFetchResourceQuery('api/v1/departments/list')
+  const {data: patientList, error: patientError, isLoading: patientLoading} = useFetchResourceQuery('/patient/list')
+  const {data: doctorList, error: doctorError, isLoading: doctorLoading} = useFetchResourceQuery('/staff/doctor/all')
+  const {data: nurseList, error: nurseError, isLoading: nurseLoading} = useFetchResourceQuery('/staff/nurses/all')
+  const {data: appointmentList, error: appointmentError, isLoading: appointmentLoading} = useFetchResourceQuery('/appointment')
+  const {data: departmentList, error: departmentError, isLoading: departmentLoading} = useFetchResourceQuery('/department/list')
   console.log(patientList)
   const handleDownloadPdf = () => {
     const element = document.getElementById('content-to-print');
@@ -31,7 +32,6 @@ const Dashboard = () => {
 
   return (
     <div className={styles.body}>
-
     <div className={styles.dashboard} id="content-to-print">
       <div className={styles.top}>
         <h2 className={styles.title}>Dashboard</h2>
@@ -41,7 +41,7 @@ const Dashboard = () => {
         <div className={styles.box}>
           <p><HouseIcon/></p>
           <h2>Number of Department</h2>
-          {/* <p>{departmentList.length}</p> */}
+          <p>{departmentList?.length}</p>
         </div>
         <div className={styles.box}>
           <p><PersonStanding/></p>
@@ -56,8 +56,8 @@ const Dashboard = () => {
         </div>
         <div className={styles.box}>
           <p><Notebook/></p>
-          <h2>Number of Appointment Booked</h2>
-          {/* <p>{appointmentList.length}</p> */}
+          <h2>No of Appointment Booked</h2>
+          <p>{appointmentList?.appointments?.length}</p>
         </div>
         <div className={styles.box}>
           <p><PersonStanding/></p>
@@ -79,27 +79,25 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className={styles.td}></td>
-                <td className={styles.td}>Doctor A</td>
-                <td className={styles.td}>Doctor A</td>
-                <td className={styles.td}>11/15/2023</td>
-                <td className={styles.td}>Practice A</td>
-              </tr>
-              <tr>
-                <td className={styles.td}></td>
-                <td className={styles.td}>Doctor A</td>
-                <td className={styles.td}>11/01/2023</td>
-                <td className={styles.td}>Practice A</td>
-                <td className={styles.td}>Organization A</td>
-              </tr>
-              <tr>
-                <td className={styles.td}>Sam Johnson</td>
-                <td className={styles.td}></td>
-                <td className={styles.td}>11/16/2023</td>
-                <td className={styles.td}>Practice A</td>
-                <td className={styles.td}>Organization A.</td>
-              </tr>
+              
+              
+               {appointmentLoading ? (<div>Loading</div>)
+               : 
+               appointmentError? (<div>Error</div>)
+               :
+               appointmentList?.appointments?.map((appointment, idx)=> {
+                return (
+                  <tr key={idx}>
+                     
+                      <td className={styles.td}>{appointment.patName}</td>
+                      <td className={styles.td}>{appointment?.staff?.firstName}</td>
+                      <td className={styles.td}>{appointment.createdAt?.slice(0,10)}</td>
+                      <td className={styles.td}>{appointment?.staff?.specialization}</td>
+                      <td className={styles.td}>{appointment?.department?.name}</td>
+                  </tr>
+                )
+               }).slice(appointmentList?.appointments.length - 5, appointmentList?.appointments.length)
+               }
             </tbody>
           </table>
         </div>
@@ -107,7 +105,7 @@ const Dashboard = () => {
           <div className={styles.docList}>
             <div className="flex justify-between ">
             <h2 className="text-md">Recently Added Doctors</h2>
-            <NavLink to="doctors"><p className="font-light underline">See full list</p></NavLink>
+            <NavLink to="/app/doctors"><p className="font-light underline">See full list</p></NavLink>
             </div>
             <ul className={styles.ul}>
               {doctorLoading ? (
@@ -117,28 +115,30 @@ const Dashboard = () => {
               <div> Error loading doctors</div>
               ) :
               doctorList.doctors.map((doctor, idx)=> {
-                return (<li key={idx} className='my-2'>
-                  <div className={styles.docIcon}>
-                    <i className="fa-solid fa-person"></i>
+                return (
+                <li key={idx} className='my-2 flex items-center justify-between'>
+                  <div className="flex gap-2 items-center">
+                    <img src={logo} alt="" className="w-10 h-10 "/>
+                    <div>
+                      <p className="flex justify-between"> <span>Name: </span></p>
+                      <p className="flex justify-between"> <span>Contact Details: </span></p>
+                      <p className="flex justify-between"> <span>Speciality: </span></p>
+                      </div>   
                   </div>
-                  <p>Name: {doctor.firstName} {doctor.lastName}</p>
-                  <p>Contact: {doctor.phone}</p>
-                  <p>Speciality: {doctor.departmentName}</p>
+                  <div>
+                    <p className="flex justify-between"><span>{doctor.firstName} {doctor.lastName}</span></p>
+                    <p className="flex justify-between"><span>{doctor.phone}</span></p>
+                    <p className="flex justify-between"><span>{doctor.departmentName}</span></p>                   
+                  </div>
                 </li>)
-              })
+              }).slice(doctorList?.doctors.length - 3, doctorList?.doctors.length)
               }
-              <li>
-                <div className={styles.docIcon}>
-                  <i className="fa-solid fa-person"></i>
-                </div>
-                <span>Doctor A</span>
-                <span>Anesthesiologist</span>
-              </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
+    
     </div>
   );
 };

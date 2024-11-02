@@ -19,7 +19,7 @@ const Patients = () => {
   const [patientToUpdate, setPatientToUpdate] = useState(null);
   const [patientToView, setPatientToView] = useState(null);
 
-  const { data: patientData = [], error: patientError, isLoading: patientLoading } = useFetchResourceQuery("/api/v1/patient/list");
+  const { data: patientData = [], error: patientError, isLoading: patientLoading } = useFetchResourceQuery("/patient/list");
   const [deleteResource] = useDeleteResourceMutation();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const Patients = () => {
 
   const handleDelete = async () => {
     try {
-      await deleteResource(`/api/v1/patient/delete/${patientToDelete}`).unwrap();
+      await deleteResource(`/patient/delete/${patientToDelete}`).unwrap();
       alert("Patient details deleted successfully");
       setShowConfirm(false);
       setFilteredPatients(filteredPatients.filter(patient => patient.id !== patientToDelete));

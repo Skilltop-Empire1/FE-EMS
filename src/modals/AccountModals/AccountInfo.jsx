@@ -4,11 +4,11 @@ import style from './addAccountStyle.module.css'
 const AccountInfo = ({toggleInfo, infoData}) => {
 
   // const [keepOpen, setKeepOpen] = useState(toggleInfo)
-  const [information?, setinformation?] = useState(infoData)
+  const [information, setinformation] = useState(infoData)
 
   const handleClose = (e) => {
     e.preventDefault();  // Prevent any default behavior from the button
-        setinformation?(null)
+        setinformation(null)
       toggleInfo(); // Close form if confirmed
 
   };

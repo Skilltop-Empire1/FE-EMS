@@ -34,7 +34,7 @@ const ViewPatients = ({ toggleForm, patient }) => {
               console.log(formData.patId)
               // Update existing account
               result = await editResource({
-                  url: `/api/v1/patient/edit/${formData.patId}`,
+                  url: `/patient/edit/${formData.patId}`,
                   method: 'PUT',
                   data: patientData,
               }).unwrap();
@@ -44,7 +44,7 @@ const ViewPatients = ({ toggleForm, patient }) => {
           } else {
               // Create new account
               result = await postResource({
-                  url: '/api/v1/patient/create',
+                  url: '/patient/create',
                   data: patientData,
               }).unwrap();
               console.log('Account created successfully:', result);

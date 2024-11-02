@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./staffStyle.module.css";
 import { CiCirclePlus } from "react-icons/ci";
 import { RiDeleteBinLine } from "react-icons/ri";

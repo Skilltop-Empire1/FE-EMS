@@ -85,7 +85,7 @@ const AddPatients = ({ toggleForm }) => {
     
       try {
         const result = await postResource({
-          url: '/api/v1/patient/create',
+          url: '/patient/create',
           data: patientData,
         }).unwrap();
         

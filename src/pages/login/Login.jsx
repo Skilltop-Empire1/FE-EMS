@@ -21,46 +21,51 @@ function Login() {
   };
 
   return (
-    <div className={styles.container}>
-      <h2>Login</h2>
-      {error && <p className={styles.error}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className={styles.formGroup}>
-          <label htmlFor="username" className={styles.label}>
-            Username
-          </label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="password" className={styles.label}>
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className={styles.input}
-          />
-        </div>
-        <button type="submit" className={styles.button}>
-          Login
-        </button>
-        <p
-          onClick={() => navigate("/forgot-password")}
-          className={styles.forgotPassword}
-        >
-          Forgot Password?
-        </p>
-      </form>
+    <div className={`${styles.container} flex items-center justify-center`}>
+      <div className="border-2 shadow-lg w-96 rounded-md p-5 ">
+        <h2 className="my-5 text-center text-4xl">Welcome back</h2>
+        {error && <p className={styles.error}>{error}</p>}
+        <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
+          <div className={styles.formGroup}>
+            <label htmlFor="username" className={styles.label}>
+              Email
+            </label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className={styles.input}
+            />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.label}>
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className={styles.input}
+            />
+          </div>
+          <button type="submit" className={`${styles.button}`}>
+            Login
+          </button>
+          <p
+            onClick={() => navigate("/forgot-password")}
+            className={ `text-center ${styles.forgotPassword}`}
+          >
+            Forgot Password?
+          </p>
+        </form>
+      </div>
+
+
+      
     </div>
   );
 }

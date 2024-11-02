@@ -40,7 +40,7 @@ const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
 
 
     //set up the table pages
-    const itemsPerPage = 15;
+    const itemsPerPage = 5;
     const [currentPage, setCurrentPage] = useState(1);
     const totalPages = Math.ceil(data.length / itemsPerPage);
   
@@ -68,42 +68,6 @@ const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
   };
 
 
-  const generatePagination = () => {
-    const pages = [];
-
-    // Go back two pages
-    if (currentPage > 2) {
-      pages.push(currentPage - 2);
-    }
-
-    // Go back one page
-    if (currentPage > 1) {
-      pages.push(currentPage - 1);
-    }
-
-    // First two pages
-    if (currentPage > 2) {
-      pages.push(1, 2);
-      pages.push('...');
-    }
-
-    // Current page and next 3 pages (if applicable)
-    for (let i = currentPage; i <= Math.min(totalPages, currentPage + 3); i++) {
-      pages.push(i);
-    }
-
-    // Go forward one page (if not the last)
-    if (currentPage < totalPages) {
-      pages.push(currentPage + 1);
-    }
-
-    // Go forward two pages (if applicable)
-    if (currentPage < totalPages - 1) {
-      pages.push(currentPage + 2);
-    }
-
-    return pages;
-  };
  
 
   return (
@@ -176,18 +140,53 @@ const Table3 = ({data = [], patients, staff, deleteFunction, refreshList, runTog
         </table> 
 
         <div className={style.identifier}>
-        <span>Page {currentPage} of {totalPages}</span>
-        <div className={style.pagination}>
-            {generatePagination().map((page, idx) => (
-              <button
-                key={idx}
-                onClick={() => page !== '...' && goToPage(page)}
-                disabled={page === currentPage || page === '...'}
+          <span> Showing {startIndex + 1 } to{" "}
+          { currentPage === totalPages ? (data.length) : (currentPage * itemsPerPage)} of {data.length} entries
+          </span>
+        <div className={`${style.pagination}`}>
+             <button
+                onClick={() => goToPage(1)}
                 className={style.pageButton}
+                disabled={currentPage === 1}
               >
-                {page}
+                 &lt;&lt;
               </button>
-            ))}
+
+              <button
+                onClick={() => goToPage(currentPage - 1)}
+                className={style.pageButton}
+                disabled={currentPage === 1}
+              >
+                 &lt;
+              </button>
+
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToPage(index + 1)}
+                  className={
+                    currentPage === index + 1 ? style.pageButton : ""
+                  }
+                >
+                  {index + 1}
+                </button> 
+              ))}
+
+              <button
+                onClick={() => goToPage(currentPage + 1)}
+                className={style.pageButton}
+                disabled={currentPage === totalPages}
+              >
+                 &gt;
+              </button>
+
+              <button
+                onClick={() => goToPage(totalPages)}
+                className={style.pageButton}
+                disabled={currentPage === totalPages}
+              >
+                 &gt;&gt;
+              </button>
           </div>
         </div>
         </div>

@@ -19,7 +19,7 @@ const Account = () => {
   const [accountToUpdate, setAccountToUpdate] = useState(null);
   const [accountToView, setAccountToView] = useState(null);
 
-  const { data: accountData = [], error: accountError, isLoading: accountLoading } = useFetchResourceQuery('/api/v1/account');
+  const { data: accountData = [], error: accountError, isLoading: accountLoading } = useFetchResourceQuery('/account');
   const [deleteResource] = useDeleteResourceMutation();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const Account = () => {
 
   const handleDelete = async () => {
     try {
-      await deleteResource(`/api/v1/account/${accountIdToDelete}`).unwrap();
+      await deleteResource(`/account/${accountIdToDelete}`).unwrap();
       alert("Account detail deleted successfully");
       setShowConfirm(false);
       setFilteredPatients(filteredPatients.filter(account => account.id !== accountIdToDelete));

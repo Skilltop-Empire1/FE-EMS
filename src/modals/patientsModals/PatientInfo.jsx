@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import style from './addPatientStyle.module.css';
 
 const PatientInfo = ({ toggleInfo, infoData }) => {
-  const [information?, setinformation?] = useState(infoData);
+  const [information, setinformation] = useState(infoData);
 
   const handleClose = (e) => {
     e.preventDefault();
-    setinformation?(null);
+    setinformation(null);
     toggleInfo(); 
   };
 
