@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import profileImg from "./profile.png";
 import Logo from "./EMS logo-Transparent.png";
@@ -13,18 +13,40 @@ import { IoMdSettings } from "react-icons/io";
 import { IoMdPerson } from "react-icons/io";
 import { IoMdHelpCircle } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
-import DropDown from "./DropDown";
+import DropDown from "./profileDropdown/DropDown";
 import ModalContainer from "../modals/ModalContainer";
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
 
 const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
+  const [isAppointmentDropdown, setIsAppointmentDropdown] = useState(false);
   const { openModal, isShowModal, image } = useModal();
+
+  const appointmentDropdownRef = useRef(null);
+
+  const handleClickOutsideDropdown = () => {
+    if (
+      appointmentDropdownRef.current &&
+      !appointmentDropdownRef.current.contains(event.target)
+    ) {
+      setIsAppointmentDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutsideDropdown);
+    return () =>
+      document.removeEventListener("click", handleClickOutsideDropdown);
+  }, []);
 
   const handleShowModal = (type) => {
     openModal(type);
   };
-  const handlePasswordChange = () => {};
+
+  const toggleAppointmentDropdown = () => {
+    setIsAppointmentDropdown((prev) => !prev);
+  };
+
   return (
     <>
       <nav className={style.dashboardNav}>
@@ -40,7 +62,7 @@ const Navbar = () => {
                 }
                 to="/"
               >
-               <MdHome /> Home
+                <MdHome /> Home
               </NavLink>
             </li>
             <li>
@@ -50,7 +72,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-                <GoOrganization /> Organization
+                <GoOrganization /> Department
               </NavLink>
             </li>
             <li>
@@ -60,7 +82,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-               <IoMdPerson /> Staff
+                <IoMdPerson /> Staff
               </NavLink>
             </li>
             <li>
@@ -70,18 +92,35 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-               <MdOutlineSick /> Patients
+                <MdOutlineSick /> Patients
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/appointments"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-              <SiGoogleclassroom />  Appointments
-              </NavLink>
+            <li ref={appointmentDropdownRef}>
+              <div>
+                <span
+                  onClick={toggleAppointmentDropdown}
+                  className={style.link}
+                  style={{ cursor: "pointer" }}
+                >
+                  <SiGoogleclassroom /> Appointments <FaSortDown />
+                </span>
+                {isAppointmentDropdown && (
+                  <div className={style.dropdownMenu}>
+                    <Link to="/appointments" className={style.dropdownItem}>
+                      Appointment
+                    </Link>
+                    <Link to="/admission" className={style.dropdownItem}>
+                      Admission
+                    </Link>
+                    <Link to="/consultation" className={style.dropdownItem}>
+                      Consultation
+                    </Link>
+                    <Link to="/discharge" className={style.dropdownItem}>
+                      Discharge
+                    </Link>
+                  </div>
+                )}
+              </div>
             </li>
             <li>
               <NavLink
@@ -90,7 +129,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-              <MdAccountCircle />  Account
+                <MdAccountCircle /> Account
               </NavLink>
             </li>
             <li>
@@ -100,7 +139,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-              <TbReportMedical />  Reports
+                <TbReportMedical /> Reports
               </NavLink>
             </li>
             <li>
@@ -110,7 +149,7 @@ const Navbar = () => {
                 }
                 to="/settings"
               >
-              <IoMdSettings />  Settings
+                <IoMdSettings /> Settings
               </NavLink>
             </li>
             <li>
@@ -120,7 +159,7 @@ const Navbar = () => {
                   isActive ? style.active : style.link
                 }
               >
-              <IoMdHelpCircle />  Help
+                <IoMdHelpCircle /> Help
               </NavLink>
             </li>
           </ul>
@@ -143,6 +182,7 @@ const Navbar = () => {
         <DropDown
           handlePasswordChange={() => handleShowModal(MODAL_TYPES.TYPE2)}
           handleProfileImageChange={() => handleShowModal(MODAL_TYPES.TYPE1)}
+          setIsDropdown={setIsDropdown}
         />
       )}
       {isShowModal && <ModalContainer />}

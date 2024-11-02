@@ -25,6 +25,14 @@ textarea {
   outline: none;
 }
 
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
 @media print {
   #printable-content {
     display: flex;

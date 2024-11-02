@@ -9,9 +9,20 @@ import UpdateOrganization from "./organisationModals/UpdateOrganization";
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
 import AddAppointment from "./appointmentModals/AddAppointment";
 import UpdateAppointment from "./appointmentModals/UpdateAppointment";
+import ViewOrganization from "./organisationModals/ViewOrganization";
+import DeleteOrganization from "./organisationModals/DeleteOrganization";
+import ViewAppointment from "./appointmentModals/ViewAppointment";
+import DeleteAppointment from "./appointmentModals/DeleteAppointment";
 
 function ModalContainer() {
-  const { modalType, modalProps, closeModal, handleFile } = useModal();
+  const {
+    modalType,
+    modalProps,
+    closeModal,
+    handleFile,
+    isDelete,
+    closeDeleteModal,
+  } = useModal();
   const renderModalContext = () => {
     switch (modalType) {
       case MODAL_TYPES.TYPE1:
@@ -35,6 +46,18 @@ function ModalContainer() {
       case MODAL_TYPES.TYPE7:
         return <UpdateAppointment {...modalProps} />;
 
+      case MODAL_TYPES.TYPE8:
+        return <ViewOrganization {...modalProps} />;
+
+      case MODAL_TYPES.TYPE9:
+        return <DeleteOrganization {...modalProps} />;
+
+      case MODAL_TYPES.TYPE10:
+        return <ViewAppointment {...modalProps} />;
+
+      case MODAL_TYPES.TYPE11:
+        return <DeleteAppointment {...modalProps} />;
+
       default:
         return null;
     }
@@ -57,8 +80,13 @@ function ModalContainer() {
       onDragOver={handleDragOver}
       className={style.overlayStyle}
     >
-      <div className={style.modalStyle}>
-        <button onClick={() => closeModal()} className={style.closeButtonStyle}>
+      <div className={isDelete ? style.deleteModalStyle : style.modalStyle}>
+        <button
+          onClick={() => {
+            isDelete ? closeDeleteModal() : closeModal();
+          }}
+          className={style.closeButtonStyle}
+        >
           &times;
         </button>
         {renderModalContext()}
