@@ -33,7 +33,7 @@ function DropDown({
   const handleLogout = () => {
     console.log("clicked logout");
     localStorage.removeItem("user");
-    navigate("/login"); // Navigate to the login page
+    navigate("/"); // Navigate to the login page
   };
 
   return (
