@@ -1,10 +1,58 @@
 import React, { useState } from "react";
+import style from "./staffStyle.module.css";
+import { CiCirclePlus } from "react-icons/ci";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { FaEye } from "react-icons/fa";
+import { MdModeEditOutline } from "react-icons/md";
+import Table from "../../../components/dataTable/Table";
 import { tableHeader, tableData } from "./staffData";
+import { MODAL_TYPES } from "../../../context/ModalContext";
+import Button from "../../../components/Button/Button";
+import AddStaff from "../../../modals/staffModals/AddStaff";
+import Table2 from "../../../components/dataTable2/Table2";
+import SelectFilter from "@src/components/SelectFilter";
 import { Search } from "lucide-react";
 import StaffTable from "@src/components/dataTable2/StaffTable";
-import AddStaffModal from "@src/modals/staffModals/AddStaffModal";
 
-const Staff = ({ type }) => {
+const StaffNurse = () => {
+  const item = [
+    {
+      specialization: "Select Specialization",
+      value: "",
+    },
+    {
+      specialization: "Surgeon",
+      value: "Surgeon",
+    },
+    {
+      specialization: "Dentist",
+      value: "Dentist",
+    },
+    {
+      specialization: "Opthamologist",
+      value: "Opthamologist",
+    },
+  ];
+
+  const item2 = [
+    {
+      specialization: "Select Practice",
+      value: "",
+    },
+    {
+      specialization: "Surgeon",
+      value: "Surgeon",
+    },
+    {
+      specialization: "Dentist",
+      value: "Dentist",
+    },
+    {
+      specialization: "Opthamologist",
+      value: "Opthamologist",
+    },
+  ];
+
   const [showForm, setShowForm] = useState(false);
   const [data, setData] = useState(tableData);
   const [searchText, setSearchText] = useState("");
@@ -52,8 +100,8 @@ const Staff = ({ type }) => {
   return (
     <div className="w-full px-10 py-5 flex flex-col space-y-4">
       <div className="my-4">
-        <h2 className="text-2xl font-bold text-left">Staffs</h2>
-        <h2 className="text-2xl font-bold text-left">{type}</h2>
+        <h2 className="text-2xl font-bold text-left">Staffsoooo</h2>
+        <h2 className="text-2xl font-bold text-left">Nurse</h2>
       </div>
       <div className="flex flex-wrap items-center gap-4 justify-between">
         <div className="relative flex items-center max-w-[400px] w-full">
@@ -89,11 +137,11 @@ const Staff = ({ type }) => {
 
       {showForm && (
         <div>
-          <AddStaffModal toggleForm={toggleForm} />
+          <AddStaff toggleForm={toggleForm} />
         </div>
       )}
     </div>
   );
 };
 
-export default Staff;
+export default StaffNurse;

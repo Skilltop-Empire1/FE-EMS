@@ -80,10 +80,26 @@ const Navbar = () => {
               />
             </li>
             <li>
-              <CustomLink
+              {/* <CustomLink
                 label="Reports"
                 icon={<TbReportMedical />}
                 path="/reports"
+              /> */}
+
+              <CustomLinkWithDropdown
+                label="Reports"
+                icon={<TbReportMedical />}
+                path="/reports"
+                dropdownItems={[
+                  { path: "/reports/admin", label: "Admin" },
+                  { path: "/reports/doctors", label: "Doctors" },
+                  { path: "/reports/nurses", label: "Nurses" },
+                  { path: "/reports/laboratory", label: "Laboratory" },
+                  { path: "/reports/radiology", label: "Radiology" },
+                  { path: "/reports/pharmacy", label: "Pharmacy" },
+                  { path: "/reports/account", label: "Account" },
+                ]}
+                s
               />
             </li>
             <li>
@@ -168,7 +184,7 @@ const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
       {/* Dropdown */}
       {dropdownItems && dropdownItems.length > 0 && (
         <div
-          className={`absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md z-10 transition-all duration-300 ease-in-out origin-top transform ${
+          className={`absolute left-0 mt-2 w-30 bg-white shadow-lg rounded-md z-10 transition-all duration-300 ease-in-out origin-top transform ${
             isDropdownOpen
               ? "scale-100 opacity-100"
               : "scale-95 opacity-0 pointer-events-none"

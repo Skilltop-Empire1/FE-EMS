@@ -1,11 +1,16 @@
 import React, { Suspense, lazy } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import Loader from "./components/loader/Loader";
 
 const AppLayout = lazy(() => import("./pages/app/AppLayout"));
 const Dashboard = lazy(() => import("./pages/app/Dashboard/Dashboard"));
 const Settings = lazy(() => import("./pages/app/SettingsPage/Settings"));
+const StaffNurse = lazy(() => import("./pages/app/Staff/StaffNurse"));
 const Organizations = lazy(() =>
   import("./pages/app/Organization/Organizations")
 );
@@ -55,6 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "staff",
+        // element: <Navigate to="/staff/doctors" replace />,
         element: (
           <Suspense fallback={<Loader />}>
             <Staff />
@@ -65,7 +71,7 @@ const router = createBrowserRouter([
             path: "doctors",
             element: (
               <Suspense fallback={<Loader />}>
-                <Staff />
+                <Staff type="doctors" />
               </Suspense>
             ),
           },
@@ -73,7 +79,7 @@ const router = createBrowserRouter([
             path: "nurses",
             element: (
               <Suspense fallback={<Loader />}>
-                <Staff />
+                <StaffNurse />
               </Suspense>
             ),
           },
@@ -81,7 +87,7 @@ const router = createBrowserRouter([
             path: "pharmacists",
             element: (
               <Suspense fallback={<Loader />}>
-                <Staff />
+                <Staff type="pharmacists" />
               </Suspense>
             ),
           },
@@ -89,7 +95,7 @@ const router = createBrowserRouter([
             path: "lab-scientist",
             element: (
               <Suspense fallback={<Loader />}>
-                <Staff />
+                <Staff type="lab-scientist" />
               </Suspense>
             ),
           },
@@ -97,7 +103,7 @@ const router = createBrowserRouter([
             path: "radiographers",
             element: (
               <Suspense fallback={<Loader />}>
-                <Staff />
+                <Staff type="radiographers" />
               </Suspense>
             ),
           },
@@ -127,13 +133,80 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      // {
+      //   path: "reports",
+      //   element: (
+      //     <Suspense fallback={<Loader />}>
+      //       <Reports />
+      //     </Suspense>
+      //   ),
+      // },
       {
         path: "reports",
+        // element: <Navigate to="/staff/doctors" replace />,
         element: (
           <Suspense fallback={<Loader />}>
             <Reports />
           </Suspense>
         ),
+        children: [
+          {
+            path: "admin",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Reports type="admin" />
+              </Suspense>
+            ),
+          },
+          {
+            path: "doctors",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Reports type="doctor" />
+              </Suspense>
+            ),
+          },
+          {
+            path: "nurses",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Reports type="nurses" />
+              </Suspense>
+            ),
+          },
+          {
+            path: "pharmacy",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Reports type="pharmacists" />
+              </Suspense>
+            ),
+          },
+          {
+            path: "laboratory",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Reports type="laboratory" />
+              </Suspense>
+            ),
+          },
+          {
+            path: "radiology",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Reports type="radiology" />
+              </Suspense>
+            ),
+          },
+          {
+            path: "account",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Reports type="account" />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "help",

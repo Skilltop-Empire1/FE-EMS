@@ -4,7 +4,6 @@ import UserDetails from "./UserDetails";
 import { rolesData, permissionsData } from "./data";
 
 import styles from "./settingsStyles.module.css";
-import StaffInviteForm from "@src/components/Staff/StaffInviteForm";
 
 const Settings = () => {
   const initialStateForm = {
@@ -95,12 +94,8 @@ const Settings = () => {
 
   return (
     <div className={styles.body}>
-      <div className="my-4 space-y-4">
-        <h2 className="text-2xl font-bold text-left">Staff Invite Settings</h2>
-        {/* <p className="text-sm">Last Update October 15, 2024</p> */}
-      </div>
-      {/* <UserDetails formData={formData} handleChange={handleChange} /> */}
-      {/* <PermissionsTable
+      <UserDetails formData={formData} handleChange={handleChange} />
+      <PermissionsTable
         handleCheckboxChange={handleCheckboxChange}
         handleToggle={handleToggle}
         handleSubmit={handleSubmit}
@@ -108,8 +103,7 @@ const Settings = () => {
         permissionsData={permissionsData}
         checkedRoles={checkedRoles}
         permissions={permissions}
-      /> */}
-      <StaffInviteForm />
+      />
     </div>
   );
 };
