@@ -14,7 +14,7 @@
     line-height: 24px;
     /* font-family: "Manrope", sans-serif; */
     color: #171A1F;
-    padding: 12px 11px !important;
+    padding: 10px;
 }
 
 .tbody tr:nth-child(odd) {
@@ -92,7 +92,7 @@
     font-weight: 400;
     line-height: 26px;
     text-align: center;
-    background-color: #ffffff;;
+    background-color: #ffffff;
   }
 
   .action {

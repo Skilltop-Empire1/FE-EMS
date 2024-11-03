@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const departmentApi = createApi({
   reducerPath: 'department',
+  // baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ems.onrender.com/' }),
   baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ems.onrender.com/api/v1' }),
   endpoints: (builder) => ({
     fetchResource: builder.query({
@@ -23,6 +24,8 @@ const departmentApi = createApi({
         headers: { 'Content-Type': 'application/json' },
       }),
     }),
+
+
     deleteResource: builder.mutation({
       query: (url) => ({
         url,
