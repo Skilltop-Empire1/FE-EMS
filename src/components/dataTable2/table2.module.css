@@ -14,7 +14,7 @@
     line-height: 24px;
     /* font-family: "Manrope", sans-serif; */
     color: #171A1F;
-    padding: 10px;
+    padding: 12px 11px !important;
 }
 
 .tbody tr:nth-child(odd) {
@@ -64,7 +64,7 @@
   }
   
   .pagination button {
-    color: #71aafe;
+    color: #999999;
     font-family: Manrope;
     font-size: 16px;
     font-weight: 400;
@@ -74,12 +74,17 @@
   }
   
   .pageButton {
-    width: 51px;
+    width: 34px;
     height: 34px;
-    padding: 5px 8.5px 5px 8.5px;
+    padding: 3px;
     border-radius: 2px;
-    border: 1px solid #71aafe;
+    border: 1px solid #E0E0E0;
     background-color: #ffffff;
+    color: #171A1F;
+    display: flex;
+    justify-content: center;
+    align-items: center
+    
   }
   
   .pageNextButton {
@@ -87,5 +92,34 @@
     font-weight: 400;
     line-height: 26px;
     text-align: center;
-    background-color: #ffffff;
+    background-color: #ffffff;;
+  }
+
+  .action {
+    position: absolute;
+    background-color: #fff;
+    padding: 10px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 150px;
+    width: 70px;
+    text-align: center;
+    box-shadow: 0px 0px 16px 0px rgba(168,162,162,0.75);
+-webkit-box-shadow: 0px 0px 16px 0px rgba(168,162,162,0.75);
+-moz-box-shadow: 0px 0px 16px 0px rgba(168,162,162,0.75);
+  }
+
+  .actionMama:hover {
+    cursor: pointer;
+  }
+
+  .action p:hover {
+    cursor: pointer;
+  }
+
+  .identifier {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }

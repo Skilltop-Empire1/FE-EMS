@@ -1,0 +1,112 @@
+.addInfo {
+    background-color: #FEFFFF;
+    padding: 20px 40px;
+    width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    /* position: absolute; */
+    /* box-shadow: 0px -1px 150px 450px rgba(0,0,0,0.34);
+    -webkit-box-shadow: 0px -1px 150px 450px rgba(0,0,0,0.34);
+    -moz-box-shadow: 0px -1px 150px 450px rgba(0,0,0,0.34); */
+    /* top: 40%;
+    left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    transition: all .3s ease-in-out;
+    z-index: 3;
+}
+
+.actionIcons {
+    color: #FFFFFF;
+    padding: 2px 5px;
+    width: 30%;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    
+}
+
+.addInfoTop {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+
+.mamaIcons {
+    display: flex;
+    justify-content: space-around;
+    gap: 3px;
+}
+
+.form {
+    display: grid;
+     grid-template-columns: 2fr 2fr;
+}
+
+.formChild {
+    width: 90%;
+    margin-top: 10px;
+}
+
+.formChild label {
+    font-size: 16px;
+    font-weight: bold;
+}
+.formChild p {
+    font-weight: 200;
+}
+
+.formChild input, select {
+    font-weight: 200;
+}
+
+.addInfoTop h3 {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.input {
+    width: 100%;
+    background-color: #F8F8F8;
+    border: none;
+    height: 30px;
+    border-radius: 8px;
+    padding: 0 10px;
+    margin-top: 4px;
+}
+
+.close {
+    background-color: #fff;
+    font-size: 20px;
+}
+
+.close:hover {
+    color: #EF3F3F;
+}
+  
+.submit {
+    width: 150px;
+    margin-top: 40px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    transition: all .3s ease-in-out;
+    color: #fff;
+}
+
+.addAnother {
+    margin-top: 50px;
+    gap: 3px;
+    
+}
+
+@media print {
+    .noPrint {
+        display: none;
+    }
+}

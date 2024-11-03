@@ -8,7 +8,7 @@
     -moz-box-shadow: 0px -1px 150px 450px rgba(0,0,0,0.34);
     top: 40%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -40%);
     transition: all .3s ease-in-out;
     z-index: 3;
 }
@@ -51,7 +51,8 @@
 
 .form {
     display: grid;
-     grid-template-columns: 2fr 2fr;
+    grid-template-columns: 2fr 2fr 2fr;
+    gap: 10px;
 }
 
 .formChild {
@@ -86,11 +87,12 @@
     align-items: center;
     border-radius: 7px;
     transition: all .3s ease-in-out;
+    background-color: #3f51b5;
+    color: #fff;
 }
 
 .submit:hover {
-    background-color: #00BDFF;
-    color: #fff;
+    background-color: #2d3980;
 }
 
 .addAnother {

@@ -10,8 +10,10 @@ export const MODAL_TYPES = {
   TYPE5: "UPDATE_ORGANIZATION",
   TYPE6: "ADD_APPOINTMENT",
   TYPE7: "UPDATE_APPOINTMENT",
-  TYPE8: "DELETE_APPOINTMENT",
+  TYPE8: "VIEW_ORGANIZATION",
   TYPE9: "DELETE_ORGANIZATION",
+  TYPE10: "VIEW_APPOINTMENT",
+  TYPE11: "DELETE_APPOINTMENT",
 };
 
 const ModalProvider = ({ children }) => {
@@ -22,11 +24,22 @@ const ModalProvider = ({ children }) => {
   const [preview, setPreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
+  const [isDelete, setIsDelete] = useState(false);
 
   const openModal = (type, props = {}) => {
     setIsShowModal(true);
     setModalType(type);
     setModalProps(props);
+  };
+
+  const openDeleteModal = (type, props = {}) => {
+    openModal(type, { ...props });
+    setIsDelete(true);
+  };
+
+  const closeDeleteModal = (type, props = {}) => {
+    closeModal(type, { ...props });
+    setIsDelete(false);
   };
 
   const closeModal = () => {
@@ -56,6 +69,8 @@ const ModalProvider = ({ children }) => {
       value={{
         openModal,
         closeModal,
+        openDeleteModal,
+        closeDeleteModal,
         modalProps,
         modalType,
         isShowModal,
@@ -68,6 +83,8 @@ const ModalProvider = ({ children }) => {
         setError,
         preview,
         setPreview,
+        isDelete,
+        setIsDelete,
       }}
     >
       {children}

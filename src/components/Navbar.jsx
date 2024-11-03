@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import profileImg from "./profile.png";
 import Logo from "./EMS logo-Transparent.png";
@@ -13,71 +13,134 @@ import { IoMdSettings } from "react-icons/io";
 import { IoMdPerson } from "react-icons/io";
 import { IoMdHelpCircle } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
-import DropDown from "./DropDown";
+import DropDown from "./profileDropdown/DropDown";
 import ModalContainer from "../modals/ModalContainer";
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
-import { ChevronDown, ChevronUp, House } from "lucide-react";
 
 const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
+  const [isAppointmentDropdown, setIsAppointmentDropdown] = useState(false);
   const { openModal, isShowModal, image } = useModal();
+
+  const appointmentDropdownRef = useRef(null);
+
+  const handleClickOutsideDropdown = () => {
+    if (
+      appointmentDropdownRef.current &&
+      !appointmentDropdownRef.current.contains(event.target)
+    ) {
+      setIsAppointmentDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutsideDropdown);
+    return () =>
+      document.removeEventListener("click", handleClickOutsideDropdown);
+  }, []);
 
   const handleShowModal = (type) => {
     openModal(type);
   };
-  const handlePasswordChange = () => {};
+
+  const toggleAppointmentDropdown = () => {
+    setIsAppointmentDropdown((prev) => !prev);
+  };
+
   return (
     <>
-      <nav className={`${style.dashboardNav} border-b !bg-gray-200`}>
+      <nav className={style.dashboardNav}>
         <div className={style.left}>
-          <NavLink to="/">
+          <NavLink to="/app">
             <img src={Logo} alt="" className={style.img} />
           </NavLink>
-          <ul className="flex gap-5 items-center flex-wrap">
+          <ul className={style.ull}>
             <li>
-              <CustomLink label="Home" icon={<House size={14} />} path="/" />
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+                to="/app"
+              >
+                <MdHome /> Home
+              </NavLink>
             </li>
             <li>
-              <CustomLink
-                label="Organization"
-                icon={<GoOrganization />}
-                path="/organization"
-              />
+              <NavLink
+                to="/app/organization"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+                <GoOrganization /> Department
+              </NavLink>
             </li>
             <li>
-              <CustomLinkWithDropdown
-                label="Staff"
-                icon={<IoMdPerson />}
-                path="/staff"
-                dropdownItems={[
-                  { path: "/staff/doctors", label: "Doctors" },
-                  { path: "/staff/nurses", label: "Nurses" },
-                  { path: "/staff/pharmacists", label: "Pharmacists" },
-                  { path: "/staff/lab-scientist", label: "Lab. Scientist" },
-                  { path: "/staff/radiographers", label: "Radiographers" },
-                ]}
-              />
+              <NavLink
+                to="/app/staff"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+                <IoMdPerson /> Staff
+              </NavLink>
             </li>
             <li>
-              <CustomLink
-                label="Patients"
-                icon={<MdOutlineSick />}
-                path="/patients"
-              />
+              <NavLink
+                to="/app/patients"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+                <MdOutlineSick /> Patients
+              </NavLink>
+            </li>
+            <li ref={appointmentDropdownRef}>
+              <div>
+                <span
+                  onClick={toggleAppointmentDropdown}
+                  className={style.link}
+                  style={{ cursor: "pointer" }}
+                >
+                  <SiGoogleclassroom /> Appointments <FaSortDown />
+                </span>
+                {isAppointmentDropdown && (
+                  <div className={style.dropdownMenu}>
+                    <Link to="/app/appointments" className={style.dropdownItem}>
+                      Appointment
+                    </Link>
+                    <Link to="/app/admission" className={style.dropdownItem}>
+                      Admission
+                    </Link>
+                    <Link to="/app/consultation" className={style.dropdownItem}>
+                      Consultation
+                    </Link>
+                    <Link to="/app/discharge" className={style.dropdownItem}>
+                      Discharge
+                    </Link>
+                  </div>
+                )}
+              </div>
             </li>
             <li>
-              <CustomLink
-                label="Appointments"
-                icon={<SiGoogleclassroom />}
-                path="/appointments"
-              />
+              <NavLink
+                to="/app/account"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+                <MdAccountCircle /> Account
+              </NavLink>
             </li>
             <li>
-              <CustomLink
-                label="Account"
-                icon={<MdAccountCircle />}
-                path="/account"
-              />
+              <NavLink
+                to="/app/reports"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+                <TbReportMedical /> Reports
+              </NavLink>
             </li>
             <li>
               {/* <CustomLink
@@ -99,18 +162,17 @@ const Navbar = () => {
                   { path: "/reports/pharmacy", label: "Pharmacy" },
                   { path: "/reports/account", label: "Account" },
                 ]}
-                s
               />
             </li>
             <li>
-              <CustomLink
-                label="Settings"
-                icon={<IoMdSettings />}
-                path="/settings"
-              />
-            </li>
-            <li>
-              <CustomLink label="Help" icon={<IoMdHelpCircle />} path="/help" />
+              <NavLink
+                to="/app/help"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+                <IoMdHelpCircle /> Help
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -132,6 +194,7 @@ const Navbar = () => {
         <DropDown
           handlePasswordChange={() => handleShowModal(MODAL_TYPES.TYPE2)}
           handleProfileImageChange={() => handleShowModal(MODAL_TYPES.TYPE1)}
+          setIsDropdown={setIsDropdown}
         />
       )}
       {isShowModal && <ModalContainer />}

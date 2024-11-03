@@ -1,0 +1,125 @@
+.table {
+    box-shadow: 0px 0px 1px 0px #171A1F12;
+    box-shadow: 0px 0px 2px 0px #171A1F1F;
+    width: 100%;
+    text-align: left;
+    
+
+
+}
+
+.th, .td {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    /* font-family: "Manrope", sans-serif; */
+    color: #171A1F;
+    padding: 10px;
+}
+
+.tbody tr:nth-child(odd) {
+    background: #EBEFFA;
+}
+
+.actionIcons {
+    color: #FFFFFF;
+    padding: 2px 5px;
+    width: 30%;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    
+}
+
+.actionIcons:nth-child(1) {
+    background-color: #00BDFF;
+}
+.actionIcons:nth-child(2) {
+    background-color: #1100AF;
+}
+.actionIcons:nth-child(3) {
+    background-color: #EF3F3F;
+}
+
+.addInfoTop {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+
+.mamaIcons {
+    display: flex;
+    justify-content: space-around;
+    gap: 3px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: left;
+    padding: 20px 0;
+  }
+  
+  .pagination button {
+    color: #999999;
+    font-family: Manrope;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    margin-right: 2px;
+  }
+  
+  .pageButton {
+    width: 34px;
+    height: 34px;
+    padding: 3px;
+    border-radius: 2px;
+    border: 1px solid #E0E0E0;
+    background-color: #ffffff;
+    color: #171A1F;
+    display: flex;
+    justify-content: center;
+    align-items: center
+    
+  }
+  
+  .pageNextButton {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: center;
+    background-color: #ffffff;
+  }
+
+  .action {
+    position: absolute;
+    background-color: #fff;
+    padding: 10px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 150px;
+    width: 70px;
+    text-align: center;
+    box-shadow: 0px 0px 16px 0px rgba(168,162,162,0.75);
+-webkit-box-shadow: 0px 0px 16px 0px rgba(168,162,162,0.75);
+-moz-box-shadow: 0px 0px 16px 0px rgba(168,162,162,0.75);
+  }
+
+  .actionMama:hover {
+    cursor: pointer;
+  }
+
+  .action p:hover {
+    cursor: pointer;
+  }
+
+  .identifier {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }

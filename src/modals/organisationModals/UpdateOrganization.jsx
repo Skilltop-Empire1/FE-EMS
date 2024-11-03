@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useModal } from "../../context/ModalContext";
-
 import style from "./OrganisationModals.module.css";
+import { useEditResourceMutation } from "../../redux/api/departmentApi";
 
 const UpdateOrganization = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [formData, setFormData] = useState({
+    deptId: "",
     name: "",
-    email: "",
-    mobileNumber: "",
-    city: "",
-    state: "",
-    zipcode: "",
+    hod: "",
+    deptContact: "",
+    operationHr: "",
+    noOfStaff: "",
+    location: "",
+    bedCapacity: "",
+    specialty: "",
+    noOfPatient: "",
+    equipment: [],
+    deptBudget: "",
   });
 
   const { closeModal, modalProps } = useModal();
+  const [editResource, { isLoading }] = useEditResourceMutation();
 
   useEffect(() => {
     if (modalProps) {
@@ -27,41 +34,47 @@ const UpdateOrganization = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-
       [name]: value,
     });
   };
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-    const URL = `https://www./${modalProps.id}`;
+    const URL = `/department/update/${formData.deptId}`;
 
-    const updateUser = () => {
-      fetch(URL, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log("success", data))
-        .catch((error) => console.error("error", error));
-    };
-
-    updateUser();
+    try {
+      const response = await editResource({
+        url: URL,
+        data: formData,
+      }).unwrap();
+      console.log("Update response", response);
+      setSuccess("Update successful!");
+      setError("");
+      setTimeout(() => {
+        closeModal();
+      }, 2000);
+    } catch (error) {
+      setError("Update failed. Please try again.");
+      setSuccess("");
+      console.error("Error:", error);
+    }
   };
 
   const handleCancel = () => {
     setFormData({
+      deptId: "",
       name: "",
-      email: "",
-      mobileNumber: "",
-      city: "",
-      state: "",
-      zipcode: "",
+      hod: "",
+      deptContact: "",
+      operationHr: "",
+      noOfStaff: "",
+      location: "",
+      bedCapacity: "",
+      specialty: "",
+      noOfPatient: "",
+      equipment: [],
+      deptBudget: "",
     });
-
     closeModal();
   };
 
@@ -70,10 +83,12 @@ const UpdateOrganization = () => {
       <div className={style.header}>
         <h3>Update Organization</h3>
       </div>
+      {success && <div style={{ color: "green" }}>{success}</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <div className={style.formContainer}>
         <div className={style.inputContent}>
           <div>
-            <label htmlFor="name">Name:</label>
+            <label htmlFor="name">Department Name:</label>
             <input
               type="text"
               id="name"
@@ -83,14 +98,13 @@ const UpdateOrganization = () => {
               required
             />
           </div>
-
           <div>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="location">Location:</label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              id="location"
+              name="location"
+              value={formData.location}
               onChange={handleChange}
               required
             />
@@ -98,50 +112,71 @@ const UpdateOrganization = () => {
         </div>
         <div className={style.inputContent}>
           <div>
-            <label htmlFor="mobileNumber">Mobile Number</label>
-
+            <label htmlFor="hod">Head of Department:</label>
+            <input
+              type="text"
+              id="hod"
+              name="hod"
+              value={formData.hod}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="specialty">Specialty:</label>
+            <input
+              type="text"
+              id="specialty"
+              name="specialty"
+              value={formData.specialty}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+        <div className={style.inputContent}>
+          <div>
+            <label htmlFor="noOfStaff">Number of Staff:</label>
+            <input
+              type="number"
+              id="noOfStaff"
+              name="noOfStaff"
+              value={formData.noOfStaff}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="noOfPatient">Number of Patients:</label>
+            <input
+              type="number"
+              id="noOfPatient"
+              name="noOfPatient"
+              value={formData.noOfPatient}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+        <div className={style.inputContent}>
+          <div>
+            <label htmlFor="deptContact">Contact Number:</label>
             <input
               type="tel"
-              id="mobileNumber"
-              name="mobileNumber"
-              value={formData.mobileNumber}
+              id="deptContact"
+              name="deptContact"
+              value={formData.deptContact}
               onChange={handleChange}
               required
             />
           </div>
-
           <div>
-            <label htmlFor="city">City</label>
+            <label htmlFor="bedCapacity">Bed Capacity:</label>
             <input
-              type="text"
-              id="city"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-        <div className={style.inputContent}>
-          <div>
-            <label htmlFor="state">State</label>
-            <input
-              type="text"
-              id="state"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="zipcode">Zipcode</label>
-            <input
-              type="text"
-              id="zipcode"
-              name="zipcode"
-              value={formData.zipcode}
+              type="number"
+              id="bedCapacity"
+              name="bedCapacity"
+              value={formData.bedCapacity}
               onChange={handleChange}
               required
             />
@@ -149,13 +184,43 @@ const UpdateOrganization = () => {
         </div>
         <div className={style.inputContent}>
           <div>
-            <label htmlFor="zipcode">Address</label>
+            <label htmlFor="deptBudget">Department Budget:</label>
+            <input
+              type="number"
+              id="deptBudget"
+              name="deptBudget"
+              value={formData.deptBudget}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="equipment">Equipment (comma separated):</label>
             <input
               type="text"
-              id="zipcode"
-              name="zipcode"
-              value={formData.zipcode}
+              id="equipment"
+              name="equipment"
+              value={formData.equipment.join(", ")}
+              onChange={(e) => {
+                const equipmentArray = e.target.value
+                  .split(",")
+                  .map((item) => item.trim());
+                setFormData({ ...formData, equipment: equipmentArray });
+              }}
+              required
+            />
+          </div>
+        </div>
+        <div className={style.inputContent}>
+          <div>
+            <label htmlFor="operationHr">Operation Hours:</label>
+            <input
+              type="text"
+              id="operationHr"
+              name="operationHr"
+              value={formData.operationHr}
               onChange={handleChange}
+              placeholder="e.g., 8:00AM - 4:00PM"
               required
             />
           </div>
@@ -163,7 +228,9 @@ const UpdateOrganization = () => {
       </div>
 
       <div className={style.formButton}>
-        <button type="submit">Update</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Updating..." : "Update"}
+        </button>
         <button type="button" onClick={handleCancel}>
           Cancel
         </button>
