@@ -1,9 +1,9 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const departmentApi = createApi({
-  reducerPath: 'department',
+  reducerPath: "department",
   // baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ems.onrender.com/' }),
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://be-ems.onrender.com/api/v1' }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://be-ems.onrender.com/api/v1" }),
   endpoints: (builder) => ({
     fetchResource: builder.query({
       query: (url) => url,
@@ -11,25 +11,24 @@ const departmentApi = createApi({
     editResource: builder.mutation({
       query: ({ url, data }) => ({
         url,
-        method: 'PUT',
+        method: "PUT",
         body: data,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       }),
     }),
     postResource: builder.mutation({
       query: ({ url, data }) => ({
         url,
-        method: 'POST',
+        method: "POST",
         body: data,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
       }),
     }),
-
 
     deleteResource: builder.mutation({
       query: (url) => ({
         url,
-        method: 'DELETE',
+        method: "DELETE",
       }),
     }),
   }),

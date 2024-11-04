@@ -33,9 +33,12 @@ a {
   text-decoration: none;
 }
 
-
 @media print {
   #printable-content {
     display: flex;
   }
+}
+
+.border-test {
+  @apply border-2 border-red-400;
 }

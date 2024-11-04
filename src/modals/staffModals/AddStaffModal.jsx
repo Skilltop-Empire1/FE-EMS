@@ -1,95 +1,133 @@
+import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
+import { useCreateStaffMutation } from "@src/redux/api/staffApi";
 import { X } from "lucide-react";
 import React, { useState } from "react";
 import { z } from "zod";
 
 // Define schema using zod
 const staffSchema = z.object({
-  name: z.string().min(1, "Staff name is required"),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  role: z.string().min(1, "Role is required"),
+  departmentName: z.string().min(1, "Department is required"),
+  specialization: z.string().min(1, "Specialization is required"),
+  shiftSchedule: z.string().optional(),
+  employStatus: z.string().optional(),
+  location: z.string().optional(),
+  dateOfHire: z.string().min(1, "Date of hire is required"),
+  yrOfExperience: z.string().optional(),
+  email: z.string().email("Invalid email format").min(1, "Email is required"),
+  phone: z.string().optional(),
   dateOfBirth: z.string().min(1, "Date of birth is required"),
   gender: z.string().optional(),
-  location: z.string().optional(),
-  role: z.string().optional(),
-  dateOfHire: z.string().min(1, "Date of hire is required"),
-  department: z.string().optional(),
-  yearsOfExperience: z.string().optional(),
-  specialization: z.string().optional(),
-  phone: z.string().optional(),
-  qualification: z.string().optional(),
-  email: z.string().email("Invalid email format").optional(),
-  license: z.string().optional(),
+  licence: z.string().optional(),
+  educationalQualification: z.string().optional(),
 });
 
 const AddStaffModal = ({ toggleForm }) => {
+  const [createStaff, { isLoading, isError, isSuccess }] =
+    useCreateStaffMutation();
   const [formData, setFormData] = useState({
-    name: "",
-    dateOfBirth: "",
-    gender: "male",
-    location: "",
+    firstName: "",
+    lastName: "",
     role: "",
-    dateOfHire: "",
-    department: "",
-    yearsOfExperience: "",
+    departmentName: "",
     specialization: "",
-    phone: "",
-    qualification: "",
+    dateOfHire: "",
+    dateOfBirth: "",
     email: "",
-    license: "",
+    phone: "",
+    gender: "male",
+    licence: "",
+    educationalQualification: "",
   });
 
   const [keepOpen, setKeepOpen] = useState(false);
   const [formErrors, setFormErrors] = useState({});
 
-  const handleCheckboxChange = (e) => {
-    setKeepOpen(e.target.checked);
-  };
+  // Fetch departments
+  const { data: fetchedDepartment, isLoading: isLoadingDepartment } =
+    useFetchResourceQuery("/department/list");
 
-  const handleInputChange = (e) => {
+  const handleCheckboxChange = (e) => setKeepOpen(e.target.checked);
+
+  const handleInputChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const generateRandomValue = (field) => {
+    switch (field) {
+      case "yrOfExperience":
+        return `${Math.floor(Math.random() * 10)} years`;
+      case "shiftSchedule":
+        return "Day Shift";
+      case "employStatus":
+        return "Active";
+      case "location":
+        return "Default Location";
+      case "licence":
+        return `${Math.floor(Math.random() * 10000000000)}`;
+      case "educationalQualification":
+        return "Bachelor's Degree";
+      default:
+        return "";
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validate form data using zod schema
-    const result = staffSchema.safeParse(formData);
-    if (!result.success) {
+    const validationResult = staffSchema.safeParse(formData);
+    if (!validationResult.success) {
       const errors = {};
-      result.error.issues.forEach((issue) => {
+      validationResult.error.issues.forEach((issue) => {
         errors[issue.path[0]] = issue.message;
       });
       setFormErrors(errors);
       return;
     }
 
-    // Simulate form submission logic
-    console.log("Form Data Submitted: ", formData);
+    const dataToSubmit = {
+      ...formData,
+      yrOfExperience: generateRandomValue("yrOfExperience"),
+      shiftSchedule: generateRandomValue("shiftSchedule"),
+      employStatus: generateRandomValue("employStatus"),
+      location: generateRandomValue("location"),
+      licence: generateRandomValue("licence"),
+      educationalQualification: generateRandomValue("educationalQualification"),
+    };
 
-    // Clear form data
-    setFormData({
-      name: "",
-      dateOfBirth: "",
-      gender: "male",
-      location: "",
-      role: "",
-      dateOfHire: "",
-      department: "",
-      yearsOfExperience: "",
-      specialization: "",
-      phone: "",
-      qualification: "",
-      email: "",
-      license: "",
-    });
-
-    // Close the form if "Add another staff" is not checked
-    if (!keepOpen) {
-      toggleForm();
+    try {
+      console.log({ dataToSubmit });
+      await createStaff(dataToSubmit).unwrap(); // Use unwrap to handle promise resolution
+      resetForm();
+      if (!keepOpen) toggleForm(); // Close the form if not adding another staff
+    } catch (error) {
+      console.error("Failed to create staff: ", error);
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      firstName: "",
+      lastName: "",
+      role: "",
+      departmentName: "",
+      specialization: "",
+      dateOfHire: "",
+      dateOfBirth: "",
+      email: "",
+      phone: "",
+      gender: "male",
+      licence: "",
+      educationalQualification: "",
+    });
+    setFormErrors({});
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 overflow-auto">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl !mt-20 !mb-10">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold">Add Staff</h3>
           <button
@@ -99,263 +137,102 @@ const AddStaffModal = ({ toggleForm }) => {
             <X size={20} />
           </button>
         </div>
+
         <form
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
-          <div>
-            <label htmlFor="name" className="block mb-1 font-medium text-sm">
-              Staff Name <span className="text-red-400">*</span>
+          {Object.keys(formData).map((key) => (
+            <div key={key}>
+              <label htmlFor={key} className="block mb-1 font-medium text-sm">
+                {key.charAt(0).toUpperCase() +
+                  key.slice(1).replace(/([A-Z])/g, " $1")}
+                {formErrors[key] && <span className="text-red-400">*</span>}
+              </label>
+              {key === "dateOfBirth" || key === "dateOfHire" ? (
+                <input
+                  type="date"
+                  id={key}
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                />
+              ) : key === "gender" ? (
+                <select
+                  id={key}
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              ) : key === "departmentName" ? (
+                <select
+                  id={key}
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                >
+                  <option value="">Select Department</option>
+                  {fetchedDepartment?.map((dept) => (
+                    <option key={dept.id} value={dept.name}>
+                      {dept.name}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  type={key === "email" ? "email" : "text"}
+                  id={key}
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleInputChange}
+                  className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                />
+              )}
+              {formErrors[key] && (
+                <span className="text-red-500 text-xs">{formErrors[key]}</span>
+              )}
+            </div>
+          ))}
+
+          <div className="col-span-1 md:col-span-2">
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                checked={keepOpen}
+                onChange={handleCheckboxChange}
+                className="w-4 h-4"
+              />
+              <span className="text-sm">Add another staff</span>
             </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            />
-            {formErrors.name && (
-              <span className="text-red-500 text-xs">{formErrors.name}</span>
-            )}
           </div>
 
-          <div>
-            <label
-              htmlFor="dateOfBirth"
-              className="block mb-1 font-medium text-sm"
-            >
-              Date Of Birth <span className="text-red-400">*</span>
-            </label>
-            <input
-              type="date"
-              id="dateOfBirth"
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            />
-            {formErrors.dateOfBirth && (
-              <span className="text-red-500 text-xs">
-                {formErrors.dateOfBirth}
-              </span>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="gender" className="block mb-1 font-medium text-sm">
-              Gender
-            </label>
-            <select
-              id="gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-
-          <div>
-            <label
-              htmlFor="location"
-              className="block mb-1 font-medium text-sm"
-            >
-              Location
-            </label>
-            <textarea
-              rows={2}
-              id="location"
-              name="location"
-              value={formData.location}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-2 resize-none"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="role" className="block mb-1 font-medium text-sm">
-              Role/Position <span className="text-red-400">*</span>
-            </label>
-            <input
-              type="text"
-              id="role"
-              name="role"
-              value={formData.role}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="dateOfHire"
-              className="block mb-1 font-medium text-sm"
-            >
-              Date Of Hire <span className="text-red-400">*</span>
-            </label>
-            <input
-              type="date"
-              id="dateOfHire"
-              name="dateOfHire"
-              value={formData.dateOfHire}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            />
-            {formErrors.dateOfHire && (
-              <span className="text-red-500 text-xs">
-                {formErrors.dateOfHire}
-              </span>
-            )}
-          </div>
-
-          <div>
-            <label
-              htmlFor="department"
-              className="block mb-1 font-medium text-sm"
-            >
-              Department <span className="text-red-400">*</span>
-            </label>
-            <select
-              id="department"
-              name="department"
-              value={formData.department}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            >
-              <option>Paediatrics</option>
-              <option>A and E</option>
-            </select>
-          </div>
-
-          <div>
-            <label
-              htmlFor="yearsOfExperience"
-              className="block mb-1 font-medium text-sm"
-            >
-              Years Of Experience
-            </label>
-            <input
-              type="text"
-              id="yearsOfExperience"
-              name="yearsOfExperience"
-              value={formData.yearsOfExperience}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="specialization"
-              className="block mb-1 font-medium text-sm"
-            >
-              Specialization <span className="text-red-400">*</span>
-            </label>
-            <input
-              type="text"
-              id="specialization"
-              name="specialization"
-              value={formData.specialization}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="phone" className="block mb-1 font-medium text-sm">
-              Phone Number
-            </label>
-            <input
-              type="text"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="qualification"
-              className="block mb-1 font-medium text-sm"
-            >
-              Educational Qualification
-            </label>
-            <select
-              id="qualification"
-              name="qualification"
-              value={formData.qualification}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            >
-              <option>ND</option>
-              <option>MBBS</option>
-            </select>
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block mb-1 font-medium text-sm">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            />
-            {formErrors.email && (
-              <span className="text-red-500 text-xs">{formErrors.email}</span>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="license" className="block mb-1 font-medium text-sm">
-              License <span className="text-red-400">*</span>
-            </label>
-            <input
-              type="string"
-              id="license"
-              name="license"
-              value={formData.license}
-              onChange={handleInputChange}
-              className="w-full border border-gray-300 text-sm rounded-lg p-1"
-            />
-          </div>
-
-          <div className="col-span-1 flex items-center gap-4">
+          <div className="col-span-1 md:col-span-2">
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition"
+              disabled={isLoading} // Disable while loading
             >
-              Save
+              {isLoading ? "Adding Staff..." : "Add Staff"}
             </button>
-            <button
-              type="button"
-              onClick={toggleForm}
-              className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600"
-            >
-              Cancel
-            </button>
-          </div>
-
-          <div className="col-span-1 md:col-span-2 mt-4 flex items-center">
-            <input
-              type="checkbox"
-              checked={keepOpen}
-              onChange={handleCheckboxChange}
-              className="mr-2"
-            />
-            <label htmlFor="checkbox" className="text-gray-600">
-              Add another staff
-            </label>
           </div>
         </form>
+
+        {isError && (
+          <div className="text-red-500 text-sm">
+            Failed to add staff. Please try again.
+          </div>
+        )}
+        {isSuccess && (
+          <div className="text-green-500 text-sm">
+            Staff added successfully!
+          </div>
+        )}
       </div>
     </div>
   );

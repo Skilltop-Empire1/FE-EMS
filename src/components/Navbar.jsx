@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { ChevronUp, ChevronDown } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import profileImg from "./profile.png";
 import Logo from "./EMS logo-Transparent.png";
 import style from "./navBarStyle.module.css";
@@ -20,9 +22,11 @@ import { MODAL_TYPES, useModal } from "../context/ModalContext";
 const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
   const [isAppointmentDropdown, setIsAppointmentDropdown] = useState(false);
+  const [staffDropDown, setStaffDropDown] = useState(false);
   const { openModal, isShowModal, image } = useModal();
 
   const appointmentDropdownRef = useRef(null);
+  const staffDropdownRef = useRef(null);
 
   const handleClickOutsideDropdown = () => {
     if (
@@ -31,10 +35,17 @@ const Navbar = () => {
     ) {
       setIsAppointmentDropdown(false);
     }
+    if (
+      staffDropdownRef.current &&
+      !staffDropdownRef.current.contains(event.target)
+    ) {
+      setStaffDropDown(false);
+    }
   };
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutsideDropdown);
+
     return () =>
       document.removeEventListener("click", handleClickOutsideDropdown);
   }, []);
@@ -76,14 +87,26 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink
+              {/* <NavLink
                 to="/app/staff"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
               >
                 <IoMdPerson /> Staff
-              </NavLink>
+              </NavLink> */}
+              <CustomLinkWithDropdown
+                label="Staff"
+                icon={<TbReportMedical />}
+                path="/app/staff?type=doctors"
+                dropdownItems={[
+                  { path: "/app/staff?type=doctor", label: "Doctors" },
+                  { path: "/app/staff?type=nurses", label: "Nurses" },
+                  { path: "/app/staff?type=pharmacy", label: "Pharmacy" },
+                  { path: "/app/staff?type=laboratory", label: "Laboratory" },
+                  { path: "/app/staff?type=radiology", label: "Radiology" },
+                ]}
+              />
             </li>
             <li>
               <NavLink
@@ -217,14 +240,94 @@ const CustomLink = ({ path, icon, label }) => {
   );
 };
 
+// const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
+//   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+//   return (
+//     <div
+//       className="relative group"
+//       onMouseEnter={() => setIsDropdownOpen(true)}
+//       onMouseLeave={() => setIsDropdownOpen(false)}
+//     >
+//       <NavLink
+//         to={path}
+//         className={({ isActive }) =>
+//           `${
+//             isActive ? "text-purple-600" : "text-gray-800"
+//           } flex gap-1 items-center text-sm`
+//         }
+//       >
+//         {icon}
+//         <span>{label}</span>
+//         {/* Conditionally render Chevron icons based on dropdown state */}
+//         {dropdownItems && dropdownItems.length > 0 && (
+//           <span className="ml-2">
+//             {isDropdownOpen ? <ChevronUp /> : <ChevronDown />}
+//           </span>
+//         )}
+//       </NavLink>
+
+//       {/* Dropdown */}
+//       {dropdownItems && dropdownItems.length > 0 && (
+//         <div
+//           className={`absolute left-0 mt-2 w-30 bg-white shadow-lg rounded-md z-10 transition-all duration-300 ease-in-out origin-top transform ${
+//             isDropdownOpen
+//               ? "scale-100 opacity-100"
+//               : "scale-95 opacity-0 pointer-events-none"
+//           }`}
+//           onMouseEnter={() => setIsDropdownOpen(true)}
+//           onMouseLeave={() => setIsDropdownOpen(false)}
+//         >
+//           {dropdownItems.map((item, index) => (
+//             <NavLink
+//               key={index}
+//               to={item.path}
+//               className={({ isActive }) =>
+//                 `block px-4 py-2 text-sm ${
+//                   isActive ? "bg-purple-600 text-white" : "text-gray-800"
+//                 } hover:bg-gray-100`
+//               }
+//             >
+//               {item.label}
+//             </NavLink>
+//           ))}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
 const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const closeTimeoutRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    setIsDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 300); // Delay in milliseconds
+  };
+
+  const handleItemClick = () => {
+    setIsDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <div
       className="relative group"
-      onMouseEnter={() => setIsDropdownOpen(true)}
-      onMouseLeave={() => setIsDropdownOpen(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <NavLink
         to={path}
@@ -236,7 +339,6 @@ const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
       >
         {icon}
         <span>{label}</span>
-        {/* Conditionally render Chevron icons based on dropdown state */}
         {dropdownItems && dropdownItems.length > 0 && (
           <span className="ml-2">
             {isDropdownOpen ? <ChevronUp /> : <ChevronDown />}
@@ -244,31 +346,36 @@ const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
         )}
       </NavLink>
 
-      {/* Dropdown */}
+      {/* Dropdown with Framer Motion animation */}
       {dropdownItems && dropdownItems.length > 0 && (
-        <div
-          className={`absolute left-0 mt-2 w-30 bg-white shadow-lg rounded-md z-10 transition-all duration-300 ease-in-out origin-top transform ${
-            isDropdownOpen
-              ? "scale-100 opacity-100"
-              : "scale-95 opacity-0 pointer-events-none"
-          }`}
-          onMouseEnter={() => setIsDropdownOpen(true)}
-          onMouseLeave={() => setIsDropdownOpen(false)}
-        >
-          {dropdownItems.map((item, index) => (
-            <NavLink
-              key={index}
-              to={item.path}
-              className={({ isActive }) =>
-                `block px-4 py-2 text-sm ${
-                  isActive ? "bg-purple-600 text-white" : "text-gray-800"
-                } hover:bg-gray-100`
-              }
+        <AnimatePresence>
+          {isDropdownOpen && (
+            <motion.div
+              className="absolute left-0 mt-2 w-30 bg-white shadow-lg rounded-md z-10"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
-              {item.label}
-            </NavLink>
-          ))}
-        </div>
+              {dropdownItems.map((item, index) => (
+                <NavLink
+                  key={index}
+                  to={item.path}
+                  onClick={handleItemClick} // Close menu on item click
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-sm ${
+                      isActive ? "bg-purple-600 text-white" : "text-gray-800"
+                    } hover:bg-gray-100`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       )}
     </div>
   );

@@ -42,11 +42,11 @@ const router = createBrowserRouter([
   {
     path: "/app",
     element: (
-      <ProtectedRoute>
-        <Suspense fallback={<Loader />}>
-          <AppLayout />
-        </Suspense>
-      </ProtectedRoute>
+      // <ProtectedRoute>
+      <Suspense fallback={<Loader />}>
+        <AppLayout />
+      </Suspense>
+      // </ProtectedRoute>
     ),
     children: [
       {

@@ -1,24 +1,52 @@
-import React, { useState } from "react";
-import { tableHeader, tableData } from "./staffData";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Search } from "lucide-react";
 import StaffTable from "@src/components/dataTable2/StaffTable";
 import AddStaffModal from "@src/modals/staffModals/AddStaffModal";
+import { useFetchStaffQuery } from "@src/redux/api/staffApi";
+import StaffTableSkeleton from "@src/components/dataTable2/StaffTableSkeleton";
+import AddStaffModal2 from "@src/modals/staffModals/AddStaffModal2";
 
-const Staff = ({ type }) => {
+const StaffTypeList = [
+  "doctor",
+  "nurses",
+  "pharmacy",
+  "laboratory",
+  "radiography",
+];
+
+const Staff = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
-  const [data, setData] = useState(tableData);
   const [searchText, setSearchText] = useState("");
   const [specializationFilter, setSpecializationFilter] = useState("");
   const [practiceFilter, setPracticeFilter] = useState("");
-  // const [stayOpen, setStayOpen] = useState(false);
+  const [selectedType, setSelectedType] = useState("doctor");
 
-  const keepOpen = () => {
-    setShowForm(!showForm);
-  };
+  // Extract `type` from query params
+  const queryParams = new URLSearchParams(location.search);
+  const type = queryParams.get("type");
 
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  };
+  // Validate the type and set default if invalid
+  const isValidType = StaffTypeList.includes(type);
+  // isValidType ? type : "doctor";
+  const URL = `/staff/${selectedType}/all`;
+
+  // Fetch data based on `URL`
+  const { data: fetchedData, isLoading, error } = useFetchStaffQuery(URL);
+  console.log({ fetchedData, URL });
+  // Update URL if `type` is invalid
+  useEffect(() => {
+    if (!isValidType) {
+      navigate(`/app/staff?type=doctor`, { replace: true });
+      setSelectedType("doctor");
+    } else {
+      setSelectedType(type);
+    }
+  }, [isValidType, navigate, type, selectedType]);
+
+  const toggleForm = () => setShowForm((prev) => !prev);
 
   const handleSearch = (event) => {
     setSearchText(event.target.value);
@@ -53,8 +81,9 @@ const Staff = ({ type }) => {
     <div className="w-full px-10 py-5 flex flex-col space-y-4">
       <div className="my-4">
         <h2 className="text-2xl font-bold text-left">Staffs</h2>
-        <h2 className="text-2xl font-bold text-left">{type}</h2>
+        <h2 className="text-2xl font-bold text-left">{selectedType}</h2>
       </div>
+
       <div className="flex flex-wrap items-center gap-4 justify-between">
         <div className="relative flex items-center max-w-[400px] w-full">
           <Search className="absolute left-3 text-gray-500" size={20} />
@@ -83,9 +112,27 @@ const Staff = ({ type }) => {
           </button>
         </div>
       </div>
-      <div>
-        <StaffTable data={data} Role={"Specialization"} />
-      </div>
+
+      {isLoading ? (
+        <StaffTableSkeleton />
+      ) : (
+        <div>
+          <StaffTable
+            data={
+              fetchedData?.[
+                selectedType === "doctor"
+                  ? "doctors"
+                  : selectedType == "nurses"
+                  ? "nurse"
+                  : selectedType
+              ]
+            }
+            Role={"Specialization"}
+          />
+        </div>
+      )}
+
+      <AddStaffModal2 show={true} onClose={() => {}} customer={{}} />
 
       {showForm && (
         <div>

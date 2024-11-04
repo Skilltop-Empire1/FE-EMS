@@ -65,14 +65,14 @@ const StaffTable = ({ data, Role }) => {
       <table className="min-w-full table-fixed border-separate border-spacing-x-4 text-sm">
         <thead>
           <tr className="bg-gray-50 text-left gap-5">
-            <th className="font-light p-2">Staff Name</th>
-            <th className="font-light p-2">Role/Position</th>
-            <th className="font-light p-2">Department</th>
-            <th className="font-light p-2">Shift Schedule</th>
-            <th className="font-light p-2">Vacation Days </th>
-            <th className="font-light p-2">Specialization</th>
-            <th className="font-light p-2">Date of Hire</th>
-            <th className="font-light p-2">Action</th>
+            <th className="font-semibold p-2">Staff Name</th>
+            <th className="font-semibold p-2">Role/Position</th>
+            <th className="font-semibold p-2">Department</th>
+            <th className="font-semibold p-2">Shift Schedule</th>
+            <th className="font-semibold p-2">Vacation Days </th>
+            <th className="font-semibold p-2">Specialization</th>
+            <th className="font-semibold p-2">Date of Hire</th>
+            <th className="font-semibold p-2">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -83,13 +83,15 @@ const StaffTable = ({ data, Role }) => {
                 idx % 2 === 0 ? "bg-blue-100" : "bg-white"
               }`}
             >
-              <td className="p-2">{item.Name}</td>
-              <td className="p-2">{item.Email}</td>
-              <td className="p-2 ">{item.Gender}</td>
-              <td className="p-2 ">{item.MobileNumber}</td>
-              <td className="p-2 ">{item.Practice}</td>
-              <td className="p-2">{item.Specialization}</td>
-              <td className="p-2">12-12-2023</td>
+              <td className="p-2">
+                {item.firstName} {item.lastName}
+              </td>
+              <td className="p-2">{item.role}</td>
+              <td className="p-2 ">{item.departmentName}</td>
+              <td className="p-2 ">{item.shiftSchedule}</td>
+              <td className="p-2 ">{item?.vacationDays || "None"}</td>
+              <td className="p-2">{item.specialization}</td>
+              <td className="p-2">{item.dateOfBirth}</td>
               <td className="p-2">
                 <PopMenu
                   onView={() => handleView(item)}
