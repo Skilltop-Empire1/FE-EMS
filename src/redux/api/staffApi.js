@@ -7,7 +7,7 @@ const BASE_URL = "https://be-ems.onrender.com/api/v1";
 const staffApi = createApi({
   reducerPath: "staffApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-  tagTypes: ["StaffList"], // Define tag type for staff data
+  tagTypes: ["StaffList", "InviteStaffList"], // Define tag type for staff data
 
   endpoints: (builder) => ({
     fetchStaff: builder.query({
@@ -34,6 +34,16 @@ const staffApi = createApi({
       }),
       invalidatesTags: ["StaffList"], // Invalidate on create
     }),
+    
+    inviteStaff: builder.mutation({
+      query: (data) => ({
+        url: "/staff/invite",
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      }),
+      invalidatesTags: ["InviteStaffList"], // Invalidate on create
+    }),
 
     deleteStaff: builder.mutation({
       query: (staffId) => ({
@@ -50,6 +60,7 @@ export const {
   useFetchStaffQuery,
   useEditStaffMutation,
   useCreateStaffMutation,
+  useInviteStaffMutation,
   useDeleteStaffMutation,
 } = staffApi;
 

@@ -42,56 +42,7 @@ const Settings = () => {
   const [permissions, setPermissions] = useState(initialStatePermissions);
   const [checkedRoles, setCheckedRoles] = useState(initialStateRoles);
 
-  const handleCheckboxChange = (role) => {
-    setCheckedRoles((prev) => ({
-      ...prev,
-      [role]: !prev[role],
-    }));
-  };
 
-  const handleToggle = (item, permission) => {
-    setPermissions((prevPermissions) => ({
-      ...prevPermissions,
-      [item]: {
-        ...prevPermissions[item],
-        [permission]: !prevPermissions[item][permission],
-      },
-    }));
-  };
-
-  const handleSubmit = () => {
-    const URL = "";
-
-    const data = {
-      permissions,
-      roles: checkedRoles,
-      formData,
-    };
-
-    async function logDataToApi() {
-      try {
-        const response = await fetch(URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        console.log("Data sent successfully:", result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
-    logDataToApi();
-
-    console.log(data);
-  };
 
   return (
     <div className={styles.body}>

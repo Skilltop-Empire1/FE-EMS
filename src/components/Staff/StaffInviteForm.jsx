@@ -1,23 +1,24 @@
 import React, { useState } from "react";
-// import { useCreateStaffMutation } from '../../redux/staffApi'
 import { z } from "zod";
 import RolesPermissionsCard from "../settings/RolesPermissionsCard";
+import { useInviteStaffMutation } from "@src/redux/api/staffApi";
+import toast from "react-hot-toast";
 
 // Define Zod schema for form validation
 const staffInviteSchema = z.object({
   username: z.string().min(1, "Username is required"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  role: z.string().min(1, "Role is required"), // Add validation for role
-  permissions: z.array(
-    z.object({
-      label: z.string(),
-      view: z.boolean(),
-      create: z.boolean(),
-      edit: z.boolean(),
-      approval: z.boolean(),
-    })
-  ),
+  role: z.string().optional(), // Add validation for role
+  // permissions: z.array(
+  //   z.object({
+  //     label: z.string(),
+  //     view: z.boolean(),
+  //     create: z.boolean(),
+  //     edit: z.boolean(),
+  //     approval: z.boolean(),
+  //   })
+  // ),
 });
 
 const StaffInviteForm = () => {
@@ -28,8 +29,8 @@ const StaffInviteForm = () => {
   const [permissions, setPermissions] = useState([]); // State for permissions
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  // const [createStaff, { isLoading, isSuccess, isError }] =
-  //   useCreateStaffMutation();
+  const [inviteStaff, { isLoading, isSuccess, isError }] =
+    useInviteStaffMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,37 +41,35 @@ const StaffInviteForm = () => {
       email,
       password,
       username,
-      role, // Include role in validation
-      permissions,
+      // role, // Include role in validation
+      // permissions,
     });
 
     if (!validationResult.success) {
       const fieldErrors = validationResult.error.format();
+      console.log({fieldErrors});
       setErrors(fieldErrors);
       return;
     }
 
     try {
-      setLoading(true);
       // Call the mutation with form data
-      // await createStaff({
-      //   email,
-      //   password,
-      //   username,
-      //   role,
-      //   permissions,
-      // }).unwrap();
+      await inviteStaff({
+        email,
+        password,
+        userName:username,
+        // role,
+        // permissions,
+      }).unwrap();
       setEmail("");
       setPassword("");
       setUsername("");
       setRole("");
       setPermissions([]);
       setLoading(false);
-      alert("Invite sent successfully!");
+      toast.success("Invite sent successfully!");
     } catch (error) {
-      setLoading(false);
-      console.error("Failed to send invite:", error);
-      alert("Failed to send invite.");
+      toast.error("Email Record Does Not Exist");
     }
   };
 
@@ -164,18 +163,16 @@ const StaffInviteForm = () => {
         {/* Submit Button */}
         <div className="mt-6 flex justify-center gap-4">
           <button
-            type="submit"
             className="bg-emsPurple text-white py-2 px-6 rounded-md shadow-md hover:bg-emsPurple focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsPurple"
-            // disabled={loading || isLoading}
+            disabled={isLoading}
+            type="submit"
           >
-            {/* {loading || isLoading ? "Sending Invite..." : "Send Invite"} */}
-            Send Invite
+            {isLoading ? "Sending Invite..." : "Send Invite"}
           </button>
           <button
             className="bg-red-600 text-white py-2 px-6 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsPurple"
-            // disabled={loading || isLoading}
           >
-            {/* {loading || isLoading ? "Sending Invite..." : "Send Invite"} */}
+           
             Cancel
           </button>
         </div>
@@ -185,8 +182,8 @@ const StaffInviteForm = () => {
           <p className="text-green-600 text-sm mt-4">
             Invite sent successfully!
           </p>
-        )} */}
-        {/* {isError && (
+        )}
+        {isError && (
           <p className="text-red-600 text-sm mt-4">
             Failed to send invite. Please try again.
           </p>

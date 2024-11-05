@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, Settings } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import profileImg from "./profile.png";
@@ -197,6 +197,16 @@ const Navbar = () => {
                 <IoMdHelpCircle /> Help
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/app/settings"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+                <Settings /> Settings
+              </NavLink>
+            </li>
           </ul>
         </div>
         <div className={style.profileImgContainer}>
@@ -240,61 +250,6 @@ const CustomLink = ({ path, icon, label }) => {
   );
 };
 
-// const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
-//   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-//   return (
-//     <div
-//       className="relative group"
-//       onMouseEnter={() => setIsDropdownOpen(true)}
-//       onMouseLeave={() => setIsDropdownOpen(false)}
-//     >
-//       <NavLink
-//         to={path}
-//         className={({ isActive }) =>
-//           `${
-//             isActive ? "text-purple-600" : "text-gray-800"
-//           } flex gap-1 items-center text-sm`
-//         }
-//       >
-//         {icon}
-//         <span>{label}</span>
-//         {/* Conditionally render Chevron icons based on dropdown state */}
-//         {dropdownItems && dropdownItems.length > 0 && (
-//           <span className="ml-2">
-//             {isDropdownOpen ? <ChevronUp /> : <ChevronDown />}
-//           </span>
-//         )}
-//       </NavLink>
-
-//       {/* Dropdown */}
-//       {dropdownItems && dropdownItems.length > 0 && (
-//         <div
-//           className={`absolute left-0 mt-2 w-30 bg-white shadow-lg rounded-md z-10 transition-all duration-300 ease-in-out origin-top transform ${
-//             isDropdownOpen
-//               ? "scale-100 opacity-100"
-//               : "scale-95 opacity-0 pointer-events-none"
-//           }`}
-//           onMouseEnter={() => setIsDropdownOpen(true)}
-//           onMouseLeave={() => setIsDropdownOpen(false)}
-//         >
-//           {dropdownItems.map((item, index) => (
-//             <NavLink
-//               key={index}
-//               to={item.path}
-//               className={({ isActive }) =>
-//                 `block px-4 py-2 text-sm ${
-//                   isActive ? "bg-purple-600 text-white" : "text-gray-800"
-//                 } hover:bg-gray-100`
-//               }
-//             >
-//               {item.label}
-//             </NavLink>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
 
 const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
