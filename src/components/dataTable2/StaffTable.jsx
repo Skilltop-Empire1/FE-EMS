@@ -6,10 +6,25 @@ import {
   ChevronsRight,
 } from "lucide-react";
 import PopMenu from "./PopMenu";
+import StaffTableSkeleton from "./StaffTableSkeleton";
+import ViewStaffModal from "@src/modals/staffModals/ViewStaffModal";
 
 const StaffTable = ({ data, Role }) => {
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
+  const [viewStaffModal, setViewStaffModal] = useState(false);
+  const [staffData, setStaffData] = useState(null);
+
+
+  if (data == undefined) {
+return <div className="text-center text-red-500">No data available</div>;
+  }else if(!data){
+    <StaffTableSkeleton />
+  }
+  else if(data.length === 0){
+    return <div className="text-center text-red-500">No data available</div>;
+  }
+
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   // Calculate the index of the first and last item on the current page
@@ -45,8 +60,15 @@ const StaffTable = ({ data, Role }) => {
   };
 
   const handleView = (item) => {
-    console.log("View", item);
+    setViewStaffModal(true)
+    setStaffData(item)
   };
+  
+  const handleCloseViewStaffModal = () => {
+    setViewStaffModal(false)
+    setStaffData(null)
+
+  }
 
   const handleEdit = (item) => {
     console.log("Edit", item);
@@ -102,17 +124,16 @@ const StaffTable = ({ data, Role }) => {
             </tr>
           ))}
         </tbody>
+        {viewStaffModal && (<ViewStaffModal show={viewStaffModal} onClose={handleCloseViewStaffModal} staffData={staffData} />)}
       </table>
 
       <div className="mt-4 flex justify-between items-center">
-        {/* Text on the left side showing entries */}
         <div>
           {`Showing ${
             startIndex + 1
           } to ${endIndex} of ${displayedEntries} entries (filtered from ${filteredEntries} total entries)`}
         </div>
 
-        {/* Pagination controls */}
         <div className="flex items-center">
           <button
             onClick={goToFirstPage}
@@ -130,7 +151,6 @@ const StaffTable = ({ data, Role }) => {
             <ChevronLeft size={20} />
           </button>
 
-          {/* Numbered Pagination */}
           <div className="flex">
             {Array.from({ length: totalPages }, (_, index) => (
               <button

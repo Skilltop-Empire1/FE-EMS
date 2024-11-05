@@ -5,20 +5,15 @@ import StaffTable from "@src/components/dataTable2/StaffTable";
 import AddStaffModal from "@src/modals/staffModals/AddStaffModal";
 import { useFetchStaffQuery } from "@src/redux/api/staffApi";
 import StaffTableSkeleton from "@src/components/dataTable2/StaffTableSkeleton";
-import AddStaffModal2 from "@src/modals/staffModals/AddStaffModal2";
 
-const StaffTypeList = [
-  "doctor",
-  "nurses",
-  "pharmacy",
-  "laboratory",
-  "radiography",
-];
+
+const StaffTypeList = ["doctor", "nurses", "pharmacy", "laboratory", "radiography"];
 
 const Staff = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
+  const [showAddStaffModal, setShowAddStaffModal] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [specializationFilter, setSpecializationFilter] = useState("");
   const [practiceFilter, setPracticeFilter] = useState("");
@@ -30,27 +25,34 @@ const Staff = () => {
 
   // Validate the type and set default if invalid
   const isValidType = StaffTypeList.includes(type);
-  // isValidType ? type : "doctor";
-  const URL = `/staff/${selectedType}/all`;
 
-  // Fetch data based on `URL`
-  const { data: fetchedData, isLoading, error } = useFetchStaffQuery(URL);
-  console.log({ fetchedData, URL });
-  // Update URL if `type` is invalid
+  // Update URL and selected type if `type` is invalid
   useEffect(() => {
     if (!isValidType) {
       navigate(`/app/staff?type=doctor`, { replace: true });
       setSelectedType("doctor");
-    } else {
+    } else if (type && type !== selectedType) {
       setSelectedType(type);
     }
   }, [isValidType, navigate, type, selectedType]);
+
+  // Fetch data based on `selectedType`
+  const { data: fetchedStaff, isLoading, error } = useFetchStaffQuery(`/staff/${selectedType}/all`);
+
+  console.log({ fetchedStaff, selectedType, error });
 
   const toggleForm = () => setShowForm((prev) => !prev);
 
   const handleSearch = (event) => {
     setSearchText(event.target.value);
     filterData(event.target.value, specializationFilter, practiceFilter);
+  };
+
+  const launchAddStaffModal = () => {
+    setShowAddStaffModal(true);
+  };
+  const closeAddStaffModal = () => {
+    setShowAddStaffModal(false);
   };
 
   const handleSpecializationChange = (event) => {
@@ -65,12 +67,8 @@ const Staff = () => {
 
   const filterData = (searchText, specialization, practice) => {
     const filteredData = tableData.filter((item) => {
-      const matchesSearch = item.Name.toLowerCase().includes(
-        searchText.toLowerCase()
-      );
-      const matchesSpecialization = specialization
-        ? item.Specialization === specialization
-        : true;
+      const matchesSearch = item.Name.toLowerCase().includes(searchText.toLowerCase());
+      const matchesSpecialization = specialization ? item.Specialization === specialization : true;
       const matchesPractice = practice ? item.Practice === practice : true;
       return matchesSearch && matchesSpecialization && matchesPractice;
     });
@@ -105,7 +103,7 @@ const Staff = () => {
           </button>
           <button
             className="bg-emsBlue text-white px-6 py-3 font-light rounded-lg text-sm"
-            onClick={toggleForm}
+            onClick={launchAddStaffModal}
             disabled={showForm}
           >
             Add Staff
@@ -113,16 +111,16 @@ const Staff = () => {
         </div>
       </div>
 
-      {isLoading ? (
+      {isLoading || !fetchedStaff ? (
         <StaffTableSkeleton />
       ) : (
         <div>
           <StaffTable
             data={
-              fetchedData?.[
+              fetchedStaff?.[
                 selectedType === "doctor"
                   ? "doctors"
-                  : selectedType == "nurses"
+                  : selectedType === "nurses"
                   ? "nurse"
                   : selectedType
               ]
@@ -131,13 +129,8 @@ const Staff = () => {
           />
         </div>
       )}
-
-      <AddStaffModal2 show={true} onClose={() => {}} customer={{}} />
-
-      {showForm && (
-        <div>
-          <AddStaffModal toggleForm={toggleForm} />
-        </div>
+      {showAddStaffModal && (
+        <AddStaffModal show={showAddStaffModal} onClose={closeAddStaffModal} customer={{}} />
       )}
     </div>
   );

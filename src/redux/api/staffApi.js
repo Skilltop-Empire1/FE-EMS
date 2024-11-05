@@ -21,7 +21,7 @@ const staffApi = createApi({
     }),
     createStaff: builder.mutation({
       // Renamed for clarity
-      query: ({ data }) => ({
+      query: (data) => ({
         url: "/staff/create",
         method: "POST",
         body: JSON.stringify(data), // Ensure data is stringified

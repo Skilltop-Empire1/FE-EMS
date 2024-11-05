@@ -33,11 +33,11 @@ const StaffTableSkeleton = () => {
             <tr
               key={idx}
               className={`border-b gap-5 text-sm ${
-                idx % 2 === 0 ? "bg-blue-100" : "bg-white"
+                idx % 2 === 0 ? "bg-blue-100" : "bg-gray-100"
               }`}
             >
               {Array.from({ length: 8 }).map((_, colIdx) => (
-                <td key={colIdx} className="p-2">
+                <td key={colIdx} className="p-4">
                   <div className="h-5 bg-gray-300 rounded animate-pulse"></div>
                 </td>
               ))}
