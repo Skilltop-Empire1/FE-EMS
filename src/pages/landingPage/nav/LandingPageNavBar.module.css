@@ -19,6 +19,7 @@
 
 .nav li {
   margin: 0 1rem;
+  text-decoration: none;
 }
 
 .nav li a {
@@ -27,7 +28,6 @@
 
 .activeLink {
   font-weight: bold;
-  text-decoration: underline;
 }
 
 .loginButton {

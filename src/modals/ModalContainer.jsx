@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import style from "./profileModals/popUp.module.css";
 import ChangeProfileImage from "./profileModals/ChangeProfileImage";
-import ChangePassword from "./profileModals/ChangePassword";
+import ChangePassword from "./resetModal/changePassword";
 import LogoutConfirmation from "./profileModals/LogoutConfirmation";
 import AddOrganization from "./organisationModals/AddOrganization";
 import UpdateOrganization from "./organisationModals/UpdateOrganization";
@@ -57,6 +57,9 @@ function ModalContainer() {
 
       case MODAL_TYPES.TYPE11:
         return <DeleteAppointment {...modalProps} />;
+
+      case MODAL_TYPES.TYPE12:
+        return <ChangePassword {...modalProps} />;
 
       default:
         return null;

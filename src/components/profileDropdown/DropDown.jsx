@@ -2,13 +2,11 @@ import React, { useEffect, useRef } from "react";
 import { UserPlus, UserCheck, Lock, LogOut } from "lucide-react";
 import styles from "./Dropdown.module.css"; // Import the CSS module
 import { useNavigate } from "react-router-dom";
+import { MODAL_TYPES, useModal } from "../../context/ModalContext";
 
-function DropDown({
-  handleProfileImageChange,
-  handlePasswordChange,
-  setIsDropdown,
-}) {
+function DropDown({ handleProfileImageChange, setIsDropdown }) {
   const profileDropdownRef = useRef(null);
+  const { openModal } = useModal();
 
   const handleClickOutside = (e) => {
     if (!profileDropdownRef.current.contains(e.target)) {
@@ -28,12 +26,16 @@ function DropDown({
     ? JSON.parse(user)
     : { userName: "Guest", role: "User" };
 
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     console.log("clicked logout");
     localStorage.removeItem("user");
-    navigate("/"); // Navigate to the login page
+    navigate("/");
+  };
+
+  const handlePasswordChange = () => {
+    openModal(MODAL_TYPES.TYPE12);
   };
 
   return (

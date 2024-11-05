@@ -14,6 +14,7 @@ export const MODAL_TYPES = {
   TYPE9: "DELETE_ORGANIZATION",
   TYPE10: "VIEW_APPOINTMENT",
   TYPE11: "DELETE_APPOINTMENT",
+  TYPE12: "RESET_PASSWORD",
 };
 
 const ModalProvider = ({ children }) => {
