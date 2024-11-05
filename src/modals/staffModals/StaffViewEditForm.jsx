@@ -1,5 +1,9 @@
 import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
-import { useCreateStaffMutation } from "@src/redux/api/staffApi";
+import {
+  
+  useEditStaffMutation,
+} from "@src/redux/api/staffApi";
+import clsx from "clsx";
 import React, { useState } from "react";
 import { z } from "zod";
 
@@ -23,8 +27,11 @@ const staffSchema = z.object({
   educationalQualification: z.string().optional(),
 });
 
-const StaffViewEditForm = ({ onClose, isViewMode = false, initialData = {} }) => {
-  const [createStaff, { isLoading, isError, isSuccess }] = useCreateStaffMutation();
+const StaffViewEditForm = ({
+  onClose,
+  isViewMode = false,
+  initialData = {},
+}) => {
   const [formData, setFormData] = useState({
     ...initialData,
     firstName: initialData.firstName || "",
@@ -47,11 +54,15 @@ const StaffViewEditForm = ({ onClose, isViewMode = false, initialData = {} }) =>
   const [apiError, setApiError] = useState(null);
 
   // Fetch departments
-  const { data: fetchedDepartment, isLoading: isLoadingDepartment } = useFetchResourceQuery("/department/list");
+  const { data: fetchedDepartment, isLoading: isLoadingDepartment } =
+    useFetchResourceQuery("/department/list");
+
+  const [editStaff, { isLoading, isError, isSuccess }] = useEditStaffMutation();
 
   const handleCheckboxChange = (e) => setKeepOpen(e.target.checked);
 
-  const handleInputChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleInputChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,9 +80,9 @@ const StaffViewEditForm = ({ onClose, isViewMode = false, initialData = {} }) =>
     }
 
     try {
-      await createStaff(formData).unwrap();
-      resetForm();
-      if (!keepOpen) onClose();
+      await editStaff(formData?.staffId, formData).unwrap();
+      // resetForm();
+      // if (!keepOpen) onClose();
     } catch (error) {
       console.error("Failed to create staff: ", error);
       setApiError(error?.data?.error);
@@ -100,17 +111,28 @@ const StaffViewEditForm = ({ onClose, isViewMode = false, initialData = {} }) =>
     <div>
       <div className="flex justify-between mb-4">
         <h2 className="text-xl">{viewMode ? "View Staff" : "Edit Staff"}</h2>
-        <button onClick={() => setViewMode(!viewMode)} className="text-blue-600 hover:underline">
+        {/* <button onClick={() => setViewMode(!viewMode)} className="text-blue-600 hover:underline">
           {viewMode ? "Edit" : "View"}
-        </button>
+        </button> */}
       </div>
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {isError && <div className="col-span-2 text-xs text-red-500">{apiError}</div>}
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
+        {isError && (
+          <div className="col-span-2 text-xs text-red-500">{apiError}</div>
+        )}
         {Object.keys(formData).map((key) => (
-          <div key={key}>
+          <div
+            key={key}
+            className={clsx("", {
+              hidden: key == "staffId",
+            })}
+          >
             <label htmlFor={key} className="block mb-1 font-medium text-sm">
-              {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, " $1")}
+              {key.charAt(0).toUpperCase() +
+                key.slice(1).replace(/([A-Z])/g, " $1")}
               {formErrors[key] && <span className="text-red-400">*</span>}
             </label>
             {viewMode ? (
@@ -138,6 +160,19 @@ const StaffViewEditForm = ({ onClose, isViewMode = false, initialData = {} }) =>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
               </select>
+            ) : key === "role" ? (
+              <select
+                id={key}
+                name={key}
+                value={formData[key]}
+                onChange={handleInputChange}
+                className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                disabled={viewMode}
+              >
+                <option value="Doctor">Doctor</option>
+                <option value="Nurse">Nurse</option>
+                <option value="Admin">Admin</option>
+              </select>
             ) : key === "departmentName" ? (
               <select
                 id={key}
@@ -154,8 +189,7 @@ const StaffViewEditForm = ({ onClose, isViewMode = false, initialData = {} }) =>
                   </option>
                 ))}
               </select>
-            ) 
-            : (
+            ) : (
               <input
                 type={key === "email" ? "email" : "text"}
                 id={key}
@@ -166,7 +200,9 @@ const StaffViewEditForm = ({ onClose, isViewMode = false, initialData = {} }) =>
                 disabled={viewMode}
               />
             )}
-            {formErrors[key] && <span className="text-red-500 text-xs">{formErrors[key]}</span>}
+            {formErrors[key] && (
+              <span className="text-red-500 text-xs">{formErrors[key]}</span>
+            )}
           </div>
         ))}
 
@@ -187,13 +223,15 @@ const StaffViewEditForm = ({ onClose, isViewMode = false, initialData = {} }) =>
               className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition"
               disabled={isLoading}
             >
-              {isLoading ? "Saving..." : "Save Staff"}
+              {isLoading ? "Updating..." : "Update Staff"}
             </button>
           </div>
         )}
       </form>
 
-      {isSuccess && <div className="text-green-500 text-sm">Staff saved successfully!</div>}
+      {isSuccess && (
+        <div className="text-green-500 text-sm">Staff saved successfully!</div>
+      )}
     </div>
   );
 };

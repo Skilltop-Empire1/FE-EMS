@@ -10,6 +10,7 @@ import LandingPage from "./pages/landingPage/mainPage/LandingPage";
 import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
+import { Toaster } from 'react-hot-toast';
 
 // Lazy load app pages
 const AppLayout = lazy(() => import("./pages/app/AppLayout"));
@@ -42,11 +43,12 @@ const router = createBrowserRouter([
   {
     path: "/app",
     element: (
-      // <ProtectedRoute>
+      <ProtectedRoute>
       <Suspense fallback={<Loader />}>
         <AppLayout />
+        <Toaster />
       </Suspense>
-      // </ProtectedRoute>
+      </ProtectedRoute>
     ),
     children: [
       {

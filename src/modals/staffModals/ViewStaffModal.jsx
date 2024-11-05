@@ -10,7 +10,7 @@ const modalVariants = {
   exit: { opacity: 0, y: "50px" },
 };
 
-const ViewStaffModal = ({ show, onClose, staffData }) => {
+const ViewStaffModal = ({ show, onClose, staffData, viewMode }) => {
   const [loading, setLoading] = useState(false);
 
   if (!show) return null;
@@ -26,7 +26,7 @@ const ViewStaffModal = ({ show, onClose, staffData }) => {
       >
         {/* Modal body */}
        <div>
-        <StaffViewEditForm onClose={onClose} isViewMode={true} initialData={staffData} />
+        <StaffViewEditForm onClose={onClose} isViewMode={viewMode} initialData={staffData} />
        </div>
       </motion.div>
     </ModalWrapper>

@@ -8,20 +8,21 @@ import {
 import PopMenu from "./PopMenu";
 import StaffTableSkeleton from "./StaffTableSkeleton";
 import ViewStaffModal from "@src/modals/staffModals/ViewStaffModal";
+import DeleteStaffModal from "@src/modals/staffModals/DeleteStaffModal";
 
 const StaffTable = ({ data, Role }) => {
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [viewStaffModal, setViewStaffModal] = useState(false);
   const [staffData, setStaffData] = useState(null);
-
+  const [viewMode, setViewMode] = useState(null);
+  const [showDeleteStaffModal, setShowDeleteStaffModal] = useState(false);
 
   if (data == undefined) {
-return <div className="text-center text-red-500">No data available</div>;
-  }else if(!data){
-    <StaffTableSkeleton />
-  }
-  else if(data.length === 0){
+    return <div className="text-center text-red-500">No data available</div>;
+  } else if (!data) {
+    <StaffTableSkeleton />;
+  } else if (data.length === 0) {
     return <div className="text-center text-red-500">No data available</div>;
   }
 
@@ -60,22 +61,30 @@ return <div className="text-center text-red-500">No data available</div>;
   };
 
   const handleView = (item) => {
-    setViewStaffModal(true)
-    setStaffData(item)
+    setViewStaffModal(true);
+    setStaffData(item);
+    setViewMode(true);
   };
-  
-  const handleCloseViewStaffModal = () => {
-    setViewStaffModal(false)
-    setStaffData(null)
 
-  }
+  const handleCloseViewStaffModal = () => {
+    setViewStaffModal(false);
+    setStaffData(null);
+  };
+
+  const handleCloseDeleteStaffModal = () => {
+    setShowDeleteStaffModal(false);
+    setStaffData(null);
+  };
 
   const handleEdit = (item) => {
-    console.log("Edit", item);
+    setViewStaffModal(true);
+    setStaffData(item);
+    setViewMode(false);
   };
 
   const handleDelete = (item) => {
-    console.log("Delete", item);
+    setStaffData(item);
+    setShowDeleteStaffModal(true);
   };
 
   const displayedEntries = currentData.length;
@@ -124,7 +133,21 @@ return <div className="text-center text-red-500">No data available</div>;
             </tr>
           ))}
         </tbody>
-        {viewStaffModal && (<ViewStaffModal show={viewStaffModal} onClose={handleCloseViewStaffModal} staffData={staffData} />)}
+        {viewStaffModal && (
+          <ViewStaffModal
+            viewMode={viewMode}
+            show={viewStaffModal}
+            onClose={handleCloseViewStaffModal}
+            staffData={staffData}
+          />
+        )}
+        {showDeleteStaffModal && (
+          <DeleteStaffModal
+            show={showDeleteStaffModal}
+            onClose={handleCloseDeleteStaffModal}
+            staffData={staffData}
+          />
+        )}
       </table>
 
       <div className="mt-4 flex justify-between items-center">

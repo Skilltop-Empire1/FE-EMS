@@ -5,34 +5,42 @@ const BASE_URL = "https://be-ems.onrender.com/api/v1";
 
 // Create the staff API slice
 const staffApi = createApi({
-  reducerPath: "staffApi", // Keeps the name for clarity
+  reducerPath: "staffApi",
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  tagTypes: ["StaffList"], // Define tag type for staff data
+
   endpoints: (builder) => ({
     fetchStaff: builder.query({
-      query: (endpoint) => endpoint, // Using endpoint for better clarity
+      query: (endpoint) => endpoint,
+      providesTags: ["StaffList"], // Tag provided for staff data
     }),
+
     editStaff: builder.mutation({
-      query: ({ endpoint, data }) => ({
-        url: endpoint,
+      query: ({ staffId, data }) => ({
+        url: `/staff/edit/${staffId}`,
         method: "PUT",
-        body: JSON.stringify(data), // Ensure data is stringified
+        body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       }),
+      invalidatesTags: ["StaffList"], // Invalidate on edit
     }),
+
     createStaff: builder.mutation({
-      // Renamed for clarity
       query: (data) => ({
         url: "/staff/create",
         method: "POST",
-        body: JSON.stringify(data), // Ensure data is stringified
+        body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" },
       }),
+      invalidatesTags: ["StaffList"], // Invalidate on create
     }),
+
     deleteStaff: builder.mutation({
-      query: (endpoint) => ({
-        url: endpoint,
+      query: (staffId) => ({
+        url: `/staff/delete/${staffId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["StaffList"], // Invalidate on delete
     }),
   }),
 });
