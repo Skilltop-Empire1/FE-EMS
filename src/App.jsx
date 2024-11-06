@@ -1,26 +1,25 @@
 import React, { Suspense, lazy } from "react";
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import Loader from "./components/loader/Loader";
 import LandingPage from "./pages/landingPage/mainPage/LandingPage";
 import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
-// Lazy load app pages
+// Lazy-loaded pages for optimized initial load
 const AppLayout = lazy(() => import("./pages/app/AppLayout"));
 const Dashboard = lazy(() => import("./pages/app/Dashboard/Dashboard"));
 const Settings = lazy(() => import("./pages/app/SettingsPage/Settings"));
+const UserSettings = lazy(() =>
+  import("./pages/app/SettingsPage/UserSettings")
+);
+const Staff = lazy(() => import("./pages/app/Staff/Staff"));
 const StaffNurse = lazy(() => import("./pages/app/Staff/StaffNurse"));
 const Organizations = lazy(() =>
   import("./pages/app/Organization/Organizations")
 );
-const Staff = lazy(() => import("./pages/app/Staff/Staff"));
 const Patients = lazy(() => import("./pages/app/Patients/Patients"));
 const Appointments = lazy(() =>
   import("./pages/app/Appointments/Appointments")
@@ -28,6 +27,11 @@ const Appointments = lazy(() =>
 const Account = lazy(() => import("./pages/app/Account/Account"));
 const Help = lazy(() => import("./pages/app/Help/Help"));
 const Reports = lazy(() => import("./pages/app/Reports/Reports"));
+
+// Simplified suspense wrapper for fallback loading
+const SuspenseWrapper = ({ children }) => (
+  <Suspense fallback={<Loader />}>{children}</Suspense>
+);
 
 const router = createBrowserRouter([
   {
@@ -43,85 +47,92 @@ const router = createBrowserRouter([
   {
     path: "/app",
     element: (
-      // <ProtectedRoute>
-      <Suspense fallback={<Loader />}>
-        <AppLayout />
-        <Toaster />
-      </Suspense>
-      // </ProtectedRoute>
+      <ProtectedRoute>
+        <SuspenseWrapper>
+          <AppLayout />
+          <Toaster />
+        </SuspenseWrapper>
+      </ProtectedRoute>
     ),
     children: [
       {
         index: true,
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Dashboard />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
       {
         path: "settings",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Settings />
-          </Suspense>
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: "settings/user",
+        element: (
+          <SuspenseWrapper>
+            <UserSettings />
+          </SuspenseWrapper>
         ),
       },
       {
         path: "organization",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Organizations />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
       {
         path: "staff",
-        // element: <Navigate to="/staff/doctors" replace />,
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Staff />
-          </Suspense>
+          </SuspenseWrapper>
         ),
         children: [
           {
             path: "doctors",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Staff type="doctors" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "nurses",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <StaffNurse />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "pharmacists",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Staff type="pharmacists" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "lab-scientist",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Staff type="lab-scientist" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "radiographers",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Staff type="radiographers" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
         ],
@@ -129,98 +140,89 @@ const router = createBrowserRouter([
       {
         path: "patients",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Patients />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
       {
         path: "appointments",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Appointments />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
       {
         path: "account",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Account />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
-      // {
-      //   path: "reports",
-      //   element: (
-      //     <Suspense fallback={<Loader />}>
-      //       <Reports />
-      //     </Suspense>
-      //   ),
-      // },
       {
         path: "reports",
-        // element: <Navigate to="/staff/doctors" replace />,
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Reports />
-          </Suspense>
+          </SuspenseWrapper>
         ),
         children: [
           {
             path: "admin",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Reports type="admin" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "doctors",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Reports type="doctor" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "nurses",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Reports type="nurses" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "pharmacy",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Reports type="pharmacists" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "laboratory",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Reports type="laboratory" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "radiology",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Reports type="radiology" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
           {
             path: "account",
             element: (
-              <Suspense fallback={<Loader />}>
+              <SuspenseWrapper>
                 <Reports type="account" />
-              </Suspense>
+              </SuspenseWrapper>
             ),
           },
         ],
@@ -228,9 +230,9 @@ const router = createBrowserRouter([
       {
         path: "help",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Help />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
     ],

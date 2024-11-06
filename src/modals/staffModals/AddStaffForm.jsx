@@ -1,6 +1,7 @@
 import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
 import { useCreateStaffMutation } from "@src/redux/api/staffApi";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 // Define schema using zod
@@ -101,6 +102,7 @@ const AddStaffForm = ({ onClose }) => {
     try {
       await createStaff(dataToSubmit).unwrap(); // Use unwrap to handle promise resolution
       resetForm();
+      toast.success("Staff added successfully!");
       if (!keepOpen) onClose(); // Close the form if not adding another staff
     } catch (error) {
       console.error("Failed to create staff: ", error);
@@ -133,7 +135,9 @@ const AddStaffForm = ({ onClose }) => {
           onSubmit={handleSubmit}
           className="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
-          {isError && <div className="col-span-2 text-xs text-red-500">{apiError}</div>}
+          {isError && (
+            <div className="col-span-2 text-xs text-red-500">{apiError}</div>
+          )}
           {Object.keys(formData).map((key) => (
             <div key={key}>
               <label htmlFor={key} className="block mb-1 font-medium text-sm">
@@ -191,7 +195,13 @@ const AddStaffForm = ({ onClose }) => {
                 </select>
               ) : (
                 <input
-                  type={key === "email" ? "email" : key === "licence" ? "number" : "text"}
+                  type={
+                    key === "email"
+                      ? "email"
+                      : key === "licence"
+                      ? "number"
+                      : "text"
+                  }
                   id={key}
                   name={key}
                   value={formData[key]}

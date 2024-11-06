@@ -3,6 +3,7 @@ import { z } from "zod";
 import RolesPermissionsCard from "../settings/RolesPermissionsCard";
 import { useInviteStaffMutation } from "@src/redux/api/staffApi";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 // Define Zod schema for form validation
 const staffInviteSchema = z.object({
@@ -47,7 +48,7 @@ const StaffInviteForm = () => {
 
     if (!validationResult.success) {
       const fieldErrors = validationResult.error.format();
-      console.log({fieldErrors});
+      console.log({ fieldErrors });
       setErrors(fieldErrors);
       return;
     }
@@ -57,7 +58,7 @@ const StaffInviteForm = () => {
       await inviteStaff({
         email,
         password,
-        userName:username,
+        userName: username,
         // role,
         // permissions,
       }).unwrap();
@@ -137,14 +138,13 @@ const StaffInviteForm = () => {
             <label className="block text-sm font-medium text-gray-700 mt-5">
               {/* Email Address */}
             </label>
-            <button
-              type="submit"
-              className="border border-emsPurple text-emsPurple w-full py-2 px-6 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsPurple"
-              // disabled={loading || isLoading}
+            <Link
+              to="/app/settings/user"
+              type="button"
+              className="border inline-block border-emsPurple text-emsPurple w-full py-2 px-6 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsPurple"
             >
-              {/* {loading || isLoading ? "Sending Invite..." : "Send Invite"} */}
               Settings
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -169,10 +169,7 @@ const StaffInviteForm = () => {
           >
             {isLoading ? "Sending Invite..." : "Send Invite"}
           </button>
-          <button
-            className="bg-red-600 text-white py-2 px-6 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsPurple"
-          >
-           
+          <button className="bg-red-600 text-white py-2 px-6 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-imsPurple">
             Cancel
           </button>
         </div>

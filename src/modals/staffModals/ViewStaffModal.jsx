@@ -11,8 +11,6 @@ const modalVariants = {
 };
 
 const ViewStaffModal = ({ show, onClose, staffData, viewMode }) => {
-  const [loading, setLoading] = useState(false);
-
   if (!show) return null;
   return (
     <ModalWrapper onClose={onClose} contentMaxWidth="max-w-5xl" modalTitle="Staff">

@@ -1,8 +1,5 @@
 import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
-import {
-  
-  useEditStaffMutation,
-} from "@src/redux/api/staffApi";
+import { useEditStaffMutation } from "@src/redux/api/staffApi";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { z } from "zod";
@@ -81,8 +78,8 @@ const StaffViewEditForm = ({
 
     try {
       await editStaff(formData?.staffId, formData).unwrap();
-      // resetForm();
-      // if (!keepOpen) onClose();
+      toast.success("Staff added successfully!");
+      onClose();
     } catch (error) {
       console.error("Failed to create staff: ", error);
       setApiError(error?.data?.error);
@@ -228,10 +225,6 @@ const StaffViewEditForm = ({
           </div>
         )}
       </form>
-
-      {isSuccess && (
-        <div className="text-green-500 text-sm">Staff saved successfully!</div>
-      )}
     </div>
   );
 };

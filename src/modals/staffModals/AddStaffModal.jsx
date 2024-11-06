@@ -12,12 +12,16 @@ const modalVariants = {
   exit: { opacity: 0, y: "50px" },
 };
 
-const ViewStaffModal = ({ show, onClose }) => {
+const AddStaffModal = ({ show, onClose }) => {
   const [loading, setLoading] = useState(false);
 
   if (!show) return null;
   return (
-    <ModalWrapper onClose={onClose} contentMaxWidth="max-w-5xl" modalTitle="Add Staff">
+    <ModalWrapper
+      onClose={onClose}
+      contentMaxWidth="max-w-2xl"
+      modalTitle="Add Staff"
+    >
       <motion.div
         className="relative flex-grow"
         initial="hidden"
@@ -30,9 +34,9 @@ const ViewStaffModal = ({ show, onClose }) => {
         <div className="flex flex-col items-center justify-center space-y-4 rounded-t p-4">
         </div> */}
         {/* Modal body */}
-       <div>
-        <AddStaffForm onClose={onClose} />
-       </div>
+        <div>
+          <AddStaffForm onClose={onClose} />
+        </div>
         {/* Modal footer */}
         {/* <div className="flex items-center space-x-3 rounded-b border-t border-gray-200 p-6 rtl:space-x-reverse">
           <button
@@ -51,4 +55,4 @@ const ViewStaffModal = ({ show, onClose }) => {
   );
 };
 
-export default ViewStaffModal;
+export default AddStaffModal;

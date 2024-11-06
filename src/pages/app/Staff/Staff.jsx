@@ -6,8 +6,13 @@ import AddStaffModal from "@src/modals/staffModals/AddStaffModal";
 import { useFetchStaffQuery } from "@src/redux/api/staffApi";
 import StaffTableSkeleton from "@src/components/dataTable2/StaffTableSkeleton";
 
-
-const StaffTypeList = ["doctor", "nurses", "pharmacy", "laboratory", "radiography"];
+const StaffTypeList = [
+  "doctor",
+  "nurses",
+  "pharmacy",
+  "laboratory",
+  "radiography",
+];
 
 const Staff = () => {
   const location = useLocation();
@@ -37,7 +42,11 @@ const Staff = () => {
   }, [isValidType, navigate, type, selectedType]);
 
   // Fetch data based on `selectedType`
-  const { data: fetchedStaff, isLoading, error } = useFetchStaffQuery(`/staff/${selectedType}/all`);
+  const {
+    data: fetchedStaff,
+    isLoading,
+    error,
+  } = useFetchStaffQuery(`/staff/${selectedType}/all`);
 
   console.log({ fetchedStaff, selectedType, error });
 
@@ -67,8 +76,12 @@ const Staff = () => {
 
   const filterData = (searchText, specialization, practice) => {
     const filteredData = tableData.filter((item) => {
-      const matchesSearch = item.Name.toLowerCase().includes(searchText.toLowerCase());
-      const matchesSpecialization = specialization ? item.Specialization === specialization : true;
+      const matchesSearch = item.Name.toLowerCase().includes(
+        searchText.toLowerCase()
+      );
+      const matchesSpecialization = specialization
+        ? item.Specialization === specialization
+        : true;
       const matchesPractice = practice ? item.Practice === practice : true;
       return matchesSearch && matchesSpecialization && matchesPractice;
     });
@@ -78,8 +91,11 @@ const Staff = () => {
   return (
     <div className="w-full px-10 py-5 flex flex-col space-y-4">
       <div className="my-4">
-        <h2 className="text-2xl font-bold text-left">Staffs</h2>
-        <h2 className="text-2xl font-bold text-left">{selectedType}</h2>
+        <h2 className="text-2xl font-bold text-left">
+          Staffs -{" "}
+          {selectedType &&
+            selectedType?.charAt(0).toUpperCase() + selectedType?.slice(1)}
+        </h2>
       </div>
 
       <div className="flex flex-wrap items-center gap-4 justify-between">
@@ -130,7 +146,11 @@ const Staff = () => {
         </div>
       )}
       {showAddStaffModal && (
-        <AddStaffModal show={showAddStaffModal} onClose={closeAddStaffModal} customer={{}} />
+        <AddStaffModal
+          show={showAddStaffModal}
+          onClose={closeAddStaffModal}
+          customer={{}}
+        />
       )}
     </div>
   );

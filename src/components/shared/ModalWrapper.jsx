@@ -20,7 +20,7 @@ const ModalWrapper = ({
   onClose,
   contentMaxWidth = "max-w-lg",
   position = "center",
-  modalTitle = "Modal Title"
+  modalTitle = "Modal Title",
 }) => {
   return (
     <AnimatePresence>
@@ -60,11 +60,11 @@ const ModalWrapper = ({
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-gray-400 hover:text-gray-900"
+              className="inline-flex h-8 w-8 items-center justify-center rounded bg-gray-200 text-gray-400 hover:text-gray-900"
               data-modal-hide="modal"
             >
               <svg
-                className="h-3 w-3"
+                className="h-2 w-2"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
