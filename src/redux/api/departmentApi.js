@@ -9,6 +9,7 @@ const departmentApi = createApi({
       const user = localStorage.getItem('user'); // Get the user object
       const token = user ? JSON.parse(user).token : null; // Parse the object and extract the token
 
+      
 
       console.log('Token in state:', token);
       if (token) {
