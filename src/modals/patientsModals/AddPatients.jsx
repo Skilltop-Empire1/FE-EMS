@@ -4,8 +4,8 @@ import { createPatient } from '../../hooks/Api';
 import { useFetchResourceQuery, usePostResourceMutation } from 'src/redux/api/departmentApi';
 
 const AddPatients = ({ toggleForm }) => {
-    const{data: departmentData = [], isLoading: departmentLoading, error: departmentError} = useFetchResourceQuery('/api/v1/department/list')
-    const{data: staffData = [], isLoading: staffLoading, error: staffError} = useFetchResourceQuery('/api/v1/staff/doctor/all')
+    const{data: departmentData = [], isLoading: departmentLoading, error: departmentError} = useFetchResourceQuery('/department/list')
+    const{data: staffData = [], isLoading: staffLoading, error: staffError} = useFetchResourceQuery('/staff/doctor/all')
     const [postResource, {error, isLoading}] = usePostResourceMutation()
     
     
@@ -239,7 +239,7 @@ const AddPatients = ({ toggleForm }) => {
             <label htmlFor="checkbox" className={` text-emsBlue`}> Add another patient</label>
           </div>
           <div className='flex gap-3'>
-            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>Save</button>
+            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Saving' : 'Save'}</button>
             <button  className={`text-white bg-emsRed ${style.submit}`} onClick={handleClose}>Cancel</button>
             </div>
         </form>

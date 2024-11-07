@@ -7,7 +7,7 @@ const ViewAccount = ({ toggleForm, account }) => {
     const [keepOpen, setKeepOpen] = useState(false);
     const [postResource, { isSuccess: postSuccess, isLoading: postLoading, error: postError }] = usePostResourceMutation()
     const [editResource, { isSuccess, isLoading, error }] = useEditResourceMutation()
-    const { data: patientData, error: patientError, isLoading: patientLoading } = useFetchResourceQuery('/api/v1/patient/list')
+    const { data: patientData, error: patientError, isLoading: patientLoading } = useFetchResourceQuery('/patient/list')
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedPatient, setSelectedPatient] = useState(null);
     const [filteredOptions, setFilteredOptions] = useState([]);
@@ -196,10 +196,10 @@ const ViewAccount = ({ toggleForm, account }) => {
                     <div className={style.formChild}>
                         <label htmlFor="paymentMethod">Payment Method</label>
                         <select id="paymentMethod" name="paymentMethod" className={style.input} required value={formData?.paymentMethod} onChange={handleInputChange}>
-                            <option value="">Select Payment Method</option>
-                            <option value="cash">Cash</option>
-                            <option value="POS">POS</option>
-                            <option value="Transfer">Transfer</option>
+                        <option value="">Select Payment Method</option>
+                            <option value="Direct">Direct</option>
+                            <option value="NHIS">NHIS</option>
+                            <option value="Insurance">Insurance</option>
                             <option value="HMO">HMO</option>
                         </select>
                     </div>
@@ -209,7 +209,14 @@ const ViewAccount = ({ toggleForm, account }) => {
                     </div>
                     <div className={style.formChild}>
                         <label htmlFor="paymentProvider">Payment Provider</label>
-                        <input type="text" id="paymentProvider" name="paymentProvider" className={style.input} value={formData?.paymentProvider} required onChange={handleInputChange}/>
+                        
+                        <select id="paymentProvider" name="paymentProvider" className={style.input}value={formData?.paymentProvider} required onChange={handleInputChange}>
+                            <option value="">Select Payment Provider</option>
+                            {/* <option value="Direct">Direct</option> */}
+                            <option value="Hires">Hires</option>
+                            <option value="Federal Health Care">Federal Health Care</option>
+                            <option value="HMO">HMO</option>
+                        </select>
                     </div>
                     <div className={style.formChild}>
                       <label htmlFor="paymentRefNo">Payment Reference Number</label>
@@ -245,7 +252,7 @@ const ViewAccount = ({ toggleForm, account }) => {
                         <label className="text-emsBlue"> Create another account</label> */}
                     </div>
                     <div className='flex gap-3'>
-                        <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Saving' : 'Save'}</button>
+                        <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Updating' : 'update'}</button>
                         <button onClick={handleClose} className={`text-white bg-emsRed ${style.submit}`}>Cancel</button>
                     </div>
                 </form>

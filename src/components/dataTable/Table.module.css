@@ -1,7 +1,10 @@
 .table {
   width: 100%;
-  border-collapse: separate;
+  /* border-collapse: separate; */
   border-spacing: 10px 0;
+  box-shadow: 0px 0px 1px 0px #171A1F12;
+  box-shadow: 0px 0px 2px 0px #171A1F1F;
+  margin-top: 20px;
 }
 
 .table thead tr {
@@ -90,13 +93,17 @@
 }
 
 .pagination button {
-  color: #71aafe;
+  width: 34px;
+  height: 34px;
+  padding: 3px;
+  border-radius: 2px;
+  border: 1px solid #E0E0E0;
+  background-color: #ffffff;
+  color: #171A1F;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-family: Manrope;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  text-align: left;
-  margin-right: 2px;
 }
 
 .pageButton {

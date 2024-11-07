@@ -145,7 +145,7 @@ const ViewPatients = ({ toggleForm, patient }) => {
             
           </div>
           <div className='flex gap-3'>
-            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>Update Details</button>
+            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Updating' :'Update Details'}</button>
             <button  className={`text-white bg-emsRed ${style.submit}`} onClick={handleClose}>Cancel</button>
             </div>
         </form>
