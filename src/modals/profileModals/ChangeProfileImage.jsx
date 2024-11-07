@@ -1,42 +1,62 @@
 import { useRef, useState } from "react";
 import style from "./popUp.module.css";
 import { useModal } from "../../context/ModalContext";
+import { usePostResourceMutation } from "@src/redux/api/departmentApi";
 
 function ChangeProfileImage() {
   const fileInputRef = useRef(null);
-
+  const [error, setError] = useState("");
   const {
     image,
     setImage,
     handleFile,
-    setError,
-    error,
-    setSelectedFile,
-    selectedFile,
     closeModal,
+    selectedFile,
+    setSelectedFile,
   } = useModal();
 
-  function handleFileSelect(e) {
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB limit
+
+  const handleFileSelect = (e) => {
     const file = e.target.files[0];
-    handleFile(file);
-  }
 
-  function handleUpload() {
-    if (selectedFile) {
-      console.log("image Upload: ", image);
-      setError("");
-      setSelectedFile(null);
-
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
+    if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        setError("File size exceeds 2MB limit.");
+        return;
       }
-      closeModal();
+      handleFile(file);
+      setSelectedFile(file); // Ensure selected file is set
+    }
+  };
 
-      reader.readAsDataURL(selectedFile);
+  const [postResource] = usePostResourceMutation();
+
+  const handleUpload = async () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("profilePic", selectedFile);
+
+      for (const [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+      try {
+        await postResource({
+          url: "/staff/upload-profile-pic",
+          data: formData,
+        }).unwrap();
+        setImage(URL.createObjectURL(selectedFile));
+        setSelectedFile(null);
+        closeModal();
+      } catch (error) {
+        console.error("Upload failed:", error);
+        setError("Upload failed. Please try again.");
+      }
     } else {
       setError("No file selected");
     }
-  }
+  };
 
   return (
     <>

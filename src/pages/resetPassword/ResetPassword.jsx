@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useResetPasswordMutation } from "../../redux/api/authApi";
 import styles from "./ResetPassword.module.css";
 import forgot from "../../components/reset.png";
+import { useNavigate } from "react-router-dom";
 
 function ResetPassword() {
   const [email, setEmail] = useState("");
@@ -8,8 +10,10 @@ function ResetPassword() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [resetPassword] = useResetPasswordMutation();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !newPassword || !confirmPassword) {
@@ -25,19 +29,30 @@ function ResetPassword() {
       return;
     }
 
-    console.log("Reset password for:", email);
-    console.log("New password:", newPassword);
+    try {
+      await resetPassword({
+        email,
+        password: newPassword,
+        confirmPassword,
+      }).unwrap();
+      setSuccess(true);
+      setError("");
 
-    // Simulate successful submission
-    setSuccess(true);
-    setError("");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    } catch (err) {
+      setError(
+        err.data?.message || "Failed to reset password. Please try again."
+      );
+    }
   };
 
   return (
     <div className={styles.container}>
       <div className={`forgot-password flex h-screen items-center`}>
         <div className="w-1/2 flex justify-center items-center">
-          <img src={forgot} alt="" />
+          <img src={forgot} alt="Reset Password" />
         </div>
 
         <div className="w-1/2 flex justify-center items-center flex-col h-full gap-10 bg-[#E0F7F7B2]">
@@ -45,7 +60,7 @@ function ResetPassword() {
           <p className="text-xl text-[#333333]">
             Enter your email address below to create a new password.
           </p>
-          <form onSubmit={handleSubmit} className=" flex flex-col gap-3 w-4/5">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-4/5">
             <div className="w-full">
               <div className={styles.formGroup}>
                 <label className="text-lg text-[#333333]">Email</label>
@@ -61,7 +76,7 @@ function ResetPassword() {
                 />
               </div>
               <div className={styles.formGroup}>
-                <label className="text-lg text-[#333333]">Password</label>
+                <label className="text-lg text-[#333333]">New Password</label>
                 <br />
                 <input
                   type="password"
@@ -69,13 +84,13 @@ function ResetPassword() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
-                  placeholder="Enter email"
+                  placeholder="Enter new password"
                   className="w-full h-12 text-[#333333] rounded-md border-2 border-[#33333380] bg-[#E0F7F7B2] p-4"
                 />
               </div>
               <div className={styles.formGroup}>
                 <label className="text-lg text-[#333333]">
-                  Confirm password
+                  Confirm Password
                 </label>
                 <br />
                 <input
@@ -84,12 +99,16 @@ function ResetPassword() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  placeholder="Enter email"
+                  placeholder="Confirm new password"
                   className="w-full h-12 text-[#333333] rounded-md border-2 border-[#33333380] bg-[#E0F7F7B2] p-4"
                 />
               </div>
               {error && <p className={styles.error}>{error}</p>}
-              {success && <p>Password has been reset successfully!</p>}
+              {success && (
+                <p className="text-green-500">
+                  Password has been reset successfully!
+                </p>
+              )}
             </div>
             <button
               type="submit"
@@ -100,53 +119,6 @@ function ResetPassword() {
           </form>
         </div>
       </div>
-      {/* <h2>Reset Password</h2>
-      {error && <p className={styles.error}>{error}</p>}
-      {success && <p>Password has been reset successfully!</p>}
-      <form onSubmit={handleSubmit}>
-        <div className={styles.formGroup}>
-          <label htmlFor="email" className={styles.label}>
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="newPassword" className={styles.label}>
-            New Password
-          </label>
-          <input
-            type="password"
-            id="newPassword"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-            className={styles.input}
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="confirmPassword" className={styles.label}>
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-            className={styles.input}
-          />
-        </div>
-        <button type="submit" className={styles.button}>
-          Reset Password
-        </button>
-      </form> */}
     </div>
   );
 }
