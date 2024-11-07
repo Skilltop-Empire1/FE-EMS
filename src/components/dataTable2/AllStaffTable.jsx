@@ -9,7 +9,8 @@ const AllStaffTable = () => {
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [staffData, setStaffData] = useState(false);
+  const [staffData, setStaffData] = useState(null);
+  const [selectedStaff, setSelectedStaff] = useState(null);
 
   // Fetch data from API
   const { data, isLoading, isError } = useFetchAllStaffQuery({
@@ -23,49 +24,41 @@ const AllStaffTable = () => {
     useFetchResourceQuery("/department/list");
 
   useEffect(() => {
-    // Reset current page on data change if needed
     setCurrentPage(data?.currentPage || 1);
   }, [data]);
 
-  if (isLoading)
-    return (
-      <p>
-        <StaffTableSkeleton />
-      </p>
-    );
+  if (isLoading) return <StaffTableSkeleton />;
   if (isError) return <p>Error loading staff data. Please try again later.</p>;
 
   // Pagination controls
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < data.totalPages) setCurrentPage(currentPage + 1);
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
+  const handlePageClick = (page) => setCurrentPage(page);
+  const handleNextPage = () =>
+    currentPage < data.totalPages && setCurrentPage(currentPage + 1);
+  const handlePrevPage = () =>
+    currentPage > 1 && setCurrentPage(currentPage - 1);
 
   const launchEditStaffModal = (data) => {
     setShowEditModal(true);
     setStaffData(data);
   };
-  const handleCloseEditStaffModal = () => {
-    setShowEditModal(false);
-    setStaffData(null);
+
+  const handleRowClick = (staffMember) => {
+    setSelectedStaff((prevSelected) =>
+      prevSelected?.staffId === staffMember.staffId ? null : staffMember
+    );
   };
 
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-lg font-semibold mb-4">Staff Directory</h2>
 
-      {/* Responsive table container */}
       <div className="overflow-x-auto">
         <table className="min-w-full table-fixed border-separate border-spacing-x-4 text-sm">
           <thead>
             <tr className="bg-gray-50 text-left gap-5">
+              <th className="font-semibold p-2 w-10">
+                <input type="checkbox" disabled />
+              </th>
               <th className="font-semibold p-2">Username</th>
               <th className="font-semibold p-2">Email</th>
               <th className="font-semibold p-2">Added Date</th>
@@ -78,11 +71,24 @@ const AllStaffTable = () => {
           <tbody>
             {data?.staff.map((staffMember, idx) => (
               <tr
-                key={staffMember.userName}
-                className={`border-b gap-5 text-sm ${
+                key={staffMember.staffId}
+                className={`border-b gap-5 text-sm cursor-pointer ${
                   idx % 2 === 0 ? "bg-blue-100" : "bg-white"
+                } ${
+                  selectedStaff?.staffId === staffMember.staffId
+                    ? "bg-blue-200"
+                    : ""
                 }`}
+                onClick={() => handleRowClick(staffMember)}
               >
+                <td className="p-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedStaff?.staffId === staffMember.staffId}
+                    onChange={() => handleRowClick(staffMember)}
+                    className="cursor-pointer"
+                  />
+                </td>
                 <td className="p-2">{staffMember.userName}</td>
                 <td className="p-2">{staffMember.email}</td>
                 <td className="p-2">
@@ -95,7 +101,10 @@ const AllStaffTable = () => {
                 <td className="p-2">{staffMember.departmentName || "N/A"}</td>
                 <td className="p-2">
                   <button
-                    onClick={() => launchEditStaffModal(staffMember)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      launchEditStaffModal(staffMember);
+                    }}
                     className="text-blue-600 hover:underline"
                   >
                     Edit
@@ -110,11 +119,12 @@ const AllStaffTable = () => {
       {showEditModal && (
         <EditStaffModal
           show={showEditModal}
-          onClose={handleCloseEditStaffModal}
+          onClose={() => setShowEditModal(false)}
           data={staffData}
           departments={fetchedDepartment || []}
         />
       )}
+
       {/* Pagination controls */}
       <div className="flex items-center justify-between mt-4">
         <p className="text-sm text-gray-600">
@@ -129,16 +139,10 @@ const AllStaffTable = () => {
             <ChevronLeft />
           </button>
 
-          {/* Page numbers */}
           {Array.from({ length: data?.totalPages }, (_, i) => i + 1).map(
             (page) => (
               <button
                 key={page}
-                // className={`px-2 py-1 rounded ${
-                //   page === currentPage
-                //     ? "bg-blue-500 text-white"
-                //     : "bg-gray-300 hover:bg-gray-400"
-                // }`}
                 className={`flex items-center justify-center w-10 h-10 border border-gray-400 ${
                   page === currentPage
                     ? "bg-blue-500 text-white"
@@ -167,7 +171,6 @@ const AllStaffTable = () => {
 export default AllStaffTable;
 
 const getStatusBadge = (status) => {
-  // Capitalize the first character of the status
   const formattedStatus = status.charAt(0).toUpperCase() + status.slice(1);
 
   let colorClass = "";

@@ -88,7 +88,7 @@ const StaffTable = ({ data, Role }) => {
   };
 
   const displayedEntries = currentData.length;
-  const totalEntries = data.length;
+
   const filteredEntries = data.length; // Assuming no filtering, but can adjust for actual filters.
 
   return (

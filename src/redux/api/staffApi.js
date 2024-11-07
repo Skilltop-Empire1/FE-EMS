@@ -53,7 +53,7 @@ const staffApi = createApi({
     }),
 
     editInviteStaff: builder.mutation({
-      query: ({ staffId, data }) => ({
+      query: (staffId, data) => ({
         url: `/staff/update/${staffId}`,
         method: "PUT",
         body: JSON.stringify(data),

@@ -21,7 +21,10 @@ const EditStaffModal = ({ show, onClose, data, departments }) => {
     staffStatus: data.staffStatus,
     role: data.role,
     departmentName: data.departmentName,
+    permissions: data.permission,
   });
+
+  console.log({ data });
 
   const [editInviteStaff, { isLoading, isError, isSuccess }] =
     useEditInviteStaffMutation();
@@ -34,6 +37,57 @@ const EditStaffModal = ({ show, onClose, data, departments }) => {
       staffStatus: data.staffStatus,
       role: data.role,
       departmentName: data.departmentName,
+      permissions: data.permission,
+      // permissions: [
+      //   {
+      //     label: "Department",
+      //     view: false,
+      //     create: false,
+      //     edit: false,
+      //     delete: false,
+      //     transfer: false,
+      //   },
+      //   {
+      //     label: "Staff",
+      //     view: false,
+      //     create: false,
+      //     edit: false,
+      //     delete: false,
+      //     transfer: false,
+      //   },
+      //   {
+      //     label: "Patients",
+      //     view: false,
+      //     create: false,
+      //     edit: false,
+      //     delete: false,
+      //     transfer: false,
+      //   },
+      //   {
+      //     label: "Appointments",
+      //     view: false,
+      //     create: false,
+      //     edit: false,
+      //     delete: false,
+      //     transfer: false,
+      //   },
+      //   {
+      //     label: "Accounts",
+      //     view: false,
+      //     create: false,
+      //     edit: false,
+      //     delete: false,
+      //     transfer: false,
+      //   },
+      //   {
+      //     label: "Reports",
+      //     view: false,
+      //     create: false,
+      //     edit: false,
+      //     delete: false,
+      //     transfer: false,
+      //   },
+      // ],
     });
   }, [data]);
 
@@ -45,8 +99,9 @@ const EditStaffModal = ({ show, onClose, data, departments }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    console.log(data?.staffId, formData);
     try {
-      await editInviteStaff(formData?.staffId, formData).unwrap();
+      await editInviteStaff(data?.staffId, formData).unwrap();
       toast.success("Staff added Updated!");
     } catch (error) {
       toast.error("Failed to Update Staff!");
