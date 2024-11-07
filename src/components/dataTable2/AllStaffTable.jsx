@@ -81,10 +81,16 @@ const AllStaffTable = () => {
 
   const handleUpdatePermission = async () => {
     if (selectedStaff) {
+      const submittedData = {
+        ...setSelectedStaff,
+        permissions: permissions,
+      };
       console.log({ permissions });
       try {
-        let data = await editInviteStaff(selectedStaff.staffId, permissions); // Update the role
-        console.log({ data });
+        let data = await editInviteStaff(selectedStaff.staffId, submittedData); // Update the role
+        if (data?.error) {
+          throw new Error(data.error);
+        }
         toast.success("Staff Permissions Updated!");
       } catch (error) {
         toast.error("Failed to Update Staff!");
@@ -221,7 +227,7 @@ const AllStaffTable = () => {
             permissions={selectedStaff?.permissions || permissions}
             onPermissionsChange={handlePermissionsChange}
           />
-          <div className="text-center">
+          {/* <div className="text-center">
             {isSuccess && (
               <p className="text-green-400">
                 Permissions Updated Successfully!
@@ -229,7 +235,7 @@ const AllStaffTable = () => {
             )}
 
             {isUpdatePermissionMutation && <p>Error Updating Permissions</p>}
-          </div>
+          </div> */}
           <button
             className="mt-4 px-4 py-2 bg-emsBlue text-white rounded self-center disabled:bg-emsBlue/80"
             onClick={handleUpdatePermission}

@@ -24,6 +24,9 @@ const EditStaffModal = ({ show, onClose, data, departments }) => {
     permissions: data.permission,
   });
 
+  const [editInviteStaff, { isLoading, isError, isSuccess }] =
+    useEditInviteStaffMutation();
+
   useEffect(() => {
     setFormData({
       userName: data.userName,
