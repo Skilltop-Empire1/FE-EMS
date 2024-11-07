@@ -24,11 +24,6 @@ const EditStaffModal = ({ show, onClose, data, departments }) => {
     permissions: data.permission,
   });
 
-  console.log({ data });
-
-  const [editInviteStaff, { isLoading, isError, isSuccess }] =
-    useEditInviteStaffMutation();
-
   useEffect(() => {
     setFormData({
       userName: data.userName,
@@ -38,56 +33,6 @@ const EditStaffModal = ({ show, onClose, data, departments }) => {
       role: data.role,
       departmentName: data.departmentName,
       permissions: data.permission,
-      // permissions: [
-      //   {
-      //     label: "Department",
-      //     view: false,
-      //     create: false,
-      //     edit: false,
-      //     delete: false,
-      //     transfer: false,
-      //   },
-      //   {
-      //     label: "Staff",
-      //     view: false,
-      //     create: false,
-      //     edit: false,
-      //     delete: false,
-      //     transfer: false,
-      //   },
-      //   {
-      //     label: "Patients",
-      //     view: false,
-      //     create: false,
-      //     edit: false,
-      //     delete: false,
-      //     transfer: false,
-      //   },
-      //   {
-      //     label: "Appointments",
-      //     view: false,
-      //     create: false,
-      //     edit: false,
-      //     delete: false,
-      //     transfer: false,
-      //   },
-      //   {
-      //     label: "Accounts",
-      //     view: false,
-      //     create: false,
-      //     edit: false,
-      //     delete: false,
-      //     transfer: false,
-      //   },
-      //   {
-      //     label: "Reports",
-      //     view: false,
-      //     create: false,
-      //     edit: false,
-      //     delete: false,
-      //     transfer: false,
-      //   },
-      // ],
     });
   }, [data]);
 

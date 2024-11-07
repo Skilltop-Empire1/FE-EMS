@@ -6,12 +6,12 @@ const ToggleSwitch = ({ isOn, handleToggle }) => {
     <div
       onClick={handleToggle}
       className={`relative inline-flex h-6 w-11 cursor-pointer items-center rounded-full transition-colors duration-300 ${
-        isOn ? "border border-emsPurple bg-emsPurple/30" : "bg-gray-300"
+        isOn ? "border border-emsBlue bg-emsBlue/30" : "bg-gray-300"
       }`}
     >
       <span
         className={`absolute left-0 h-4 w-4 transform rounded-full shadow transition-transform duration-300 ${
-          isOn ? "translate-x-6 bg-emsPurple" : "translate-x-1 bg-white"
+          isOn ? "translate-x-6 bg-emsBlue" : "translate-x-1 bg-white"
         }`}
       />
     </div>
@@ -36,7 +36,7 @@ const initialPermissions = [
     delete: false,
   },
   {
-    label: "Patient",
+    label: "Patients",
     view: false,
     edit: false,
     create: false,
@@ -44,7 +44,7 @@ const initialPermissions = [
     delete: false,
   },
   {
-    label: "Appointment",
+    label: "Appointments",
     view: false,
     edit: false,
     create: false,
@@ -52,7 +52,7 @@ const initialPermissions = [
     delete: false,
   },
   {
-    label: "Account",
+    label: "Accounts",
     view: true,
     edit: false,
     create: false,
@@ -60,7 +60,7 @@ const initialPermissions = [
     delete: false,
   },
   {
-    label: "Report",
+    label: "Reports",
     view: false,
     edit: false,
     create: false,

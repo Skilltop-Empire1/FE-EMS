@@ -47,12 +47,12 @@ const router = createBrowserRouter([
   {
     path: "/app",
     element: (
-      <ProtectedRoute>
-        <SuspenseWrapper>
-          <AppLayout />
-          <Toaster />
-        </SuspenseWrapper>
-      </ProtectedRoute>
+      // <ProtectedRoute>
+      <SuspenseWrapper>
+        <AppLayout />
+        <Toaster />
+      </SuspenseWrapper>
+      // </ProtectedRoute>
     ),
     children: [
       {

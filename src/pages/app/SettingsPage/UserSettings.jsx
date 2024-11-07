@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import PermissionsTable from "./PermitionsTable";
-import UserDetails from "./UserDetails";
 import { rolesData, permissionsData } from "./data";
 
 import styles from "./settingsStyles.module.css";
-import StaffInviteForm from "@src/components/Staff/StaffInviteForm";
-import StaffTable from "@src/components/dataTable2/StaffTable";
 import AllStaffTable from "@src/components/dataTable2/AllStaffTable";
 
 const UserSettings = () => {
@@ -48,9 +45,9 @@ const UserSettings = () => {
     <div className={styles.body}>
       <div className="my-4 space-y-4">
         <h2 className="text-2xl font-bold text-left">Owner Settings User</h2>
-        {/* <p className="text-sm">Last Update October 15, 2024</p> */}
       </div>
-      <div>
+      <div className="container mx-auto p-4">
+        <h2 className="text-lg font-semibold mb-4">Staff Directory</h2>
         <AllStaffTable />
       </div>
       {/* <StaffInviteForm /> */}

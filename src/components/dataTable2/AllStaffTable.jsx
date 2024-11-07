@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useFetchAllStaffQuery } from "@src/redux/api/staffApi";
+import {
+  useEditInviteStaffMutation,
+  useFetchAllStaffQuery,
+} from "@src/redux/api/staffApi";
 import StaffTableSkeleton from "./StaffTableSkeleton";
 import EditStaffModal from "@src/modals/staffModals/EditStaffModal";
 import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
+import SelectPermission from "../settings/SelectPermission";
+import toast from "react-hot-toast";
 
 const AllStaffTable = () => {
   const itemsPerPage = 5;
@@ -11,6 +16,7 @@ const AllStaffTable = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [staffData, setStaffData] = useState(null);
   const [selectedStaff, setSelectedStaff] = useState(null);
+  const [permissions, setPermissions] = useState([]); // State for permissions
 
   // Fetch data from API
   const { data, isLoading, isError } = useFetchAllStaffQuery({
@@ -22,6 +28,26 @@ const AllStaffTable = () => {
   // Fetch departments
   const { data: fetchedDepartment, isLoading: isLoadingDepartment } =
     useFetchResourceQuery("/department/list");
+
+  // const [
+  //   updateStaffPermission,
+  //   {
+  //     isLoading: isLoadingMutation,
+  //     isSuccess,
+  //     isError: isUpdatePermissionMutation,
+  //     error,
+  //   },
+  // ] = useUpdateStaffPermissionMutation(); // Mutation hook for updating staff permission
+
+  const [
+    editInviteStaff,
+    {
+      isLoading: isLoadingMutation,
+      isSuccess,
+      isError: isUpdatePermissionMutation,
+      error,
+    },
+  ] = useEditInviteStaffMutation();
 
   useEffect(() => {
     setCurrentPage(data?.currentPage || 1);
@@ -46,12 +72,34 @@ const AllStaffTable = () => {
     setSelectedStaff((prevSelected) =>
       prevSelected?.staffId === staffMember.staffId ? null : staffMember
     );
+    setPermissions((prevSelected) =>
+      prevSelected?.staffId === staffMember.staffId
+        ? []
+        : staffMember?.permissions
+    );
+  };
+
+  const handleUpdatePermission = async () => {
+    if (selectedStaff) {
+      console.log({ permissions });
+      try {
+        let data = await editInviteStaff(selectedStaff.staffId, permissions); // Update the role
+        console.log({ data });
+        toast.success("Staff Permissions Updated!");
+      } catch (error) {
+        toast.error("Failed to Update Staff!");
+        console.error("Failed to update staff:", error);
+      }
+    }
+  };
+
+  // Handle permissions change
+  const handlePermissionsChange = (updatedPermissions) => {
+    setPermissions(updatedPermissions);
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-lg font-semibold mb-4">Staff Directory</h2>
-
+    <div className="flex flex-col space-y-8">
       <div className="overflow-x-auto">
         <table className="min-w-full table-fixed border-separate border-spacing-x-4 text-sm">
           <thead>
@@ -87,6 +135,7 @@ const AllStaffTable = () => {
                     checked={selectedStaff?.staffId === staffMember.staffId}
                     onChange={() => handleRowClick(staffMember)}
                     className="cursor-pointer"
+                    onClick={() => handleRowClick(staffMember)}
                   />
                 </td>
                 <td className="p-2">{staffMember.userName}</td>
@@ -164,6 +213,32 @@ const AllStaffTable = () => {
           </button>
         </div>
       </div>
+
+      {selectedStaff && (
+        <div className="flex flex-col gap-4">
+          <SelectPermission
+            loadedPermissions={selectedStaff?.permissions || permissions}
+            permissions={selectedStaff?.permissions || permissions}
+            onPermissionsChange={handlePermissionsChange}
+          />
+          <div className="text-center">
+            {isSuccess && (
+              <p className="text-green-400">
+                Permissions Updated Successfully!
+              </p>
+            )}
+
+            {isUpdatePermissionMutation && <p>Error Updating Permissions</p>}
+          </div>
+          <button
+            className="mt-4 px-4 py-2 bg-emsBlue text-white rounded self-center disabled:bg-emsBlue/80"
+            onClick={handleUpdatePermission}
+            disabled={isLoadingMutation}
+          >
+            {isLoadingMutation ? "Updating" : "Update Permission"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

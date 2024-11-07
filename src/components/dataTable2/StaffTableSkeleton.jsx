@@ -23,7 +23,8 @@ const StaffTableSkeleton = () => {
               "Action",
             ].map((header, index) => (
               <th key={index} className="font-semibold p-2">
-                {header}
+                {/* {header} */}
+                <div className="h-5 bg-gray-300 rounded animate-pulse"></div>
               </th>
             ))}
           </tr>
