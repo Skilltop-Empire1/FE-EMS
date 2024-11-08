@@ -1,67 +1,76 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import style from "./staffStyle.module.css";
+import { CiCirclePlus } from "react-icons/ci";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { FaEye } from "react-icons/fa";
+import { MdModeEditOutline } from "react-icons/md";
+import Table from "../../../components/dataTable/Table";
+import { tableHeader, tableData } from "./staffData";
+import { MODAL_TYPES } from "../../../context/ModalContext";
+import Button from "../../../components/Button/Button";
+import AddStaff from "../../../modals/staffModals/AddStaff";
+import Table2 from "../../../components/dataTable2/Table2";
+import SelectFilter from "@src/components/SelectFilter";
 import { Search } from "lucide-react";
 import StaffTable from "@src/components/dataTable2/StaffTable";
-import AddStaffModal from "@src/modals/staffModals/AddStaffModal";
-import { useFetchStaffQuery } from "@src/redux/api/staffApi";
-import StaffTableSkeleton from "@src/components/dataTable2/StaffTableSkeleton";
 
-const StaffTypeList = [
-  "doctor",
-  "nurses",
-  "pharmacy",
-  "laboratory",
-  "radiography",
-];
+const StaffNurse = () => {
+  const item = [
+    {
+      specialization: "Select Specialization",
+      value: "",
+    },
+    {
+      specialization: "Surgeon",
+      value: "Surgeon",
+    },
+    {
+      specialization: "Dentist",
+      value: "Dentist",
+    },
+    {
+      specialization: "Opthamologist",
+      value: "Opthamologist",
+    },
+  ];
 
-const Staff = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const item2 = [
+    {
+      specialization: "Select Practice",
+      value: "",
+    },
+    {
+      specialization: "Surgeon",
+      value: "Surgeon",
+    },
+    {
+      specialization: "Dentist",
+      value: "Dentist",
+    },
+    {
+      specialization: "Opthamologist",
+      value: "Opthamologist",
+    },
+  ];
+
   const [showForm, setShowForm] = useState(false);
-  const [showAddStaffModal, setShowAddStaffModal] = useState(false);
+  const [data, setData] = useState(tableData);
   const [searchText, setSearchText] = useState("");
   const [specializationFilter, setSpecializationFilter] = useState("");
   const [practiceFilter, setPracticeFilter] = useState("");
-  const [selectedType, setSelectedType] = useState("doctor");
+  // const [stayOpen, setStayOpen] = useState(false);
 
-  // Extract `type` from query params
-  const queryParams = new URLSearchParams(location.search);
-  const type = queryParams.get("type");
+  const keepOpen = () => {
+    setShowForm(!showForm);
+  };
 
-  // Validate the type and set default if invalid
-  const isValidType = StaffTypeList.includes(type);
-
-  // Update URL and selected type if `type` is invalid
-  useEffect(() => {
-    if (!isValidType) {
-      navigate(`/app/staff?type=doctor`, { replace: true });
-      setSelectedType("doctor");
-    } else if (type && type !== selectedType) {
-      setSelectedType(type);
-    }
-  }, [isValidType, navigate, type, selectedType]);
-
-  // Fetch data based on `selectedType`
-  const {
-    data: fetchedStaff,
-    isLoading,
-    error,
-  } = useFetchStaffQuery(`/staff/${selectedType}/all`);
-
-  console.log({ fetchedStaff, selectedType, error });
-
-  const toggleForm = () => setShowForm((prev) => !prev);
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };
 
   const handleSearch = (event) => {
     setSearchText(event.target.value);
     filterData(event.target.value, specializationFilter, practiceFilter);
-  };
-
-  const launchAddStaffModal = () => {
-    setShowAddStaffModal(true);
-  };
-  const closeAddStaffModal = () => {
-    setShowAddStaffModal(false);
   };
 
   const handleSpecializationChange = (event) => {
@@ -91,13 +100,9 @@ const Staff = () => {
   return (
     <div className="w-full px-10 py-5 flex flex-col space-y-4">
       <div className="my-4">
-        <h2 className="text-2xl font-bold text-left">
-          Staffs -{" "}
-          {selectedType &&
-            selectedType?.charAt(0).toUpperCase() + selectedType?.slice(1)}
-        </h2>
+        <h2 className="text-2xl font-bold text-left">Staffsoooo</h2>
+        <h2 className="text-2xl font-bold text-left">Nurse</h2>
       </div>
-
       <div className="flex flex-wrap items-center gap-4 justify-between">
         <div className="relative flex items-center max-w-[400px] w-full">
           <Search className="absolute left-3 text-gray-500" size={20} />
@@ -119,41 +124,24 @@ const Staff = () => {
           </button>
           <button
             className="bg-emsBlue text-white px-6 py-3 font-light rounded-lg text-sm"
-            onClick={launchAddStaffModal}
+            onClick={toggleForm}
             disabled={showForm}
           >
             Add Staff
           </button>
         </div>
       </div>
+      <div>
+        <StaffTable data={data} Role={"Specialization"} />
+      </div>
 
-      {isLoading || !fetchedStaff ? (
-        <StaffTableSkeleton />
-      ) : (
+      {showForm && (
         <div>
-          <StaffTable
-            data={
-              fetchedStaff?.[
-                selectedType === "doctor"
-                  ? "doctors"
-                  : selectedType === "nurses"
-                  ? "nurse"
-                  : selectedType
-              ]
-            }
-            Role={"Specialization"}
-          />
+          <AddStaff toggleForm={toggleForm} />
         </div>
-      )}
-      {showAddStaffModal && (
-        <AddStaffModal
-          show={showAddStaffModal}
-          onClose={closeAddStaffModal}
-          customer={{}}
-        />
       )}
     </div>
   );
 };
 
-export default Staff;
+export default StaffNurse;

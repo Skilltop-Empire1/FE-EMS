@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import PermissionsTable from "./PermitionsTable";
-import UserDetails from "./UserDetails";
 import { rolesData, permissionsData } from "./data";
 
 import styles from "./settingsStyles.module.css";
-import StaffInviteForm from "@src/components/Staff/StaffInviteForm";
+import AllStaffTable from "@src/components/dataTable2/AllStaffTable";
 
-const Settings = () => {
+const UserSettings = () => {
   const initialStateForm = {
     name: "",
     email: "",
@@ -42,27 +41,18 @@ const Settings = () => {
   const [permissions, setPermissions] = useState(initialStatePermissions);
   const [checkedRoles, setCheckedRoles] = useState(initialStateRoles);
 
-
-
   return (
     <div className={styles.body}>
       <div className="my-4 space-y-4">
-        <h2 className="text-2xl font-bold text-left">Staff Invite Settings</h2>
-        {/* <p className="text-sm">Last Update October 15, 2024</p> */}
+        <h2 className="text-2xl font-bold text-left">Owner Settings User</h2>
       </div>
-      {/* <UserDetails formData={formData} handleChange={handleChange} /> */}
-      {/* <PermissionsTable
-        handleCheckboxChange={handleCheckboxChange}
-        handleToggle={handleToggle}
-        handleSubmit={handleSubmit}
-        rolesData={rolesData}
-        permissionsData={permissionsData}
-        checkedRoles={checkedRoles}
-        permissions={permissions}
-      /> */}
-      <StaffInviteForm />
+      <div className="container mx-auto p-4">
+        <h2 className="text-lg font-semibold mb-4">Staff Directory</h2>
+        <AllStaffTable />
+      </div>
+      {/* <StaffInviteForm /> */}
     </div>
   );
 };
 
-export default Settings;
+export default UserSettings;

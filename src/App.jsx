@@ -6,15 +6,20 @@ import LandingPage from "./pages/landingPage/mainPage/LandingPage";
 import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
+import { Toaster } from "react-hot-toast";
 
-// Lazy load app pages
+// Lazy-loaded pages for optimized initial load
 const AppLayout = lazy(() => import("./pages/app/AppLayout"));
 const Dashboard = lazy(() => import("./pages/app/Dashboard/Dashboard"));
 const Settings = lazy(() => import("./pages/app/SettingsPage/Settings"));
-const Organizations = lazy(
-  () => import("./pages/app/Organization/Organizations")
+const UserSettings = lazy(() =>
+  import("./pages/app/SettingsPage/UserSettings")
 );
 const Staff = lazy(() => import("./pages/app/Staff/Staff"));
+const StaffNurse = lazy(() => import("./pages/app/Staff/StaffNurse"));
+const Organizations = lazy(() =>
+  import("./pages/app/Organization/Organizations")
+);
 const Patients = lazy(() => import("./pages/app/Patients/Patients"));
 const Appointments = lazy(
   () => import("./pages/app/Appointments/Appointments")
@@ -22,6 +27,11 @@ const Appointments = lazy(
 const Account = lazy(() => import("./pages/app/Account/Account"));
 const Help = lazy(() => import("./pages/app/Help/Help"));
 const Reports = lazy(() => import("./pages/app/Reports/Reports"));
+
+// Simplified suspense wrapper for fallback loading
+const SuspenseWrapper = ({ children }) => (
+  <Suspense fallback={<Loader />}>{children}</Suspense>
+);
 
 const router = createBrowserRouter([
   {
@@ -38,82 +48,91 @@ const router = createBrowserRouter([
     path: "/app",
     element: (
       <ProtectedRoute>
-        <Suspense fallback={<Loader />}>
-          <AppLayout />
-        </Suspense>
-      </ProtectedRoute>
+      <SuspenseWrapper>
+        <AppLayout />
+        <Toaster />
+      </SuspenseWrapper>
+     </ProtectedRoute>
     ),
     children: [
       {
         index: true,
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Dashboard />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
       {
         path: "settings",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Settings />
-          </Suspense>
+          </SuspenseWrapper>
+        ),
+      },
+      {
+        path: "settings/user",
+        element: (
+          <SuspenseWrapper>
+            <UserSettings />
+          </SuspenseWrapper>
         ),
       },
       {
         path: "organization",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Organizations />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
       {
         path: "staff",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Staff />
-          </Suspense>
+          </SuspenseWrapper>
         ),
         children: [
           {
             path: "doctors",
             element: (
-              <Suspense fallback={<Loader />}>
-                <Staff />
-              </Suspense>
+              <SuspenseWrapper>
+                <Staff type="doctors" />
+              </SuspenseWrapper>
             ),
           },
           {
             path: "nurses",
             element: (
-              <Suspense fallback={<Loader />}>
-                <Staff />
-              </Suspense>
+              <SuspenseWrapper>
+                <StaffNurse />
+              </SuspenseWrapper>
             ),
           },
           {
             path: "pharmacists",
             element: (
-              <Suspense fallback={<Loader />}>
-                <Staff />
-              </Suspense>
+              <SuspenseWrapper>
+                <Staff type="pharmacists" />
+              </SuspenseWrapper>
             ),
           },
           {
             path: "lab-scientist",
             element: (
-              <Suspense fallback={<Loader />}>
-                <Staff />
-              </Suspense>
+              <SuspenseWrapper>
+                <Staff type="lab-scientist" />
+              </SuspenseWrapper>
             ),
           },
           {
             path: "radiographers",
             element: (
-              <Suspense fallback={<Loader />}>
-                <Staff />
-              </Suspense>
+              <SuspenseWrapper>
+                <Staff type="radiographers" />
+              </SuspenseWrapper>
             ),
           },
         ],
@@ -121,41 +140,99 @@ const router = createBrowserRouter([
       {
         path: "patients",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Patients />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
       {
         path: "appointments",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Appointments />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
       {
         path: "account",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Account />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
       {
         path: "reports",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Reports />
-          </Suspense>
+          </SuspenseWrapper>
         ),
+        children: [
+          {
+            path: "admin",
+            element: (
+              <SuspenseWrapper>
+                <Reports type="admin" />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: "doctors",
+            element: (
+              <SuspenseWrapper>
+                <Reports type="doctor" />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: "nurses",
+            element: (
+              <SuspenseWrapper>
+                <Reports type="nurses" />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: "pharmacy",
+            element: (
+              <SuspenseWrapper>
+                <Reports type="pharmacists" />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: "laboratory",
+            element: (
+              <SuspenseWrapper>
+                <Reports type="laboratory" />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: "radiology",
+            element: (
+              <SuspenseWrapper>
+                <Reports type="radiology" />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: "account",
+            element: (
+              <SuspenseWrapper>
+                <Reports type="account" />
+              </SuspenseWrapper>
+            ),
+          },
+        ],
       },
       {
         path: "help",
         element: (
-          <Suspense fallback={<Loader />}>
+          <SuspenseWrapper>
             <Help />
-          </Suspense>
+          </SuspenseWrapper>
         ),
       },
     ],
