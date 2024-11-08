@@ -15,14 +15,8 @@ import ViewAppointment from "./appointmentModals/ViewAppointment";
 import DeleteAppointment from "./appointmentModals/DeleteAppointment";
 
 function ModalContainer() {
-  const {
-    modalType,
-    modalProps,
-    closeModal,
-    handleFile,
-    isDelete,
-    closeDeleteModal,
-  } = useModal();
+  const { modalType, modalProps, closeModal, isDelete, closeDeleteModal } =
+    useModal();
   const renderModalContext = () => {
     switch (modalType) {
       case MODAL_TYPES.TYPE1:
@@ -65,24 +59,9 @@ function ModalContainer() {
         return null;
     }
   };
-  function handleDragOver(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  }
 
-  function handleDrop(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const file = e.dataTransfer.files[0];
-    handleFile(file);
-  }
   return (
-    <div
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      className={style.overlayStyle}
-    >
+    <div className={style.overlayStyle}>
       <div className={isDelete ? style.deleteModalStyle : style.modalStyle}>
         <button
           onClick={() => {

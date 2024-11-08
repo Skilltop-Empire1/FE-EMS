@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { ChevronUp, ChevronDown, Settings } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,37 +18,50 @@ import { MdAccountCircle } from "react-icons/md";
 import DropDown from "./profileDropdown/DropDown";
 import ModalContainer from "../modals/ModalContainer";
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
+import { useFetchProfileImageQuery } from "@src/redux/api/departmentApi";
 
 const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
   const [isAppointmentDropdown, setIsAppointmentDropdown] = useState(false);
   const [staffDropDown, setStaffDropDown] = useState(false);
   const { openModal, isShowModal, image } = useModal();
+  const user = localStorage.getItem("user");
+  const token = user ? JSON.parse(user).token : null;
 
+  const { data, isLoading, isError } = useFetchProfileImageQuery({
+    url: "/staff/get-profilePic",
+    token: token,
+  });
+
+  // Event listener to handle click outside dropdown
   const appointmentDropdownRef = useRef(null);
   const staffDropdownRef = useRef(null);
 
-  const handleClickOutsideDropdown = () => {
+  const handleClickOutsideDropdown = useCallback((event) => {
     if (
       appointmentDropdownRef.current &&
       !appointmentDropdownRef.current.contains(event.target)
     ) {
       setIsAppointmentDropdown(false);
     }
-    if (
-      staffDropdownRef.current &&
-      !staffDropdownRef.current.contains(event.target)
-    ) {
-      setStaffDropDown(false);
-    }
-  };
+  
+
+  if (
+    staffDropdownRef.current &&
+    !staffDropdownRef.current.contains(event.target)
+  ) {
+    setStaffDropDown(false);
+  }
+}, []);
+
+
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutsideDropdown);
-
-    return () =>
+    return () => {
       document.removeEventListener("click", handleClickOutsideDropdown);
-  }, []);
+    };
+  }, [handleClickOutsideDropdown]);
 
   const handleShowModal = (type) => {
     openModal(type);
@@ -58,12 +71,15 @@ const Navbar = () => {
     setIsAppointmentDropdown((prev) => !prev);
   };
 
+  // Handle profile image fallback (check data.profilePic properly)
+  const profileImageUrl = data?.profilePic || image || profileImg;
+
   return (
     <>
       <nav className={style.dashboardNav}>
         <div className={style.left}>
           <NavLink to="/app">
-            <img src={Logo} alt="" className={style.img} />
+            <img src={Logo} alt="Logo" className={style.img} />
           </NavLink>
           <ul className={style.ull}>
             <li>
@@ -205,7 +221,7 @@ const Navbar = () => {
         <div className={style.profileImgContainer}>
           <div className={style.right}>
             <img
-              src={image || profileImg}
+              src={profileImageUrl}
               alt="Profile"
               className={style.profileImg}
             />
