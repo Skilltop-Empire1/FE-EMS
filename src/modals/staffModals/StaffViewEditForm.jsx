@@ -1,8 +1,9 @@
 import { useFetchResourceQuery } from "@src/redux/api/departmentApi";
 import { useEditStaffMutation } from "@src/redux/api/staffApi";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { z } from "zod";
+import { useReactToPrint } from "react-to-print";
 
 // Define schema using zod
 const staffSchema = z.object({
@@ -104,6 +105,16 @@ const StaffViewEditForm = ({
     setFormErrors({});
   };
 
+
+  //printing function
+
+  const contentRef = useRef();
+  const reactToPrintFn = useReactToPrint({ 
+    contentRef,
+    documentTitle: initialData?.firstName + ' ' + initialData?.lastName + ' Information',
+   });
+
+
   return (
     <div>
       <div className="flex justify-between mb-4">
@@ -116,6 +127,7 @@ const StaffViewEditForm = ({
       <form
         onSubmit={handleSubmit}
         className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        ref={contentRef}
       >
         {isError && (
           <div className="col-span-2 text-xs text-red-500">{apiError}</div>
@@ -203,14 +215,19 @@ const StaffViewEditForm = ({
           </div>
         ))}
 
-        {/* {!viewMode && (
+        {viewMode && (
           <div className="col-span-1 md:col-span-2">
-            <label className="flex items-center space-x-2">
-              <input type="checkbox" checked={keepOpen} onChange={handleCheckboxChange} className="w-4 h-4" />
-              <span className="text-sm">Add another staff</span>
+            <label className="flex items-center justify-center  space-x-2 m-4">
+            <button
+              type="button"
+              className="w-96 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition"
+              onClick={reactToPrintFn}
+            >
+              Print
+            </button>
             </label>
           </div>
-        )} */}
+        )}
 
         {!viewMode && (
           <div className="col-span-1">

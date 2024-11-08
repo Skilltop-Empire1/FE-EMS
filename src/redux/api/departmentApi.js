@@ -11,7 +11,7 @@ const departmentApi = createApi({
 
       
 
-      console.log('Token in state:', token);
+      // console.log('Token in state:', token);
       if (token) {
         headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
       }

@@ -156,14 +156,7 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to="/app/reports"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-                <TbReportMedical /> Reports
-              </NavLink>
+              
             </li>
             <li>
               {/* <CustomLink
@@ -177,13 +170,13 @@ const Navbar = () => {
                 icon={<TbReportMedical />}
                 path="/reports"
                 dropdownItems={[
-                  { path: "/reports/admin", label: "Admin" },
-                  { path: "/reports/doctors", label: "Doctors" },
-                  { path: "/reports/nurses", label: "Nurses" },
-                  { path: "/reports/laboratory", label: "Laboratory" },
-                  { path: "/reports/radiology", label: "Radiology" },
-                  { path: "/reports/pharmacy", label: "Pharmacy" },
-                  { path: "/reports/account", label: "Account" },
+                  { path: "/app/reports/admin", label: "Admin" },
+                  { path: "/app/reports/doctors", label: "Doctors" },
+                  { path: "/app/reports/nurses", label: "Nurses" },
+                  { path: "/app/reports/laboratory", label: "Laboratory" },
+                  { path: "/app/reports/radiology", label: "Radiology" },
+                  { path: "/app/reports/pharmacy", label: "Pharmacy" },
+                  { path: "/app/reports/account", label: "Account" },
                 ]}
               />
             </li>
