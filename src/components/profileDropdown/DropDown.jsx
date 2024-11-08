@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { UserPlus, UserCheck, Lock, LogOut } from "lucide-react";
-import styles from "./Dropdown.module.css"; // Import the CSS module
+import styles from "./Dropdown.module.css";
 import { useNavigate } from "react-router-dom";
 import { MODAL_TYPES, useModal } from "../../context/ModalContext";
 
 function DropDown({ handleProfileImageChange, setIsDropdown }) {
   const profileDropdownRef = useRef(null);
+
   const { openModal } = useModal();
 
   const handleClickOutside = (e) => {

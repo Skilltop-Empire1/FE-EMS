@@ -24,7 +24,7 @@ const AddAppointment = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [sendMessage, setSendMessage] = useState(false);
   const { closeModal } = useModal();
-  const URL = "/appointmentData";
+  const URL = "/appointment/book/:patientId";
   const [postResource, { isLoading: loading, isError: apiError }] =
     usePostResourceMutation();
 
