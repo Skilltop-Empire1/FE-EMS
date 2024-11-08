@@ -93,7 +93,7 @@ const StaffTable = ({ data, Role }) => {
 
   return (
     <div className="py-4">
-      <table className="min-w-full table-fixed border-separate border-spacing-x-4 text-sm">
+      <table className="min-w-full table-fixed border-spacing-x-4 text-sm">
         <thead>
           <tr className="bg-gray-50 text-left gap-5">
             <th className="font-semibold p-2">Staff Name</th>
