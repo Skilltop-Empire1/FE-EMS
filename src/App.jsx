@@ -2,7 +2,12 @@ import React, { Suspense, lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import Loader from "./components/loader/Loader";
+import LandingPage from "./pages/landingPage/mainPage/LandingPage";
+import Login from "./pages/login/Login";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
+import ResetPassword from "./pages/resetPassword/ResetPassword";
 
+// Lazy load app pages
 const AppLayout = lazy(() => import("./pages/app/AppLayout"));
 const Dashboard = lazy(() => import("./pages/app/Dashboard/Dashboard"));
 const Settings = lazy(() => import("./pages/app/SettingsPage/Settings"));
@@ -21,6 +26,16 @@ const Reports = lazy(() => import("./pages/app/Reports/Reports"));
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <LandingPage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  { path: "/forgot-password", element: <ForgotPassword /> },
+  { path: "/reset-password", element: <ResetPassword /> },
+  {
+    path: "/app",
     element: (
       <ProtectedRoute>
         <Suspense fallback={<Loader />}>
@@ -60,6 +75,48 @@ const router = createBrowserRouter([
             <Staff />
           </Suspense>
         ),
+        children: [
+          {
+            path: "doctors",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Staff />
+              </Suspense>
+            ),
+          },
+          {
+            path: "nurses",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Staff />
+              </Suspense>
+            ),
+          },
+          {
+            path: "pharmacists",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Staff />
+              </Suspense>
+            ),
+          },
+          {
+            path: "lab-scientist",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Staff />
+              </Suspense>
+            ),
+          },
+          {
+            path: "radiographers",
+            element: (
+              <Suspense fallback={<Loader />}>
+                <Staff />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "patients",

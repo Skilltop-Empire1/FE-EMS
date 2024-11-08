@@ -1,0 +1,50 @@
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10.25rem;
+  background-color: #e0f7f7b2;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+}
+
+.nav {
+  display: flex;
+  list-style: none;
+}
+
+.nav li {
+  margin: 0 1rem;
+  text-decoration: none;
+}
+
+.nav li a {
+  color: black;
+}
+
+.activeLink {
+  font-weight: bold;
+}
+
+.loginButton {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 158px;
+  height: 45px;
+}
+
+.loginButton:hover {
+  background-color: #0056b3;
+}
+
+body {
+  margin-top: 4.5rem;
+}

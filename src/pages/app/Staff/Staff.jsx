@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./staffStyle.module.css";
 import { CiCirclePlus } from "react-icons/ci";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -10,131 +10,128 @@ import { MODAL_TYPES } from "../../../context/ModalContext";
 import Button from "../../../components/Button/Button";
 import AddStaff from "../../../modals/staffModals/AddStaff";
 import Table2 from "../../../components/dataTable2/Table2";
-import SelectFilter from "../../../components/SelectFilter";
+import SelectFilter from "@src/components/SelectFilter";
 
 const Staff = () => {
-  const item = [
-    {
-      specialization: "Select Specialization",
-      value: "",
-    },
-    {
-      specialization: "Surgeon",
-      value: "Surgeon",
-    },
-    {
-      specialization: "Dentist",
-      value: "Dentist",
-    },
-    {
-      specialization: "Opthamologist",
-      value: "Opthamologist",
-    },
+
+  const specializationOptions = [
+    { specialization: 'Select Specialization', value: '' },
+    { specialization: 'Surgeon', value: 'Surgeon' },
+    { specialization: 'Dentist', value: 'Dentist' },
+    { specialization: 'Ophthalmologist', value: 'Ophthalmologist' },
   ];
 
-  const item2 = [
-    {
-      specialization: "Select Practice",
-      value: "",
-    },
-    {
-      specialization: "Surgeon",
-      value: "Surgeon",
-    },
-    {
-      specialization: "Dentist",
-      value: "Dentist",
-    },
-    {
-      specialization: "Opthamologist",
-      value: "Opthamologist",
-    },
+  const practiceOptions = [
+    { specialization: 'Select Practice', value: '' },
+    { specialization: 'Surgeon', value: 'Surgeon' },
+    { specialization: 'Dentist', value: 'Dentist' },
+    { specialization: 'Ophthalmologist', value: 'Ophthalmologist' },
   ];
 
   const [showForm, setShowForm] = useState(false);
-  const [data, setData] = useState(tableData);
-  const [searchText, setSearchText] = useState("");
-  const [specializationFilter, setSpecializationFilter] = useState("");
-  const [practiceFilter, setPracticeFilter] = useState("");
-  // const [stayOpen, setStayOpen] = useState(false);
+  const [patients, setPatients] = useState([]);
+  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [specializationFilter, setSpecializationFilter] = useState('');
+  const [practiceFilter, setPracticeFilter] = useState('');
 
-  const keepOpen = () => {
-    setShowForm(!showForm);
-  };
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const patientData = await listStaff();
+        setPatients(patientData);
+        setFilteredPatients(patientData); // Initialize filtered data
+      } catch (error) {
+        console.error('Failed to fetch staff:', error);
+      }
+    };
+
+    fetchPatients();
+  }, []);
 
   const toggleForm = () => {
     setShowForm(!showForm);
   };
+  
+  //confirmation to close the modal
+  const toggleForm2 = () => {
+    let confirmation = window.confirm('Cancel staff details ?')
+    if (confirmation) setShowForm(!showForm);
+  };
 
   const handleSearch = (event) => {
-    setSearchText(event.target.value);
-    filterData(event.target.value, specializationFilter, practiceFilter);
+    const searchValue = event.target.value;
+    setSearchText(searchValue);
+    filterData(searchValue, specializationFilter, practiceFilter);
   };
 
   const handleSpecializationChange = (event) => {
-    setSpecializationFilter(event.target.value);
-    filterData(searchText, event.target.value, practiceFilter);
+    const specializationValue = event.target.value;
+    setSpecializationFilter(specializationValue);
+    filterData(searchText, specializationValue, practiceFilter);
   };
 
   const handlePracticeChange = (event) => {
-    setPracticeFilter(event.target.value);
-    filterData(searchText, specializationFilter, event.target.value);
+    const practiceValue = event.target.value;
+    setPracticeFilter(practiceValue);
+    filterData(searchText, specializationFilter, practiceValue);
   };
 
   const filterData = (searchText, specialization, practice) => {
-    const filteredData = tableData.filter((item) => {
-      const matchesSearch = item.Name.toLowerCase().includes(
-        searchText.toLowerCase()
-      );
-      const matchesSpecialization = specialization
-        ? item.Specialization === specialization
-        : true;
-      const matchesPractice = practice ? item.Practice === practice : true;
+    const filteredData = patients.filter((item) => {
+      const matchesSearch = item.name.toLowerCase().includes(searchText.toLowerCase());
+      const matchesSpecialization = specialization ? item.specialization === specialization : true;
+      const matchesPractice = practice ? item.practice === practice : true;
       return matchesSearch && matchesSpecialization && matchesPractice;
     });
-    setData(filteredData);
+    setFilteredPatients(filteredData);
   };
 
+  //Delete staff
+
+//   const handleDelete = async (i) => {
+//     await deleteStaff(id);
+//     searchStaff(); // Refresh the staff list after deletion
+// };
+
+
   return (
-    <div className={style.body}>
-      <div>
-        <div className={style.top}>
-          <h2 className={style.header}>Staffs</h2>
-          <div className={style.sticky}>
-            <Button
-              onClick={toggleForm}
-              disabled={showForm}
-              add={"Add Staff"}
+    <div className="w-full px-10 py-5 flex flex-col space-y-4">
+      <div className="my-4">
+        <h2 className="text-2xl font-bold text-left">Staffs</h2>
+      </div>
+      <div className="flex flex-wrap items-center justify-between">
+        <div>
+          <div>
+            <input
+              type="text"
+              placeholder="Name"
+              className={style.filter}
+              onChange={handleSearch}
+            />
+            <SelectFilter
+              onChange={handleSpecializationChange}
+              data={item}
+              Filter={specializationFilter}
+            />
+            <SelectFilter
+              onChange={handleSpecializationChange}
+              data={item2}
+              Filter={practiceFilter}
             />
           </div>
         </div>
-      </div>
-      <div className={style.info}>
-        <div>
-          <input
-            type="text"
-            placeholder="Name"
-            className={style.filter}
-            onChange={handleSearch}
-          />
-          <SelectFilter
-            onChange={handleSpecializationChange}
-            data={item}
-            Filter={specializationFilter}
-          />
-          <SelectFilter
-            onChange={handleSpecializationChange}
-            data={item2}
-            Filter={practiceFilter}
-          />
+        <div className={style.sticky}>
+          <Button onClick={toggleForm} disabled={showForm} add={"Add Staff"} />
         </div>
+      </div>
+      <div>
         <Table2 data={data} Role={"Specialization"} />
-        {/* <Table headers={tableHeader} data={tableData} itemsPerPage={6} renderRow={renderRow} modalType={MODAL_TYPES.TYPE4}/> */}
       </div>
 
       {showForm && (
         <div>
-          <AddStaff toggleForm={toggleForm} />
+          <AddStaff toggleForm={toggleForm2} />
         </div>
       )}
     </div>

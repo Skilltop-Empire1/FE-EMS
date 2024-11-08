@@ -3,66 +3,65 @@ import style from "./organisation.module.css";
 import { table } from "./data";
 import { MODAL_TYPES, useModal } from "../../../context/ModalContext";
 import Table from "../../../components/dataTable/Table";
-import useFetchRequest from "../../../hooks/fetchRequestApi";
+import { useFetchResourceQuery } from "../../../redux/api/departmentApi";
+import { useNavigate } from "react-router-dom";
+import SearchQuery from "../../../components/searchQuery/SearchQuery";
 
 function Organizations() {
-  const URL = "http://localhost:5000/organisationData";
-  // const URL =     " https://be-ems-production-2721.up.railway.app/api/v1/organization/list"
+  const URL = "/department/list";
+  const navigate = useNavigate();
 
-  const { data: fetchedData, loading, error } = useFetchRequest(URL);
+  const { data: fetchedData, isLoading, error } = useFetchResourceQuery(URL);
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const { openModal } = useModal();
 
-  console.log("organisation data fetched", fetchedData);
-
   useEffect(() => {
-    if (fetchedData && !loading && !error) {
+    if (fetchedData && !isLoading && !error) {
       setData(fetchedData);
     }
-  }, [fetchedData, loading, error]);
+  }, [fetchedData, isLoading, error]);
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const value = event.target.value;
-    setQuery(value);
-
-    if (!value) {
-      setData(fetchedData);
-      console.log("Fetched data", fetchedData);
-      return;
-    }
-
-    const filteredData = fetchedData.filter((item) =>
-      item.username.toLowerCase().includes(value.toLowerCase())
-    );
-    setData(filteredData);
-    setCurrentPage(1);
+  const handleEdit = (item) => {
+    openModal(MODAL_TYPES.TYPE5, item);
   };
 
   return (
     <div className={style.container}>
       <div>
-        <h3 className={style.header}>Organizations Name</h3>
+        <h3 className={style.header}>Department Name</h3>
       </div>
       <div className={style.searchContainer}>
-        <input
-          onChange={handleSearch}
-          type="text"
-          placeholder="Enter name to search"
-          value={query}
+        <SearchQuery
+          searchKey={["name", "location", "specialty", "equipment", "hod"]}
+          query={query}
+          setData={setData}
+          setQuery={setQuery}
+          fetchedData={fetchedData}
         />
-        <button onClick={() => openModal(MODAL_TYPES.TYPE4)} type="button">
-          Add Department
-        </button>
+        <div>
+          <button
+            className={style.staffNavButton}
+            onClick={() => navigate("/staff")}
+            type="button"
+          >
+            Add Staff
+          </button>
+          <button onClick={() => openModal(MODAL_TYPES.TYPE4)} type="button">
+            Add Department
+          </button>
+        </div>
       </div>
       <Table
         headers={table}
         data={data}
-        modalType={MODAL_TYPES.TYPE4}
-        isLoading={loading}
+        editModal={MODAL_TYPES.TYPE5}
+        viewModal={MODAL_TYPES.TYPE8}
+        deleteModal={MODAL_TYPES.TYPE9}
+        isLoading={isLoading}
         error={error}
+        onEdit={handleEdit}
+        getId={(item) => item.deptId}
       />
     </div>
   );

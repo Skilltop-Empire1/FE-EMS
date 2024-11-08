@@ -1,6 +1,6 @@
 
     export const table = [
-      "Patient", "Consulting Doctor", "Appointment Date", "Appointment Time", "Reason", "Practice", "Organization", "Action"
+      "Patient","Phone Number", "Consulting Doctor", "Date of Appointment", "Time of Appointment", "Reason", "Department", "Action"
     ];
 
 

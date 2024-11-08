@@ -1,79 +1,115 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import style from "./patientStyle.module.css";
-import { CiCirclePlus } from "react-icons/ci";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { FaEye } from "react-icons/fa";
-import { MdModeEditOutline } from "react-icons/md";
 import Button from "../../../components/Button/Button";
 import Table2 from "../../../components/dataTable2/Table2";
-import { tableHeader, tableData } from "./patientsData";
 import AddPatients from "../../../modals/patientsModals/AddPatients";
+import ConfirmationModal from "src/modals/ConfirmationModal/ConfirmationModal";
+import ViewPatients from "src/modals/patientsModals/ViewPatients";
+import { useFetchResourceQuery, useDeleteResourceMutation } from "src/redux/api/departmentApi";
+import PatientInfo from "src/modals/patientsModals/PatientInfo";
 
-const Staff = () => {
+const Patients = () => {
   const [showForm, setShowForm] = useState(false);
-  const [data, setData] = useState(tableData);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [showView, setShowView] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [specializationFilter, setSpecializationFilter] = useState("");
-  const [practiceFilter, setPracticeFilter] = useState("");
-  // const [stayOpen, setStayOpen] = useState(false);
+  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [patientToDelete, setPatientToDelete] = useState(null);
+  const [patientToUpdate, setPatientToUpdate] = useState(null);
+  const [patientToView, setPatientToView] = useState(null);
 
-  const keepOpen = () => {
-    setShowForm(!showForm);
+  const { data: patientData = [], error: patientError, isLoading: patientLoading } = useFetchResourceQuery("/patient/list");
+  const [deleteResource] = useDeleteResourceMutation();
+
+  useEffect(() => {
+    // Initialize filteredPatients with patientData when data is fetched
+    setFilteredPatients(patientData);
+  }, [patientData]);
+
+  const handlePatientDelete = (id) => {
+    setPatientToDelete(id);
+    setShowConfirm(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteResource(`/patient/delete/${patientToDelete}`).unwrap();
+      alert("Patient details deleted successfully");
+      setShowConfirm(false);
+      setFilteredPatients(filteredPatients.filter(patient => patient.id !== patientToDelete));
+    } catch (err) {
+      console.error("Failed to delete patient details:", err);
+    }
+  };
+
+  const toggleForm = () => setShowForm(!showForm);
+  const toggleConfirm = () => setShowConfirm(!showConfirm);
+  const toggleView = (patient) => {
+    setPatientToUpdate(patient);
+    setShowView(!showView);
+  };
+  const toggleInfo = (patient) => {
+    setPatientToView(patient);
+    setShowInfo(!showInfo);
   };
 
   const handleSearch = (event) => {
-    setSearchText(event.target.value);
-    filterData(event.target.value, specializationFilter, practiceFilter);
-  };
+    const searchValue = event.target.value.toLowerCase();
+    setSearchText(searchValue);
 
-  const filterData = (searchText, specialization, practice) => {
-    const filteredData = tableData.filter((item) => {
-      const matchesSearch = item.Name.toLowerCase().includes(
-        searchText.toLowerCase()
+    if (searchValue === "") {
+      setFilteredPatients(patientData); // Reset to original data when search is cleared
+    } else {
+      const filteredData = patientData.filter((patient) =>
+        patient.firstName?.toLowerCase().includes(searchValue)
       );
-      return matchesSearch;
-    });
-    setData(filteredData);
-  };
-
-  // Step 2: Toggle form visibility when button is clicked
-  const toggleForm = () => {
-    setShowForm(!showForm);
+      setFilteredPatients(filteredData);
+    }
   };
 
   return (
     <div className={style.body}>
-      <div>
-        <div className={style.top}>
-          <h2 className={style.header}>Patients</h2>
-          <div className={style.sticky}>
-            <Button
-              onClick={toggleForm}
-              disabled={showForm}
-              add={"Add Patient"}
-            />
-          </div>
-        </div>
+      <div className={style.top}>
+        <h2 className={style.header}>Patients</h2>
       </div>
       <div className={style.info}>
-        <div>
+        <div className={style.work}>
           <input
             type="text"
             placeholder="Search Patient"
             className={style.filter}
+            value={searchText}
             onChange={handleSearch}
           />
+          <Button onClick={toggleForm} disabled={showForm} add="Add Patient" />
         </div>
-        <Table2 Role={"Organization"} data={data} />
+
+        {patientLoading ? (
+          <div>Loading...</div>
+        ) : patientError ? (
+          <div>Failed to Load patient data</div>
+        ) : filteredPatients.length > 0 ? (
+          <Table2
+            Role="Organization"
+            data={filteredPatients}
+            staff="none"
+            patients=""
+            runToggle={handlePatientDelete}
+            runView={toggleView}
+            runInfo={toggleInfo}
+          />
+        ) : (
+          <div>No data yet</div>
+        )}
       </div>
 
-      {showForm && (
-        <div>
-          <AddPatients toggleForm={toggleForm} />
-        </div>
-      )}
+      {showForm && <AddPatients toggleForm={toggleForm} />}
+      {showConfirm && <ConfirmationModal page="Patient" toggle={toggleConfirm} runDelete={handleDelete} />}
+      {showView && <ViewPatients toggleForm={toggleView} patient={patientToUpdate} />}
+      {showInfo && <PatientInfo toggleInfo={toggleInfo} infoData={patientToView} />}
     </div>
   );
 };
 
-export default Staff;
+export default Patients;

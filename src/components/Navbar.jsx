@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Link, NavLink } from "react-router-dom";
 import profileImg from "./profile.png";
 import Logo from "./EMS logo-Transparent.png";
@@ -13,24 +13,59 @@ import { IoMdSettings } from "react-icons/io";
 import { IoMdPerson } from "react-icons/io";
 import { IoMdHelpCircle } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
-import DropDown from "./DropDown";
+import DropDown from "./profileDropdown/DropDown";
 import ModalContainer from "../modals/ModalContainer";
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
+import { useFetchProfileImageQuery } from "@src/redux/api/departmentApi";
 
 const Navbar = () => {
   const [isDropdown, setIsDropdown] = useState(false);
+  const [isAppointmentDropdown, setIsAppointmentDropdown] = useState(false);
   const { openModal, isShowModal, image } = useModal();
+  const user = localStorage.getItem("user");
+  const token = user ? JSON.parse(user).token : null;
+
+  const { data, isLoading, isError } = useFetchProfileImageQuery({
+    url: "/staff/get-profilePic",
+    token: token,
+  });
+
+  // Event listener to handle click outside dropdown
+  const appointmentDropdownRef = useRef(null);
+
+  const handleClickOutsideDropdown = useCallback((event) => {
+    if (
+      appointmentDropdownRef.current &&
+      !appointmentDropdownRef.current.contains(event.target)
+    ) {
+      setIsAppointmentDropdown(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutsideDropdown);
+    return () => {
+      document.removeEventListener("click", handleClickOutsideDropdown);
+    };
+  }, [handleClickOutsideDropdown]);
 
   const handleShowModal = (type) => {
     openModal(type);
   };
-  const handlePasswordChange = () => {};
+
+  const toggleAppointmentDropdown = () => {
+    setIsAppointmentDropdown((prev) => !prev);
+  };
+
+  // Handle profile image fallback (check data.profilePic properly)
+  const profileImageUrl = data?.profilePic || image || profileImg;
+
   return (
     <>
       <nav className={style.dashboardNav}>
         <div className={style.left}>
-          <NavLink to="/">
-            <img src={Logo} alt="" className={style.img} />
+          <NavLink to="/app">
+            <img src={Logo} alt="Logo" className={style.img} />
           </NavLink>
           <ul className={style.ull}>
             <li>
@@ -38,69 +73,86 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
-                to="/"
+                to="/app"
               >
-               <MdHome /> Home
+                <MdHome /> Home
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/organization"
+                to="/app/organization"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
               >
-                <GoOrganization /> Organization
+                <GoOrganization /> Department
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/staff"
+                to="/app/staff"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
               >
-               <IoMdPerson /> Staff
+                <IoMdPerson /> Staff
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/patients"
+                to="/app/patients"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
               >
-               <MdOutlineSick /> Patients
+                <MdOutlineSick /> Patients
+              </NavLink>
+            </li>
+            <li ref={appointmentDropdownRef}>
+              <div>
+                <span
+                  onClick={toggleAppointmentDropdown}
+                  className={style.link}
+                  style={{ cursor: "pointer" }}
+                >
+                  <SiGoogleclassroom /> Appointments <FaSortDown />
+                </span>
+                {isAppointmentDropdown && (
+                  <div className={style.dropdownMenu}>
+                    <Link to="/app/appointments" className={style.dropdownItem}>
+                      Appointment
+                    </Link>
+                    <Link to="/app/admission" className={style.dropdownItem}>
+                      Admission
+                    </Link>
+                    <Link to="/app/consultation" className={style.dropdownItem}>
+                      Consultation
+                    </Link>
+                    <Link to="/app/discharge" className={style.dropdownItem}>
+                      Discharge
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </li>
+            <li>
+              <NavLink
+                to="/app/account"
+                className={({ isActive }) =>
+                  isActive ? style.active : style.link
+                }
+              >
+                <MdAccountCircle /> Account
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/appointments"
+                to="/app/reports"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
               >
-              <SiGoogleclassroom />  Appointments
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/account"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-              <MdAccountCircle />  Account
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/reports"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-              <TbReportMedical />  Reports
+                <TbReportMedical /> Reports
               </NavLink>
             </li>
             <li>
@@ -108,19 +160,19 @@ const Navbar = () => {
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
-                to="/settings"
+                to="/app/settings"
               >
-              <IoMdSettings />  Settings
+                <IoMdSettings /> Settings
               </NavLink>
             </li>
             <li>
               <NavLink
-                to="/help"
+                to="/app/help"
                 className={({ isActive }) =>
                   isActive ? style.active : style.link
                 }
               >
-              <IoMdHelpCircle />  Help
+                <IoMdHelpCircle /> Help
               </NavLink>
             </li>
           </ul>
@@ -128,7 +180,7 @@ const Navbar = () => {
         <div className={style.profileImgContainer}>
           <div className={style.right}>
             <img
-              src={image || profileImg}
+              src={profileImageUrl}
               alt="Profile"
               className={style.profileImg}
             />
@@ -143,6 +195,7 @@ const Navbar = () => {
         <DropDown
           handlePasswordChange={() => handleShowModal(MODAL_TYPES.TYPE2)}
           handleProfileImageChange={() => handleShowModal(MODAL_TYPES.TYPE1)}
+          setIsDropdown={setIsDropdown}
         />
       )}
       {isShowModal && <ModalContainer />}
