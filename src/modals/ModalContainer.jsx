@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import style from "./profileModals/popUp.module.css";
 import ChangeProfileImage from "./profileModals/ChangeProfileImage";
-import ChangePassword from "./resetModal/changePassword";
+import ChangePassword from "./resetModal/ChangePassword";
 import LogoutConfirmation from "./profileModals/LogoutConfirmation";
 import AddOrganization from "./organisationModals/AddOrganization";
 import UpdateOrganization from "./organisationModals/UpdateOrganization";
