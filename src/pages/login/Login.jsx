@@ -29,7 +29,16 @@ function Login() {
   };
 
   return (
-    <div className={`${styles.container} flex items-center justify-center`}>
+    <div
+      className={`${styles.container} flex items-center justify-center relative`}
+    >
+      <span
+        onClick={() => navigate(-1)}
+        className={styles.backArrow}
+        aria-label="Go back"
+      >
+        &larr;
+      </span>
       <div className="border-2 shadow-lg w-96 rounded-md p-5">
         <h2 className="my-5 text-center text-4xl">Welcome back</h2>
         {error && <p className={styles.error}>{error}</p>}

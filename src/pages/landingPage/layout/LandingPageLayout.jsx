@@ -5,7 +5,7 @@ import {
   faTwitter,
   faInstagram,
   faLinkedin,
-} from "@fortawesome/free-brands-svg-icons"; // Import Font Awesome icons
+} from "@fortawesome/free-brands-svg-icons";
 import style from "./LandingPageLayout.module.css";
 
 function LandingPageLayout() {
