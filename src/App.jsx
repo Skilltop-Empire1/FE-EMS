@@ -32,7 +32,6 @@ const Account = lazy(() => import("./pages/app/Account/Account"));
 const Help = lazy(() => import("./pages/app/Help/Help"));
 const Reports = lazy(() => import("./pages/app/Reports/Reports"));
 
-// Simplified suspense wrapper for fallback loading
 const SuspenseWrapper = ({ children }) => (
   <Suspense fallback={<Loader />}>{children}</Suspense>
 );
@@ -158,7 +157,7 @@ const router = createBrowserRouter([
         ),
         children: [
           {
-            index: true,
+            path: "appointment",
             element: (
               <SuspenseWrapper>
                 <AppointmentsDetails />
