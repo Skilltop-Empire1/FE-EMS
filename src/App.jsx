@@ -7,18 +7,22 @@ import Login from "./pages/login/Login";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
 import { Toaster } from "react-hot-toast";
+import AdmissionDetails from "./pages/app/admissions/AdmissionDetails";
+import ConsultationDetails from "./pages/app/consultations/ConsultationDetails";
+import DischargeDetails from "./pages/app/discharge/DischargeDetails";
+import AppointmentsDetails from "./pages/app/appointmentDetails/AppointmentsDetails";
 
 // Lazy-loaded pages for optimized initial load
 const AppLayout = lazy(() => import("./pages/app/AppLayout"));
 const Dashboard = lazy(() => import("./pages/app/Dashboard/Dashboard"));
 const Settings = lazy(() => import("./pages/app/SettingsPage/Settings"));
-const UserSettings = lazy(() =>
-  import("./pages/app/SettingsPage/UserSettings")
+const UserSettings = lazy(
+  () => import("./pages/app/SettingsPage/UserSettings")
 );
 const Staff = lazy(() => import("./pages/app/Staff/Staff"));
 const StaffNurse = lazy(() => import("./pages/app/Staff/StaffNurse"));
-const Organizations = lazy(() =>
-  import("./pages/app/Organization/Organizations")
+const Organizations = lazy(
+  () => import("./pages/app/Organization/Organizations")
 );
 const Patients = lazy(() => import("./pages/app/Patients/Patients"));
 const Appointments = lazy(
@@ -48,11 +52,11 @@ const router = createBrowserRouter([
     path: "/app",
     element: (
       <ProtectedRoute>
-      <SuspenseWrapper>
-        <AppLayout />
-        <Toaster />
-      </SuspenseWrapper>
-     </ProtectedRoute>
+        <SuspenseWrapper>
+          <AppLayout />
+          <Toaster />
+        </SuspenseWrapper>
+      </ProtectedRoute>
     ),
     children: [
       {
@@ -152,6 +156,40 @@ const router = createBrowserRouter([
             <Appointments />
           </SuspenseWrapper>
         ),
+        children: [
+          {
+            index: true,
+            element: (
+              <SuspenseWrapper>
+                <AppointmentsDetails />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: "admission",
+            element: (
+              <SuspenseWrapper>
+                <AdmissionDetails />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: "consultation",
+            element: (
+              <SuspenseWrapper>
+                <ConsultationDetails />
+              </SuspenseWrapper>
+            ),
+          },
+          {
+            path: "discharge",
+            element: (
+              <SuspenseWrapper>
+                <DischargeDetails />
+              </SuspenseWrapper>
+            ),
+          },
+        ],
       },
       {
         path: "account",

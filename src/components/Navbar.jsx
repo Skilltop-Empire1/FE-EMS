@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { ChevronUp, ChevronDown, Settings } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,19 +11,21 @@ import { MdOutlineSick } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 import { FaSortDown } from "react-icons/fa";
 import { TbReportMedical } from "react-icons/tb";
-import { IoMdSettings } from "react-icons/io";
-import { IoMdPerson } from "react-icons/io";
-import { IoMdHelpCircle } from "react-icons/io";
+import { IoMdSettings, IoMdPerson, IoMdHelpCircle } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
 import DropDown from "./profileDropdown/DropDown";
 import ModalContainer from "../modals/ModalContainer";
 import { MODAL_TYPES, useModal } from "../context/ModalContext";
 import { useFetchProfileImageQuery } from "@src/redux/api/departmentApi";
+import { ClipLoader } from "react-spinners";
 
 const Navbar = () => {
-  const [isDropdown, setIsDropdown] = useState(false);
-  const [isAppointmentDropdown, setIsAppointmentDropdown] = useState(false);
-  const [staffDropDown, setStaffDropDown] = useState(false);
+  const [dropdowns, setDropdowns] = useState({
+    isDropdown: false,
+    isAppointmentDropdown: false,
+    staffDropDown: false,
+  });
+
   const { openModal, isShowModal, image } = useModal();
   const user = localStorage.getItem("user");
   const token = user ? JSON.parse(user).token : null;
@@ -33,28 +35,23 @@ const Navbar = () => {
     token: token,
   });
 
-  // Event listener to handle click outside dropdown
-  const appointmentDropdownRef = useRef(null);
   const staffDropdownRef = useRef(null);
+  const appointmentDropdownRef = useRef(null);
 
   const handleClickOutsideDropdown = useCallback((event) => {
+    if (
+      staffDropdownRef.current &&
+      !staffDropdownRef.current.contains(event.target)
+    ) {
+      setDropdowns((prev) => ({ ...prev, staffDropDown: false }));
+    }
     if (
       appointmentDropdownRef.current &&
       !appointmentDropdownRef.current.contains(event.target)
     ) {
-      setIsAppointmentDropdown(false);
+      setDropdowns((prev) => ({ ...prev, isAppointmentDropdown: false }));
     }
-  
-
-  if (
-    staffDropdownRef.current &&
-    !staffDropdownRef.current.contains(event.target)
-  ) {
-    setStaffDropDown(false);
-  }
-}, []);
-
-
+  }, []);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutsideDropdown);
@@ -67,11 +64,13 @@ const Navbar = () => {
     openModal(type);
   };
 
-  const toggleAppointmentDropdown = () => {
-    setIsAppointmentDropdown((prev) => !prev);
+  const toggleDropdown = (dropdown) => {
+    setDropdowns((prevState) => ({
+      ...prevState,
+      [dropdown]: !prevState[dropdown],
+    }));
   };
 
-  // Handle profile image fallback (check data.profilePic properly)
   const profileImageUrl = data?.profilePic || image || profileImg;
 
   return (
@@ -103,14 +102,6 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              {/* <NavLink
-                to="/app/staff"
-                className={({ isActive }) =>
-                  isActive ? style.active : style.link
-                }
-              >
-                <IoMdPerson /> Staff
-              </NavLink> */}
               <CustomLinkWithDropdown
                 label="Staff"
                 icon={<TbReportMedical />}
@@ -134,32 +125,24 @@ const Navbar = () => {
                 <MdOutlineSick /> Patients
               </NavLink>
             </li>
-            <li ref={appointmentDropdownRef}>
-              <div>
-                <span
-                  onClick={toggleAppointmentDropdown}
-                  className={style.link}
-                  style={{ cursor: "pointer" }}
-                >
-                  <SiGoogleclassroom /> Appointments <FaSortDown />
-                </span>
-                {isAppointmentDropdown && (
-                  <div className={style.dropdownMenu}>
-                    <Link to="/app/appointments" className={style.dropdownItem}>
-                      Appointment
-                    </Link>
-                    <Link to="/app/admission" className={style.dropdownItem}>
-                      Admission
-                    </Link>
-                    <Link to="/app/consultation" className={style.dropdownItem}>
-                      Consultation
-                    </Link>
-                    <Link to="/app/discharge" className={style.dropdownItem}>
-                      Discharge
-                    </Link>
-                  </div>
-                )}
-              </div>
+            <li>
+              <CustomLinkWithDropdown
+                label="Appointments"
+                icon={<SiGoogleclassroom />}
+                path="/app/appointments"
+                dropdownItems={[
+                  {
+                    path: "/app/appointments/appointment",
+                    label: "Appointment",
+                  },
+                  { path: "/app/appointments/admission", label: "Admission" },
+                  {
+                    path: "/app/appointments/consultation",
+                    label: "Consultation",
+                  },
+                  { path: "/app/appointments/discharge", label: "Discharge" },
+                ]}
+              />
             </li>
             <li>
               <NavLink
@@ -172,15 +155,6 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              
-            </li>
-            <li>
-              {/* <CustomLink
-                label="Reports"
-                icon={<TbReportMedical />}
-                path="/reports"
-              /> */}
-
               <CustomLinkWithDropdown
                 label="Reports"
                 icon={<TbReportMedical />}
@@ -220,23 +194,29 @@ const Navbar = () => {
         </div>
         <div className={style.profileImgContainer}>
           <div className={style.right}>
-            <img
-              src={profileImageUrl}
-              alt="Profile"
-              className={style.profileImg}
-            />
+            {isLoading ? (
+              <ClipLoader color="#b79f9f" size={16} />
+            ) : (
+              <img
+                src={profileImageUrl}
+                alt="Profile"
+                className={style.profileImg}
+              />
+            )}
           </div>
           <FaSortDown
-            onClick={() => setIsDropdown((prev) => !prev)}
-            className={style[`dashboard-icon`]}
+            onClick={() => toggleDropdown("isDropdown")}
+            className={style["dashboard-icon"]}
           />
         </div>
       </nav>
-      {isDropdown && (
+      {dropdowns.isDropdown && (
         <DropDown
           handlePasswordChange={() => handleShowModal(MODAL_TYPES.TYPE2)}
           handleProfileImageChange={() => handleShowModal(MODAL_TYPES.TYPE1)}
-          setIsDropdown={setIsDropdown}
+          setIsDropdown={(val) =>
+            setDropdowns((prev) => ({ ...prev, isDropdown: val }))
+          }
         />
       )}
       {isShowModal && <ModalContainer />}
@@ -246,35 +226,32 @@ const Navbar = () => {
 
 export default Navbar;
 
-const CustomLink = ({ path, icon, label }) => {
+const CustomLink = React.memo(({ path, icon, label }) => {
   return (
     <NavLink
       to={path}
       className={({ isActive }) =>
-        `${isActive && "text-purple-600"} flex gap-1 items-center text-sm`
+        `${isActive ? "text-purple-600" : "text-gray-800"} flex gap-1 items-center text-sm`
       }
     >
       {icon} <span>{label}</span>
     </NavLink>
   );
-};
-
+});
 
 const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const closeTimeoutRef = useRef(null);
 
   const handleMouseEnter = () => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-    }
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
     setIsDropdownOpen(true);
   };
 
   const handleMouseLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
-    }, 300); // Delay in milliseconds
+    }, 300);
   };
 
   const handleItemClick = () => {
@@ -296,9 +273,7 @@ const CustomLinkWithDropdown = ({ path, icon, label, dropdownItems }) => {
       <NavLink
         to={path}
         className={({ isActive }) =>
-          `${
-            isActive ? "text-purple-600" : "text-gray-800"
-          } flex gap-1 items-center text-sm`
+          `${isActive ? "text-purple-600" : "text-gray-800"} flex gap-1 items-center text-sm`
         }
       >
         {icon}
