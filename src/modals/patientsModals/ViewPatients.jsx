@@ -5,8 +5,8 @@ import { useEditResourceMutation } from 'src/redux/api/departmentApi';
 const ViewPatients = ({ toggleForm, patient }) => {
     const [keepOpen, setKeepOpen] = useState(false);
     const [formData, setFormData] = useState(patient);
+    const [formError, setFormError] = useState()
     const [editResource, { isSuccess, isLoading, error }] = useEditResourceMutation()
-    console.log(formData.medCondition)
 
     const handleCheckboxChange = (e) => {
       setKeepOpen(e.target.checked);
@@ -31,14 +31,12 @@ const ViewPatients = ({ toggleForm, patient }) => {
       try {
           let result;
           if (patient?.patId) {
-              console.log(formData.patId)
               // Update existing account
               result = await editResource({
                   url: `/patient/edit/${formData.patId}`,
                   method: 'PUT',
                   data: patientData,
               }).unwrap();
-              console.log('Account updated successfully:', result);
               setFormData(null)
               alert('Account updated successfully');
           } else {
@@ -47,7 +45,6 @@ const ViewPatients = ({ toggleForm, patient }) => {
                   url: '/patient/create',
                   data: patientData,
               }).unwrap();
-              console.log('Account created successfully:', result);
               alert('Account created successfully');
           }
   
@@ -57,8 +54,15 @@ const ViewPatients = ({ toggleForm, patient }) => {
               toggleForm();
           }
       } catch (error) {
-          console.error('Error saving account:', error.message);
-          alert(`Error saving account: ${error.message}`);
+        console.error('Error creating patient:', error.data);
+        if (error.data) {
+          // If the error message is in the response
+          const errorMessage = error.data;
+          setFormError(errorMessage);
+      } else {
+          // Generic fallback for other errors
+          setFormError("An unexpected error occurred");
+      }
       }
   };
 
@@ -108,12 +112,10 @@ const ViewPatients = ({ toggleForm, patient }) => {
           <div className={style.formChild}>
             <label htmlFor="lastVisit">Last Visit</label>
             <input type="date" id="lastVisit" name="lastVisit" className={style.input} value={formData?.lastVisit?.slice(0,10)} onChange={handleInputChange} required />
-            {console.log(formData.medCondition)}
           </div>
           <div className={style.formChild}>
             <label htmlFor="phone">Mobile Number</label>
             <input type="number" id="phone" name="phone" className={style.input}  value={formData?.phone} onChange={handleInputChange} required />
-{console.log(formData.email)}
           </div>
           <div className={style.formChild}>
             <label htmlFor="medCondition">Medical Condition</label>
@@ -145,9 +147,10 @@ const ViewPatients = ({ toggleForm, patient }) => {
             
           </div>
           <div className='flex gap-3'>
-            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>Update Details</button>
+            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Updating' :'Update Details'}</button>
             <button  className={`text-white bg-emsRed ${style.submit}`} onClick={handleClose}>Cancel</button>
             </div>
+            <span className='text-red-500'>{formError}</span>
         </form>
       </div>
     </div>

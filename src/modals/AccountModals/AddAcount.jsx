@@ -6,11 +6,12 @@ import { useFetchResourceQuery } from 'src/redux/api/departmentApi';
 const AddAccount = ({ toggleForm }) => {
     const [keepOpen, setKeepOpen] = useState(false);
     const [postResource, { isSuccess, isLoading, error }] = usePostResourceMutation()
-    const { data: patientData, error: patientError, isLoading: patientLoading } = useFetchResourceQuery('/api/v1/patient/list')
+    const { data: patientData, error: patientError, isLoading: patientLoading } = useFetchResourceQuery('/patient/list')
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedPatient, setSelectedPatient] = useState(null);
     const [filteredOptions, setFilteredOptions] = useState([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [formError, setFormError] = useState()
 
     // Filter patient options
     useEffect(() => {
@@ -57,7 +58,7 @@ const AddAccount = ({ toggleForm }) => {
             nextPayDueDate: e.target.nextPayDueDate.value,
         };
 
-        console.log('Form Data:', accountData);
+        // console.log('Form Data:', accountData);
 
         try {
             const result = await postResource({
@@ -65,7 +66,7 @@ const AddAccount = ({ toggleForm }) => {
                 method: 'POST',
                 data: accountData,
             }).unwrap();
-            console.log('Account created successfully:', result);
+            // console.log('Account created successfully:', result);
             alert('Account created successfully');
             e.target.reset();
             window.location.reload()
@@ -74,8 +75,17 @@ const AddAccount = ({ toggleForm }) => {
             }
 
         } catch (error) {
-            console.error('Error creating account:', error.message);
-            alert(`Error creating account: ${error.message}`);
+            console.error('Error creating account:', error.data.error);
+            // alert(`Error creating account: ${error.message}`);
+            // setFormError(error.error)
+            if ( error.data) {
+                // If the error message is in the response
+                const errorMessage = error.data.error;
+                setFormError(errorMessage);
+            } else {
+                // Generic fallback for other errors
+                setFormError("An unexpected error occurred");
+            }
         }
     };
 
@@ -135,9 +145,9 @@ const AddAccount = ({ toggleForm }) => {
                         <label htmlFor="paymentMethod">Payment Method</label>
                         <select id="paymentMethod" name="paymentMethod" className={style.input} required>
                             <option value="">Select Payment Method</option>
-                            <option value="cash">Cash</option>
-                            <option value="POS">POS</option>
-                            <option value="Transfer">Transfer</option>
+                            <option value="Direct">Direct</option>
+                            <option value="NHIS">NHIS</option>
+                            <option value="Insurance">Insurance</option>
                             <option value="HMO">HMO</option>
                         </select>
                     </div>
@@ -147,7 +157,13 @@ const AddAccount = ({ toggleForm }) => {
                     </div>
                     <div className={style.formChild}>
                         <label htmlFor="paymentProvider">Payment Provider</label>
-                        <input type="text" id="paymentProvider" name="paymentProvider" className={style.input} required />
+                        <select id="paymentProvider" name="paymentProvider" className={style.input} required>
+                            <option value="">Select Payment Provider</option>
+                            {/* <option value="Direct">Direct</option> */}
+                            <option value="Hires">Hires</option>
+                            <option value="Federal Health Care">Federal Health Care</option>
+                            <option value="HMO">HMO</option>
+                        </select>
                     </div>
                     <div className={style.formChild}>
                       <label htmlFor="paymentRefNo">Payment Reference Number</label>
@@ -169,7 +185,7 @@ const AddAccount = ({ toggleForm }) => {
                         <label htmlFor="paymentStatus">Payment Status</label>
                         <select id="paymentStatus" name="paymentStatus" className={style.input} required>
                             <option value="">Select Payment Status</option>
-                            <option value="complete">Complete</option>
+                            <option value="completed">complete</option>
                             <option value="incomplete">Incomplete</option>
                         </select>
                     </div>
@@ -186,6 +202,7 @@ const AddAccount = ({ toggleForm }) => {
                         <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Saving' : 'Save'}</button>
                         <button onClick={handleClose} className={`text-white bg-emsRed ${style.submit}`}>Cancel</button>
                     </div>
+                    <span className='text-red-500'>{formError}</span>
                 </form>
             </div>
         </div>

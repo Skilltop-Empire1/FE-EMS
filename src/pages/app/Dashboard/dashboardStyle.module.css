@@ -1,6 +1,4 @@
-.body {
-  background-color: #F8F8FC;
-}
+
 
 .dashboard {
   padding: 30px;
@@ -11,14 +9,22 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  margin: 20px 0;
 }
 
-button {
+.button {
   height: 30px;
-  padding: 0 5px;
+  padding: 20px;
+  border-radius: 5px;
   border: none;
   font-weight: 700;
+  background-color: #F8F8FC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+b
 
 .title {
   margin-bottom: 50px;
@@ -149,6 +155,7 @@ button {
 .ul li {
   list-style: none;
   background-color: #fefefe;
+  box-shadow: 1px 1px 1px 1px #a8a4a2;
   padding: 5px 10px;
   font-size: 16px;
 }

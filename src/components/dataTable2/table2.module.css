@@ -8,6 +8,11 @@
 
 }
 
+.th {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
 .th, .td {
     font-size: 15px;
     font-weight: 500;
@@ -64,7 +69,7 @@
   }
   
   .pagination button {
-    color: #999999;
+    color: #171A1F;
     font-family: Manrope;
     font-size: 16px;
     font-weight: 400;
@@ -83,7 +88,8 @@
     color: #171A1F;
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    font-family: Manrope;
     
   }
   

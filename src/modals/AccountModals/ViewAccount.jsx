@@ -7,12 +7,13 @@ const ViewAccount = ({ toggleForm, account }) => {
     const [keepOpen, setKeepOpen] = useState(false);
     const [postResource, { isSuccess: postSuccess, isLoading: postLoading, error: postError }] = usePostResourceMutation()
     const [editResource, { isSuccess, isLoading, error }] = useEditResourceMutation()
-    const { data: patientData, error: patientError, isLoading: patientLoading } = useFetchResourceQuery('/api/v1/patient/list')
+    const { data: patientData, error: patientError, isLoading: patientLoading } = useFetchResourceQuery('/patient/list')
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedPatient, setSelectedPatient] = useState(null);
     const [filteredOptions, setFilteredOptions] = useState([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [formData, setFormData] = useState({})
+    const [formError, setFormError] = useState()
 
 
     useEffect(() => {
@@ -83,14 +84,14 @@ const ViewAccount = ({ toggleForm, account }) => {
     try {
         let result;
         if (account?.acctId) {
-            console.log(formData.acctId)
+            // console.log(formData.acctId)
             // Update existing account
             result = await editResource({
                 url: `/account/${formData.acctId}`,
                 method: 'PUT',
                 data: accountData,
             }).unwrap();
-            console.log('Account updated successfully:', result);
+            // console.log('Account updated successfully:', result);
             setFormData(null)
             alert('Account updated successfully');
         } else {
@@ -99,7 +100,7 @@ const ViewAccount = ({ toggleForm, account }) => {
                 url: '/account/create',
                 data: accountData,
             }).unwrap();
-            console.log('Account created successfully:', result);
+            // console.log('Account created successfully:', result);
             alert('Account created successfully');
         }
 
@@ -109,8 +110,16 @@ const ViewAccount = ({ toggleForm, account }) => {
             toggleForm();
         }
     } catch (error) {
-        console.error('Error saving account:', error.message);
-        alert(`Error saving account: ${error.message}`);
+        console.error('Error saving account:', error.data.error);
+        // alert(`Error saving account: ${error.message}`);
+        if ( error.data) {
+            // If the error message is in the response
+            const errorMessage = error.data.error;
+            setFormError(errorMessage);
+        } else {
+            // Generic fallback for other errors
+            setFormError("An unexpected error occurred");
+        }
     }
 };
 
@@ -196,10 +205,10 @@ const ViewAccount = ({ toggleForm, account }) => {
                     <div className={style.formChild}>
                         <label htmlFor="paymentMethod">Payment Method</label>
                         <select id="paymentMethod" name="paymentMethod" className={style.input} required value={formData?.paymentMethod} onChange={handleInputChange}>
-                            <option value="">Select Payment Method</option>
-                            <option value="cash">Cash</option>
-                            <option value="POS">POS</option>
-                            <option value="Transfer">Transfer</option>
+                        <option value="">Select Payment Method</option>
+                            <option value="Direct">Direct</option>
+                            <option value="NHIS">NHIS</option>
+                            <option value="Insurance">Insurance</option>
                             <option value="HMO">HMO</option>
                         </select>
                     </div>
@@ -209,7 +218,14 @@ const ViewAccount = ({ toggleForm, account }) => {
                     </div>
                     <div className={style.formChild}>
                         <label htmlFor="paymentProvider">Payment Provider</label>
-                        <input type="text" id="paymentProvider" name="paymentProvider" className={style.input} value={formData?.paymentProvider} required onChange={handleInputChange}/>
+                        
+                        <select id="paymentProvider" name="paymentProvider" className={style.input}value={formData?.paymentProvider} required onChange={handleInputChange}>
+                            <option value="">Select Payment Provider</option>
+                            {/* <option value="Direct">Direct</option> */}
+                            <option value="Hires">Hires</option>
+                            <option value="Federal Health Care">Federal Health Care</option>
+                            <option value="HMO">HMO</option>
+                        </select>
                     </div>
                     <div className={style.formChild}>
                       <label htmlFor="paymentRefNo">Payment Reference Number</label>
@@ -231,7 +247,7 @@ const ViewAccount = ({ toggleForm, account }) => {
                         <label htmlFor="paymentStatus">Payment Status</label>
                         <select id="paymentStatus" name="paymentStatus" className={style.input} required value={formData?.paymentStatus} onChange={handleInputChange}>
                             <option value="">Select Payment Status</option>
-                            <option value="complete">Complete</option>
+                            <option value="completed">Complete</option>
                             <option value="incomplete">Incomplete</option>
                         </select>
                     </div>
@@ -245,9 +261,10 @@ const ViewAccount = ({ toggleForm, account }) => {
                         <label className="text-emsBlue"> Create another account</label> */}
                     </div>
                     <div className='flex gap-3'>
-                        <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Saving' : 'Save'}</button>
+                        <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Updating' : 'update'}</button>
                         <button onClick={handleClose} className={`text-white bg-emsRed ${style.submit}`}>Cancel</button>
                     </div>
+                    <span className='text-red-500'>{formError}</span>
                 </form>
             </div>
         </div>

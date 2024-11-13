@@ -51,7 +51,7 @@ const Dashboard = () => {
       <div className={styles.dashboard} id="content-to-print">
         <div className={styles.top}>
           <h2 className={styles.title}>Dashboard</h2>
-          <button onClick={handleDownloadPdf}>Download PDF</button>
+          <button onClick={handleDownloadPdf} className={styles.button}>Download PDF</button>
         </div>
         <div className={styles.boxes}>
           <div className={styles.box}>
@@ -157,7 +157,7 @@ const Dashboard = () => {
                       return (
                         <li
                           key={idx}
-                          className="my-2 flex items-center justify-between"
+                          className="my-2 flex items-center justify-between bg-orange-500"
                         >
                           <div className="flex gap-2 items-center">
                             <img src={logo} alt="" className="w-10 h-10 " />

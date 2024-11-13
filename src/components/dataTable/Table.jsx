@@ -136,7 +136,7 @@ function Table({
                       aria-label="More actions"
                       role="button"
                       tabIndex="0"
-                      onKeyPress={(e) =>
+                      onKeyDown={(e) =>
                         e.key === "Enter" && toggleActionCell(itemId)
                       }
                     >

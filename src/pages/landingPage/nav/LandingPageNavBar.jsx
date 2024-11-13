@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import style from "./LandingPageNavBar.module.css";
 import WatchDemo from "./WatchDemo";
+import { Menu } from "lucide-react";
 
 function LandingPageNavBar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isShowMenu, setIsShowMenu] = useState(false);
   const navigate = useNavigate();
 
   const handleDemoClick = () => {
@@ -15,14 +17,22 @@ function LandingPageNavBar() {
     setIsModalOpen(false);
   };
 
+  const toggleMenu = () => {
+    setIsShowMenu(!isShowMenu);
+  };
+
   return (
     <>
       <nav className={style.navContainer}>
-        <Link to="/" aria-label="Home">
+        <Link
+          className={`${style.nav} ${isShowMenu ? style.show : ""}`}
+          to="/"
+          aria-label="Home"
+        >
           <img src="/ehs.svg" alt="EHS Logo" />
         </Link>
 
-        <ul className={style.nav}>
+        <ul className={`${style.nav} ${isShowMenu ? style.show : ""}`}>
           <li onClick={handleDemoClick}>
             <NavLink
               to="#demo"
@@ -67,13 +77,22 @@ function LandingPageNavBar() {
 
         <button
           onClick={() => navigate("/login")}
-          className={style.loginButton}
+          className={`${style.loginButton} ${style.nav} ${isShowMenu ? style.show : ""}`}
         >
           Login
         </button>
-      </nav>
 
-      <WatchDemo isOpen={isModalOpen} onRequestClose={handleModalClose} />
+        <WatchDemo isOpen={isModalOpen} onRequestClose={handleModalClose} />
+
+        {/* Hamburger Menu Icon */}
+        <button
+          className={style.hamburger}
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          <Menu size={32} />
+        </button>
+      </nav>
     </>
   );
 }

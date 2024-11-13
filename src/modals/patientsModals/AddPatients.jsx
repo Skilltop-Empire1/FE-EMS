@@ -4,9 +4,10 @@ import { createPatient } from '../../hooks/Api';
 import { useFetchResourceQuery, usePostResourceMutation } from 'src/redux/api/departmentApi';
 
 const AddPatients = ({ toggleForm }) => {
-    const{data: departmentData = [], isLoading: departmentLoading, error: departmentError} = useFetchResourceQuery('/api/v1/department/list')
-    const{data: staffData = [], isLoading: staffLoading, error: staffError} = useFetchResourceQuery('/api/v1/staff/doctor/all')
+    const{data: departmentData = [], isLoading: departmentLoading, error: departmentError} = useFetchResourceQuery('/department/list')
+    const{data: staffData = [], isLoading: staffLoading, error: staffError} = useFetchResourceQuery('/staff/doctor/all')
     const [postResource, {error, isLoading}] = usePostResourceMutation()
+    const [formError, setFormError] = useState()
     
     
     const [keepOpen, setKeepOpen] = useState(false);
@@ -81,7 +82,7 @@ const AddPatients = ({ toggleForm }) => {
         medCondition: e.target.medCondition.value,
       };
     
-      console.log('Form Data:', patientData); // Check formatted data
+      // console.log('Form Data:', patientData); // Check formatted data
     
       try {
         const result = await postResource({
@@ -89,7 +90,7 @@ const AddPatients = ({ toggleForm }) => {
           data: patientData,
         }).unwrap();
         
-        console.log('Patient created successfully:', result);
+        // console.log('Patient created successfully:', result);
         alert('Patient created successfully');
         window.location.reload()
         e.target.reset();
@@ -100,8 +101,15 @@ const AddPatients = ({ toggleForm }) => {
         }
     
       } catch (error) {
-        console.error('Error creating patient:', error.message);
-        alert(`Error creating patient: ${error.message}`);
+        console.error('Error creating patient:', error.data.message);
+        if (error.data) {
+          // If the error message is in the response
+          const errorMessage = error.data.message;
+          setFormError(errorMessage);
+      } else {
+          // Generic fallback for other errors
+          setFormError("An unexpected error occurred");
+      }
       }
     };
     
@@ -239,9 +247,10 @@ const AddPatients = ({ toggleForm }) => {
             <label htmlFor="checkbox" className={` text-emsBlue`}> Add another patient</label>
           </div>
           <div className='flex gap-3'>
-            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>Save</button>
+            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Saving' : 'Save'}</button>
             <button  className={`text-white bg-emsRed ${style.submit}`} onClick={handleClose}>Cancel</button>
             </div>
+            <span className='text-red-500'>{formError}</span>
         </form>
       </div>
     </div>

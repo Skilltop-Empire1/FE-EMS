@@ -46,6 +46,18 @@
      grid-template-columns: 2fr 2fr;
 }
 
+.formPrint {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.formPrint > div {
+    flex: 40%;
+}
+
+
 .formChild {
     width: 90%;
     margin-top: 10px;

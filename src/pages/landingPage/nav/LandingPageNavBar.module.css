@@ -1,3 +1,4 @@
+/* General Navbar Styles */
 .navContainer {
   display: flex;
   justify-content: space-between;
@@ -19,11 +20,16 @@
 
 .nav li {
   margin: 0 1rem;
-  text-decoration: none;
 }
 
 .nav li a {
   color: black;
+  transition: color 0.3s ease;
+}
+
+.nav li a:hover {
+  color: #007bff;
+  text-decoration: none;
 }
 
 .activeLink {
@@ -37,8 +43,7 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: 158px;
-  height: 45px;
+  text-align: center;
 }
 
 .loginButton:hover {
@@ -47,4 +52,44 @@
 
 body {
   margin-top: 4.5rem;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .loginButton {
+    text-align: center;
+    padding: 0.5rem 1rem;
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+  }
+  .navContainer {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .nav.show {
+    display: flex;
+  }
 }

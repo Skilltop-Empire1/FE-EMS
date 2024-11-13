@@ -1,138 +1,156 @@
 import React, { useState, useEffect } from "react";
-import style from "./staffStyle.module.css";
-import { CiCirclePlus } from "react-icons/ci";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { FaEye } from "react-icons/fa";
-import { MdModeEditOutline } from "react-icons/md";
-import Table from "../../../components/dataTable/Table";
-import { tableHeader, tableData } from "./staffData";
-import { MODAL_TYPES } from "../../../context/ModalContext";
-import Button from "../../../components/Button/Button";
-import AddStaff from "../../../modals/staffModals/AddStaff";
-import Table2 from "../../../components/dataTable2/Table2";
-import SelectFilter from "@src/components/SelectFilter";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Search } from "lucide-react";
+import StaffTable from "@src/components/dataTable2/StaffTable";
+import AddStaffModal from "@src/modals/staffModals/AddStaffModal";
+import { useFetchStaffQuery } from "@src/redux/api/staffApi";
+import StaffTableSkeleton from "@src/components/dataTable2/StaffTableSkeleton";
+
+const StaffTypeList = [
+  "doctor",
+  "nurses",
+  "pharmacy",
+  "laboratory",
+  "radiography",
+];
 
 const Staff = () => {
-
-  const specializationOptions = [
-    { specialization: 'Select Specialization', value: '' },
-    { specialization: 'Surgeon', value: 'Surgeon' },
-    { specialization: 'Dentist', value: 'Dentist' },
-    { specialization: 'Ophthalmologist', value: 'Ophthalmologist' },
-  ];
-
-  const practiceOptions = [
-    { specialization: 'Select Practice', value: '' },
-    { specialization: 'Surgeon', value: 'Surgeon' },
-    { specialization: 'Dentist', value: 'Dentist' },
-    { specialization: 'Ophthalmologist', value: 'Ophthalmologist' },
-  ];
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
-  const [patients, setPatients] = useState([]);
-  const [filteredPatients, setFilteredPatients] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [specializationFilter, setSpecializationFilter] = useState('');
-  const [practiceFilter, setPracticeFilter] = useState('');
+  const [showAddStaffModal, setShowAddStaffModal] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [specializationFilter, setSpecializationFilter] = useState("");
+  const [practiceFilter, setPracticeFilter] = useState("");
+  const [selectedType, setSelectedType] = useState("doctor");
 
+  // Extract `type` from query params
+  const queryParams = new URLSearchParams(location.search);
+  const type = queryParams.get("type");
+
+  // Validate the type and set default if invalid
+  const isValidType = StaffTypeList.includes(type);
+
+  // Update URL and selected type if `type` is invalid
   useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const patientData = await listStaff();
-        setPatients(patientData);
-        setFilteredPatients(patientData); // Initialize filtered data
-      } catch (error) {
-        console.error('Failed to fetch staff:', error);
-      }
-    };
+    if (!isValidType) {
+      navigate(`/app/staff?type=doctor`, { replace: true });
+      setSelectedType("doctor");
+    } else if (type && type !== selectedType) {
+      setSelectedType(type);
+    }
+  }, [isValidType, navigate, type, selectedType]);
 
-    fetchPatients();
-  }, []);
+  // Fetch data based on `selectedType`
+  const {
+    data: fetchedStaff,
+    isLoading,
+    error,
+  } = useFetchStaffQuery(`/staff/${selectedType}/all`);
 
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  };
-  
-  //confirmation to close the modal
-  const toggleForm2 = () => {
-    let confirmation = window.confirm('Cancel staff details ?')
-    if (confirmation) setShowForm(!showForm);
-  };
+  console.log({ fetchedStaff, selectedType, error });
+
+  const toggleForm = () => setShowForm((prev) => !prev);
 
   const handleSearch = (event) => {
-    const searchValue = event.target.value;
-    setSearchText(searchValue);
-    filterData(searchValue, specializationFilter, practiceFilter);
+    setSearchText(event.target.value);
+    filterData(event.target.value, specializationFilter, practiceFilter);
+  };
+
+  const launchAddStaffModal = () => {
+    setShowAddStaffModal(true);
+  };
+  const closeAddStaffModal = () => {
+    setShowAddStaffModal(false);
   };
 
   const handleSpecializationChange = (event) => {
-    const specializationValue = event.target.value;
-    setSpecializationFilter(specializationValue);
-    filterData(searchText, specializationValue, practiceFilter);
+    setSpecializationFilter(event.target.value);
+    filterData(searchText, event.target.value, practiceFilter);
   };
 
   const handlePracticeChange = (event) => {
-    const practiceValue = event.target.value;
-    setPracticeFilter(practiceValue);
-    filterData(searchText, specializationFilter, practiceValue);
+    setPracticeFilter(event.target.value);
+    filterData(searchText, specializationFilter, event.target.value);
   };
 
   const filterData = (searchText, specialization, practice) => {
-    const filteredData = patients.filter((item) => {
-      const matchesSearch = item.name.toLowerCase().includes(searchText.toLowerCase());
-      const matchesSpecialization = specialization ? item.specialization === specialization : true;
-      const matchesPractice = practice ? item.practice === practice : true;
+    const filteredData = tableData.filter((item) => {
+      const matchesSearch = item.Name.toLowerCase().includes(
+        searchText.toLowerCase()
+      );
+      const matchesSpecialization = specialization
+        ? item.Specialization === specialization
+        : true;
+      const matchesPractice = practice ? item.Practice === practice : true;
       return matchesSearch && matchesSpecialization && matchesPractice;
     });
-    setFilteredPatients(filteredData);
+    setData(filteredData);
   };
-
-  //Delete staff
-
-//   const handleDelete = async (i) => {
-//     await deleteStaff(id);
-//     searchStaff(); // Refresh the staff list after deletion
-// };
-
 
   return (
     <div className="w-full px-10 py-5 flex flex-col space-y-4">
       <div className="my-4">
-        <h2 className="text-2xl font-bold text-left">Staffs</h2>
-      </div>
-      <div className="flex flex-wrap items-center justify-between">
-        <div>
-          <div>
-            <input
-              type="text"
-              placeholder="Name"
-              className={style.filter}
-              onChange={handleSearch}
-            />
-            <SelectFilter
-              onChange={handleSpecializationChange}
-              data={item}
-              Filter={specializationFilter}
-            />
-            <SelectFilter
-              onChange={handleSpecializationChange}
-              data={item2}
-              Filter={practiceFilter}
-            />
-          </div>
-        </div>
-        <div className={style.sticky}>
-          <Button onClick={toggleForm} disabled={showForm} add={"Add Staff"} />
-        </div>
-      </div>
-      <div>
-        <Table2 data={data} Role={"Specialization"} />
+        <h2 className="text-2xl font-bold text-left">
+          Staffs -{" "}
+          {selectedType &&
+            selectedType?.charAt(0).toUpperCase() + selectedType?.slice(1)}
+        </h2>
       </div>
 
-      {showForm && (
-        <div>
-          <AddStaff toggleForm={toggleForm2} />
+      <div className="flex flex-wrap items-center gap-4 justify-between">
+        <div className="relative flex items-center max-w-[400px] w-full">
+          <Search className="absolute left-3 text-gray-500" size={20} />
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:ring-1 focus:ring-blue-500/50 focus:border-blue-500/50"
+            onChange={handleSearch}
+          />
         </div>
+
+        <div className="flex gap-2 items-center">
+          <button
+            className="bg-transparent border border-emsBlue text-emsBlue px-6 py-3 font-light rounded-lg text-sm"
+            onClick={toggleForm}
+            disabled={showForm}
+          >
+            Add Appointment
+          </button>
+          <button
+            className="bg-emsBlue text-white px-6 py-3 font-light rounded-lg text-sm"
+            onClick={launchAddStaffModal}
+            disabled={showForm}
+          >
+            Add Staff
+          </button>
+        </div>
+      </div>
+
+      {isLoading || !fetchedStaff ? (
+        <StaffTableSkeleton />
+      ) : (
+        <div>
+          <StaffTable
+            data={
+              fetchedStaff?.[
+                selectedType === "doctor"
+                  ? "doctors"
+                  : selectedType === "nurses"
+                  ? "nurse"
+                  : selectedType
+              ]
+            }
+            Role={"Specialization"}
+          />
+        </div>
+      )}
+      {showAddStaffModal && (
+        <AddStaffModal
+          show={showAddStaffModal}
+          onClose={closeAddStaffModal}
+          customer={{}}
+        />
       )}
     </div>
   );
