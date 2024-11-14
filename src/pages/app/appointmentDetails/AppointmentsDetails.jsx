@@ -55,7 +55,7 @@ function AppointmentsDetails() {
         <div>
           <button
             className={style.staffNavButton}
-            onClick={() => navigate("/staff")}
+            onClick={() => navigate("/app/staff")}
             type="button"
           >
             Add Staff

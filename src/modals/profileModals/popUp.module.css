@@ -20,11 +20,12 @@
   border-radius: 8px;
   position: relative;
   width: 786px;
-  height: 503px;
+  /* height: 503px; */
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: center;
+  overflow-y: scroll;
 }
 
 .deleteModalStyle {

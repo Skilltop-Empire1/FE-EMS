@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
-  faTwitter,
+  faXTwitter,
   faInstagram,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
@@ -16,7 +16,7 @@ function LandingPageLayout() {
       <main>
         <section id="video" className={style.heroSection}>
           <div className={style.heroContent}>
-            <h1>Streamline Health Operations with EHS</h1>
+            <h1>Streamline Health Care Operations with EHS</h1>
             <p>
               Your all-in-one health management system to efficiently manage
               departments, staff, patients, admission, appointments, billing,
@@ -202,7 +202,7 @@ function LandingPageLayout() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon={faTwitter} size="2x" />
+            <FontAwesomeIcon icon={faXTwitter} size="2x" />
           </a>
           <a
             href="https://linkedin.com"
