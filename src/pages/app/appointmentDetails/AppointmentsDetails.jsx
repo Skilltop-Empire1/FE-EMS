@@ -15,10 +15,11 @@ function AppointmentsDetails() {
     data: fetchedData,
     isLoading: loading,
     error,
+    refetch, // Used for retrying fetching data
   } = useFetchResourceQuery(URL);
 
   const [data, setData] = useState([]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(""); // Search query state
   const { openModal } = useModal();
 
   useEffect(() => {
@@ -27,6 +28,21 @@ function AppointmentsDetails() {
     }
   }, [fetchedData, loading, error]);
 
+  // Handle search change (client-side filtering)
+  const handleSearchChange = (newQuery) => {
+    setQuery(newQuery);
+    if (fetchedData?.appointments) {
+      const filteredData = fetchedData.appointments.filter(
+        (item) =>
+          item.patName.toLowerCase().includes(newQuery.toLowerCase()) ||
+          item.phone.toLowerCase().includes(newQuery.toLowerCase()) ||
+          item.email.toLowerCase().includes(newQuery.toLowerCase())
+      );
+      setData(filteredData);
+    }
+  };
+
+  // Render each row in the table
   const renderRow = (item) => (
     <>
       <td>{item.patName}</td>
@@ -49,7 +65,7 @@ function AppointmentsDetails() {
           searchKey={["patName", "phone", "email"]}
           query={query}
           setData={setData}
-          setQuery={setQuery}
+          setQuery={handleSearchChange} // Pass the search change handler
           fetchedData={fetchedData?.appointments}
         />
         <div>
@@ -65,10 +81,26 @@ function AppointmentsDetails() {
           </button>
         </div>
       </div>
+
+      {/* Error handling UI */}
+      {error && (
+        <div className={style.errorContainer}>
+          <p className={style.errorMessage}>
+            There was an error loading the data.
+          </p>
+          <button onClick={refetch} type="button">
+            Retry
+          </button>
+        </div>
+      )}
+
+      {/* Loading state */}
+      {loading && <div>Loading appointments...</div>}
+
+      {/* Table rendering */}
       <Table
         headers={table}
         data={data}
-        itemsPerPage={5}
         renderRow={renderRow}
         editModal={MODAL_TYPES.TYPE7}
         viewModal={MODAL_TYPES.TYPE10}
