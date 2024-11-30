@@ -67,6 +67,27 @@ function ChangeProfileImage() {
     setError(""); // Reset error when clearing the file
   };
 
+  const uploadButton = {
+    width: "170px",
+    height: "48px",
+    padding: "10px",
+    borderRadius: "8px",
+    fontSize: "17px",
+    fontWeight: "400",
+    lineHeight: "27px",
+    textAlign: "center",
+    backgroundColor: "#FFFFFF",
+    color: "#FFFFFF",
+    marginTop: "20px",
+    marginTopBottom: "20px",
+    backgroundColor: "#3F51B5",
+  };
+
+  const buttonContainer = {
+    display: "flex",
+    justifyContent: "center",
+  };
+
   return (
     <>
       <div className={style.contentStyle}>
@@ -97,9 +118,15 @@ function ChangeProfileImage() {
           onChange={handleFileSelect}
         />
       </div>
-      <button onClick={handleUpload} disabled={isUploading}>
-        {isUploading ? "Uploading..." : "Upload"}
-      </button>
+      <div style={buttonContainer}>
+        <button
+          style={uploadButton}
+          onClick={handleUpload}
+          disabled={isUploading}
+        >
+          {isUploading ? "Uploading..." : "Upload"}
+        </button>
+      </div>
     </>
   );
 }

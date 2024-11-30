@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useModal } from "../../context/ModalContext";
 import { useDeleteResourceMutation } from "../../redux/api/departmentApi";
+import { color } from "framer-motion";
 
 function DeleteOrganization({ id, onDeleteSuccess }) {
   const { modalProps, closeDeleteModal } = useModal();
@@ -34,6 +35,7 @@ function DeleteOrganization({ id, onDeleteSuccess }) {
     lineHeight: "27px",
     textAlign: "center",
     backgroundColor: "#FFFFFF",
+    color: "#FFFFFF",
   };
 
   const deleteButton = {

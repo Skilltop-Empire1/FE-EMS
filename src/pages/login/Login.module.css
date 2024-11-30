@@ -54,3 +54,7 @@
 .backArrow:hover {
   background-color: #cfecec;
 }
+
+.forgotPassword {
+  cursor: pointer !important;
+}

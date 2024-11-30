@@ -31,10 +31,10 @@ function AppointmentsDetails() {
     <>
       <td>{item.patName}</td>
       <td>{item.phone}</td>
-      <td>{item.email}</td>
-      <td>{item.gender}</td>
-      <td>{item.dateOfBirth}</td>
-      <td>{item.updatedAt}</td>
+      <td>{item.staff.lastName}</td>
+      <td>{item.appointDate}</td>
+      <td>{item.appointTime}</td>
+      <td>{item.reason}</td>
       <td>{item.department.name}</td>
     </>
   );

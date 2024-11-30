@@ -228,8 +228,8 @@ const AddAppointment = () => {
             />
           </div>
         </div>
-        <div className={style.inputContent}>
-          <div>
+        <div>
+          <div className={style.sendMessage}>
             <input
               type="checkbox"
               id="sendMessage"

@@ -13,10 +13,10 @@ function LandingPageLayout() {
 
   return (
     <>
-      <main>
+      <main className={style.mainContainer}>
         <section id="video" className={style.heroSection}>
           <div className={style.heroContent}>
-            <h1>Streamline Health Care Operations with EHS</h1>
+            <h1>Streamline Healthcare Operations with EHS</h1>
             <p>
               Your all-in-one health management system to efficiently manage
               departments, staff, patients, admission, appointments, billing,
@@ -191,34 +191,35 @@ function LandingPageLayout() {
       <footer className={style.footer}>
         <div className={style.socialMedia}>
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/people/Skilltop-Empire/61560962855881/"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faFacebook} size="2x" />
           </a>
           <a
-            href="https://twitter.com"
+            href="https://x.com/i/flow/login?redirect_after_login=%2FSkilltopempire"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faXTwitter} size="2x" />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/company/skilltop-empire/"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faLinkedin} size="2x" />
           </a>
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/skilltopempire/?igsh=YzljYTk1ODg3Zg%3D%3D#"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FontAwesomeIcon icon={faInstagram} size="2x" />
           </a>
         </div>
+
         <p>All rights reserved Skilltop Empire, {currentYear}.</p>
       </footer>
     </>

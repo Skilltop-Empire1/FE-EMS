@@ -80,3 +80,10 @@
   color: white;
   margin-left: 24px;
 }
+
+.sendMessage {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+}
