@@ -26,17 +26,6 @@
   margin-right: 24px;
 }
 
-.searchContainer input {
-  width: 217px;
-  height: 52px;
-  gap: 0px;
-  border-radius: 2px;
-  opacity: 0px;
-  border: 1px solid #ced4da;
-  outline: none;
-  text-align: center;
-}
-
 .searchContainer button {
   height: 46px;
   top: 18px;
