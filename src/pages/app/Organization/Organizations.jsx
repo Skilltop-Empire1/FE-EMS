@@ -28,7 +28,7 @@ function Organizations() {
 
   return (
     <div className={style.container}>
-      <div>
+      <div className={style.departmentName}>
         <h3 className={style.header}>Department Name</h3>
       </div>
       <div className={style.searchContainer}>

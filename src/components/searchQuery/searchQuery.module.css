@@ -10,8 +10,13 @@
   padding: 12px 11px;
 }
 
+.searchBar:focus-within {
+  outline: 2px solid #ced4da;
+}
+
 .searchBar input {
   width: 100%;
+  outline: none;
 }
 
 .searchIcon {

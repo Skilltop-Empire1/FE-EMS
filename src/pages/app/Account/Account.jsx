@@ -5,8 +5,12 @@ import Table3 from "src/components/dataTable3/Table3";
 import AddAccount from "src/modals/AccountModals/AddAcount";
 import ConfirmationModal from "src/modals/ConfirmationModal/ConfirmationModal";
 import ViewAccount from "src/modals/AccountModals/ViewAccount";
-import { useFetchResourceQuery, useDeleteResourceMutation } from "src/redux/api/departmentApi";
+import {
+  useFetchResourceQuery,
+  useDeleteResourceMutation,
+} from "src/redux/api/departmentApi";
 import AccountInfo from "src/modals/AccountModals/AccountInfo";
+import SearchQuery from "@src/components/searchQuery/SearchQuery";
 
 const Account = () => {
   const [showForm, setShowForm] = useState(false);
@@ -14,17 +18,20 @@ const Account = () => {
   const [showView, setShowView] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [filteredPatients, setFilteredPatients] = useState([]);
-  const [accountIdToDelete, setAccountIdToDelete] = useState();
+  const [filteredAccounts, setFilteredAccounts] = useState([]);
+  const [accountIdToDelete, setAccountIdToDelete] = useState(null);
   const [accountToUpdate, setAccountToUpdate] = useState(null);
   const [accountToView, setAccountToView] = useState(null);
 
-  const { data: accountData = [], error: accountError, isLoading: accountLoading } = useFetchResourceQuery('/account');
+  const {
+    data: accountData = [],
+    error: accountError,
+    isLoading: accountLoading,
+  } = useFetchResourceQuery("/account");
   const [deleteResource] = useDeleteResourceMutation();
 
   useEffect(() => {
-    // Initialize filteredPatients with accountData when data is fetched
-    setFilteredPatients(accountData);
+    setFilteredAccounts(accountData);
   }, [accountData]);
 
   const handleAccountDelete = (id) => {
@@ -37,7 +44,9 @@ const Account = () => {
       await deleteResource(`/account/${accountIdToDelete}`).unwrap();
       alert("Account detail deleted successfully");
       setShowConfirm(false);
-      setFilteredPatients(filteredPatients.filter(account => account.id !== accountIdToDelete));
+      setFilteredAccounts(
+        filteredAccounts.filter((account) => account.id !== accountIdToDelete)
+      );
     } catch (err) {
       console.error("Failed to delete account:", err);
     }
@@ -54,17 +63,16 @@ const Account = () => {
     setShowInfo(!showInfo);
   };
 
-  const handleSearch = (event) => {
-    const searchValue = event.target.value.toLowerCase();
-    setSearchText(searchValue);
+  const handleSearch = (query) => {
+    setSearchText(query);
 
-    if (searchValue === "") {
-      setFilteredPatients(accountData); // Reset to original data when search is cleared
+    if (query === "") {
+      setFilteredAccounts(accountData);
     } else {
       const filteredData = accountData.filter((account) =>
-        account.patName?.toLowerCase().includes(searchValue)
+        account.patName?.toLowerCase().includes(query.toLowerCase())
       );
-      setFilteredPatients(filteredData);
+      setFilteredAccounts(filteredData);
     }
   };
 
@@ -75,12 +83,12 @@ const Account = () => {
       </div>
       <div className={style.info}>
         <div className={style.work}>
-          <input
-            type="text"
-            placeholder="Search Account"
-            className={style.filter}
-            value={searchText}
-            onChange={handleSearch}
+          <SearchQuery
+            setQuery={handleSearch}
+            query={searchText}
+            setData={setFilteredAccounts}
+            fetchedData={accountData}
+            searchKey={["patName"]}
           />
           <Button onClick={toggleForm} disabled={showForm} add="Add Account" />
         </div>
@@ -89,10 +97,10 @@ const Account = () => {
           <div>Loading...</div>
         ) : accountError ? (
           <div>Failed to load account data</div>
-        ) : filteredPatients?.length > 0 ? (
+        ) : filteredAccounts?.length > 0 ? (
           <Table3
             Role="Organization"
-            data={filteredPatients}
+            data={filteredAccounts}
             staff="none"
             patients=""
             runToggle={handleAccountDelete}
@@ -105,9 +113,19 @@ const Account = () => {
       </div>
 
       {showForm && <AddAccount toggleForm={toggleForm} />}
-      {showConfirm && <ConfirmationModal page="Account" toggle={toggleConfirm} runDelete={handleDelete} />}
-      {showView && <ViewAccount toggleForm={toggleView} account={accountToUpdate} />}
-      {showInfo && <AccountInfo toggleInfo={toggleInfo} infoData={accountToView} />}
+      {showConfirm && (
+        <ConfirmationModal
+          page="Account"
+          toggle={toggleConfirm}
+          runDelete={handleDelete}
+        />
+      )}
+      {showView && (
+        <ViewAccount toggleForm={toggleView} account={accountToUpdate} />
+      )}
+      {showInfo && (
+        <AccountInfo toggleInfo={toggleInfo} infoData={accountToView} />
+      )}
     </div>
   );
 };

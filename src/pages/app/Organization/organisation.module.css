@@ -6,6 +6,10 @@
   cursor: pointer;
 }
 
+.departmentName {
+  margin-bottom: 24px;
+}
+
 .header {
   font-size: 25px;
   font-weight: 700;

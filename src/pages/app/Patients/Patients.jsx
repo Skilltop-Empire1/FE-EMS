@@ -5,8 +5,12 @@ import Table2 from "../../../components/dataTable2/Table2";
 import AddPatients from "../../../modals/patientsModals/AddPatients";
 import ConfirmationModal from "src/modals/ConfirmationModal/ConfirmationModal";
 import ViewPatients from "src/modals/patientsModals/ViewPatients";
-import { useFetchResourceQuery, useDeleteResourceMutation } from "src/redux/api/departmentApi";
+import {
+  useFetchResourceQuery,
+  useDeleteResourceMutation,
+} from "src/redux/api/departmentApi";
 import PatientInfo from "src/modals/patientsModals/PatientInfo";
+import SearchQuery from "@src/components/searchQuery/SearchQuery";
 
 const Patients = () => {
   const [showForm, setShowForm] = useState(false);
@@ -19,7 +23,11 @@ const Patients = () => {
   const [patientToUpdate, setPatientToUpdate] = useState(null);
   const [patientToView, setPatientToView] = useState(null);
 
-  const { data: patientData = [], error: patientError, isLoading: patientLoading } = useFetchResourceQuery("/patient/list");
+  const {
+    data: patientData = [],
+    error: patientError,
+    isLoading: patientLoading,
+  } = useFetchResourceQuery("/patient/list");
   const [deleteResource] = useDeleteResourceMutation();
 
   useEffect(() => {
@@ -37,7 +45,9 @@ const Patients = () => {
       await deleteResource(`/patient/delete/${patientToDelete}`).unwrap();
       alert("Patient details deleted successfully");
       setShowConfirm(false);
-      setFilteredPatients(filteredPatients.filter(patient => patient.id !== patientToDelete));
+      setFilteredPatients(
+        filteredPatients.filter((patient) => patient.id !== patientToDelete)
+      );
     } catch (err) {
       console.error("Failed to delete patient details:", err);
     }
@@ -54,15 +64,15 @@ const Patients = () => {
     setShowInfo(!showInfo);
   };
 
-  const handleSearch = (event) => {
-    const searchValue = event.target.value.toLowerCase();
-    setSearchText(searchValue);
+  // Function to update filteredPatients based on search
+  const handleSearch = (query) => {
+    setSearchText(query);
 
-    if (searchValue === "") {
-      setFilteredPatients(patientData); // Reset to original data when search is cleared
+    if (query === "") {
+      setFilteredPatients(patientData);
     } else {
       const filteredData = patientData.filter((patient) =>
-        patient.firstName?.toLowerCase().includes(searchValue)
+        patient.firstName?.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredPatients(filteredData);
     }
@@ -75,12 +85,13 @@ const Patients = () => {
       </div>
       <div className={style.info}>
         <div className={style.work}>
-          <input
-            type="text"
-            placeholder="Search Patient"
-            className={style.filter}
-            value={searchText}
-            onChange={handleSearch}
+          {/* Integrating the SearchQuery component */}
+          <SearchQuery
+            setQuery={handleSearch}
+            query={searchText}
+            setData={setFilteredPatients}
+            fetchedData={patientData}
+            searchKey={["firstName"]}
           />
           <Button onClick={toggleForm} disabled={showForm} add="Add Patient" />
         </div>
@@ -105,9 +116,19 @@ const Patients = () => {
       </div>
 
       {showForm && <AddPatients toggleForm={toggleForm} />}
-      {showConfirm && <ConfirmationModal page="Patient" toggle={toggleConfirm} runDelete={handleDelete} />}
-      {showView && <ViewPatients toggleForm={toggleView} patient={patientToUpdate} />}
-      {showInfo && <PatientInfo toggleInfo={toggleInfo} infoData={patientToView} />}
+      {showConfirm && (
+        <ConfirmationModal
+          page="Patient"
+          toggle={toggleConfirm}
+          runDelete={handleDelete}
+        />
+      )}
+      {showView && (
+        <ViewPatients toggleForm={toggleView} patient={patientToUpdate} />
+      )}
+      {showInfo && (
+        <PatientInfo toggleInfo={toggleInfo} infoData={patientToView} />
+      )}
     </div>
   );
 };

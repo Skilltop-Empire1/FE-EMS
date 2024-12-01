@@ -57,7 +57,7 @@ function AppointmentsDetails() {
 
   return (
     <div className={style.container}>
-      <div>
+      <div className={style.nameContainer}>
         <h3 className={style.header}>Appointments</h3>
       </div>
       <div className={style.searchContainer}>
