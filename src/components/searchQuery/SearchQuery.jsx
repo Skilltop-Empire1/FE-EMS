@@ -1,4 +1,6 @@
 import React from "react";
+import { Search } from "lucide-react"; // Import the Search icon
+import style from "./searchQuery.module.css";
 
 function SearchQuery({
   setQuery,
@@ -27,13 +29,16 @@ function SearchQuery({
   };
 
   return (
-    <input
-      onChange={handleSearch}
-      type="text"
-      placeholder="Enter name to search"
-      value={query}
-      aria-label="Search query"
-    />
+    <div className={style.searchBar}>
+      <Search className={style.searchIcon} />
+      <input
+        onChange={handleSearch}
+        type="text"
+        placeholder="Search"
+        value={query}
+        aria-label="Search query"
+      />
+    </div>
   );
 }
 
