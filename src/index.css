@@ -19,12 +19,6 @@ button {
   cursor: pointer;
 }
 
-input,
-select,
-textarea {
-  outline: none;
-}
-
 li {
   list-style: none;
 }

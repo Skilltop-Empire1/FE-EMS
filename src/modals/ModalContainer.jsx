@@ -54,6 +54,8 @@ function ModalContainer() {
 
       case MODAL_TYPES.TYPE12:
         return <ChangePassword {...modalProps} />;
+      case MODAL_TYPES.TYPE13:
+        return <LogoutConfirmation />;
 
       default:
         return null;
@@ -69,7 +71,7 @@ function ModalContainer() {
           }}
           className={style.closeButtonStyle}
         >
-          &times;
+          X
         </button>
         {renderModalContext()}
       </div>

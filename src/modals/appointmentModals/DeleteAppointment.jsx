@@ -8,6 +8,8 @@ function DeleteOrganization({ id, onDeleteSuccess }) {
     useDeleteResourceMutation();
   const [error, setError] = useState("");
 
+  console.log("deleteResource", modalProps);
+
   const handleDelete = async () => {
     const URL = `/appointmentData/${modalProps.id}`;
 
@@ -24,12 +26,48 @@ function DeleteOrganization({ id, onDeleteSuccess }) {
     }
   };
 
+  const btn = {
+    width: "170px",
+    height: "48px",
+    padding: "10px",
+    borderRadius: "8px",
+    fontSize: "17px",
+    fontWeight: "400",
+    lineHeight: "27px",
+    textAlign: "center",
+    backgroundColor: "#FFFFFF",
+    color: "#FFFFFF",
+  };
+
+  const deleteButton = {
+    ...btn,
+    backgroundColor: "#3F51B5",
+    marginRight: "13px",
+  };
+
+  const closeButton = {
+    ...btn,
+    backgroundColor: "#F44336",
+    marginLeft: "13px",
+  };
+
+  const textStyle = {
+    width: "360px",
+    height: "54px",
+    fontSize: "17px",
+    fontWeight: 700,
+    lineHeight: "27px",
+    textAlign: "centre",
+    color: " #171A1F",
+    marginBottom: "20px",
+  };
+
   return (
     <div>
-      <p>
+      <p style={textStyle}>
         Are you sure you want to delete{" "}
-        <span style={{ color: "red" }}>{modalProps.patientName}</span>{" "}
-        Appointment record?
+        <span style={{ color: "red" }}>{modalProps.patName}</span> Appointment
+        record?
       </p>
       {error && <div style={{ color: "red" }}>{error}</div>}
       {isError && (
@@ -39,10 +77,16 @@ function DeleteOrganization({ id, onDeleteSuccess }) {
         <div style={{ color: "green" }}>Organization deleted successfully!</div>
       )}
       <div>
-        <button onClick={handleDelete} disabled={isLoading}>
+        <button
+          style={deleteButton}
+          onClick={handleDelete}
+          disabled={isLoading}
+        >
           {isLoading ? "Deleting..." : "Delete"}
         </button>
-        <button onClick={closeModal}>Close</button>
+        <button style={closeButton} onClick={closeModal}>
+          Close
+        </button>
       </div>
     </div>
   );

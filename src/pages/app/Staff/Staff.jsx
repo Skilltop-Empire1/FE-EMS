@@ -137,8 +137,8 @@ const Staff = () => {
                 selectedType === "doctor"
                   ? "doctors"
                   : selectedType === "nurses"
-                  ? "nurse"
-                  : selectedType
+                    ? "nurse"
+                    : selectedType
               ]
             }
             Role={"Specialization"}

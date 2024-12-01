@@ -281,11 +281,18 @@ footer {
 
 /* Mobile styles */
 @media (max-width: 768px) {
+  .mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
   .heroSection {
     flex-direction: column;
+    align-items: center;
     padding: 5rem 2rem;
     gap: 2rem;
-    text-align: center;
   }
 
   .heroImage img {
@@ -293,33 +300,31 @@ footer {
     height: auto;
   }
 
-  .heroContent h1 {
-    font-size: 2rem;
-    line-height: 2.5rem;
-  }
-
+  .heroContent h1,
   .heroContent p {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    text-align: center;
   }
 
   .serviceSection {
     flex-direction: column;
+    align-items: center;
     padding: 4rem 2rem;
     gap: 2rem;
-    text-align: center;
   }
 
   .serviceItem {
     flex-direction: column;
     align-items: center;
+    text-align: center;
     gap: 1rem;
   }
 
   .performanceSection {
     flex-direction: column;
+    align-items: center;
     padding: 4rem 2rem;
     gap: 2rem;
+    text-align: center;
   }
 
   .performanceSection img {
@@ -334,6 +339,7 @@ footer {
 
   .insightContainer {
     flex-direction: column;
+    align-items: center;
     gap: 2rem;
   }
 
@@ -344,6 +350,7 @@ footer {
 
   .solutionsSection {
     flex-direction: column;
+    align-items: center;
     padding: 4rem 2rem;
     gap: 2rem;
     text-align: center;
@@ -355,34 +362,41 @@ footer {
   }
 
   .testimonialsSection {
+    flex-direction: column;
+    align-items: center;
     padding: 4rem 2rem;
+    gap: 2rem;
     text-align: center;
   }
 
   .testimonials {
     flex-direction: column;
+    align-items: center;
     gap: 2rem;
+  }
+
+  .testimonialItem {
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
   }
 
   .streamlineSection {
     flex-direction: column;
+    align-items: center;
     gap: 2rem;
     padding: 4rem 2rem;
     text-align: center;
   }
 
-  .streamlineSection h3 {
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-
+  .streamlineSection h3,
   .streamlineSection p {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    text-align: center;
   }
 
   footer {
     padding: 2rem 1rem;
+    text-align: center;
   }
 
   .socialMedia {

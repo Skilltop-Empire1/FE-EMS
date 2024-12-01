@@ -10,9 +10,7 @@ const ChangePassword = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showOldPassword, setShowOldPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [changePassword] = useChangePasswordMutation();
 
   const navigate = useNavigate();
@@ -70,54 +68,33 @@ const ChangePassword = () => {
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="relative">
             <input
-              type={showOldPassword ? "text" : "password"}
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
               required
               placeholder="Old Password"
               className="border p-2 rounded w-full"
             />
-            <button
-              type="button"
-              className="absolute right-3 top-2"
-              onClick={() => setShowOldPassword(!showOldPassword)}
-            >
-              {showOldPassword ? <EyeOff /> : <Eye />}
-            </button>
+            <button type="button" className="absolute right-3 top-2"></button>
           </div>
           <div className="relative">
             <input
-              type={showNewPassword ? "text" : "password"}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
               placeholder="New Password"
               className="border p-2 rounded w-full"
             />
-            <button
-              type="button"
-              className="absolute right-3 top-2"
-              onClick={() => setShowNewPassword(!showNewPassword)}
-            >
-              {showNewPassword ? <EyeOff /> : <Eye />}
-            </button>
+            <button type="button" className="absolute right-3 top-2"></button>
           </div>
           <div className="relative">
             <input
-              type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               placeholder="Confirm Password"
               className="border p-2 rounded w-full"
             />
-            <button
-              type="button"
-              className="absolute right-3 top-2"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            >
-              {showConfirmPassword ? <EyeOff /> : <Eye />}
-            </button>
+            <button type="button" className="absolute right-3 top-2"></button>
           </div>
           <button
             type="submit"

@@ -32,7 +32,7 @@
 
 .inputContent input {
   width: 330px;
-  height: 20px;
+  height: 35px;
   border-radius: 2px;
   border: 1px solid #ced4da;
   outline: none;
@@ -79,4 +79,11 @@
   background-color: #f44336;
   color: white;
   margin-left: 24px;
+}
+
+.sendMessage {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
 }

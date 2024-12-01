@@ -15,10 +15,11 @@ function AppointmentsDetails() {
     data: fetchedData,
     isLoading: loading,
     error,
+    refetch, // Used for retrying fetching data
   } = useFetchResourceQuery(URL);
 
   const [data, setData] = useState([]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(""); // Search query state
   const { openModal } = useModal();
 
   useEffect(() => {
@@ -27,21 +28,36 @@ function AppointmentsDetails() {
     }
   }, [fetchedData, loading, error]);
 
+  // Handle search change (client-side filtering)
+  const handleSearchChange = (newQuery) => {
+    setQuery(newQuery);
+    if (fetchedData?.appointments) {
+      const filteredData = fetchedData.appointments.filter(
+        (item) =>
+          item.patName.toLowerCase().includes(newQuery.toLowerCase()) ||
+          item.phone.toLowerCase().includes(newQuery.toLowerCase()) ||
+          item.email.toLowerCase().includes(newQuery.toLowerCase())
+      );
+      setData(filteredData);
+    }
+  };
+
+  // Render each row in the table
   const renderRow = (item) => (
     <>
       <td>{item.patName}</td>
       <td>{item.phone}</td>
-      <td>{item.email}</td>
-      <td>{item.gender}</td>
-      <td>{item.dateOfBirth}</td>
-      <td>{item.updatedAt}</td>
+      <td>{item.staff.lastName}</td>
+      <td>{item.appointDate}</td>
+      <td>{item.appointTime}</td>
+      <td>{item.reason}</td>
       <td>{item.department.name}</td>
     </>
   );
 
   return (
     <div className={style.container}>
-      <div>
+      <div className={style.nameContainer}>
         <h3 className={style.header}>Appointments</h3>
       </div>
       <div className={style.searchContainer}>
@@ -49,13 +65,13 @@ function AppointmentsDetails() {
           searchKey={["patName", "phone", "email"]}
           query={query}
           setData={setData}
-          setQuery={setQuery}
+          setQuery={handleSearchChange} // Pass the search change handler
           fetchedData={fetchedData?.appointments}
         />
         <div>
           <button
             className={style.staffNavButton}
-            onClick={() => navigate("/staff")}
+            onClick={() => navigate("/app/staff")}
             type="button"
           >
             Add Staff
@@ -65,10 +81,26 @@ function AppointmentsDetails() {
           </button>
         </div>
       </div>
+
+      {/* Error handling UI */}
+      {error && (
+        <div className={style.errorContainer}>
+          <p className={style.errorMessage}>
+            There was an error loading the data.
+          </p>
+          <button onClick={refetch} type="button">
+            Retry
+          </button>
+        </div>
+      )}
+
+      {/* Loading state */}
+      {loading && <div>Loading appointments...</div>}
+
+      {/* Table rendering */}
       <Table
         headers={table}
         data={data}
-        itemsPerPage={5}
         renderRow={renderRow}
         editModal={MODAL_TYPES.TYPE7}
         viewModal={MODAL_TYPES.TYPE10}

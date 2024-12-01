@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"json-server --watch db.json --port 5000\"",
+    "dev": "concurrently \"vite\" ",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -17,7 +17,7 @@
     "axios": "^1.7.6",
     "bootstrap": "^5.3.3",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.11.11",
+    "framer-motion": "^11.12.0",
     "html2pdf.js": "^0.10.2",
     "lucide-react": "^0.453.0",
     "react": "^18.3.1",

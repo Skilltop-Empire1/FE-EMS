@@ -27,12 +27,9 @@ function DropDown({ handleProfileImageChange, setIsDropdown }) {
     ? JSON.parse(user)
     : { userName: "Guest", role: "User" };
 
-  const navigate = useNavigate();
-
   const handleLogout = () => {
     console.log("clicked logout");
-    localStorage.removeItem("user");
-    navigate("/");
+    openModal(MODAL_TYPES.TYPE13);
   };
 
   const handlePasswordChange = () => {

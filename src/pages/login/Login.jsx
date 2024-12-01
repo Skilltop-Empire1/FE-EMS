@@ -12,6 +12,13 @@ function Login() {
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
 
+  const handleShowPassword = () => {
+    setShowPassword(true);
+    setTimeout(() => {
+      setShowPassword(false);
+    }, 500);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -33,7 +40,7 @@ function Login() {
       className={`${styles.container} flex items-center justify-center relative`}
     >
       <span
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
         className={styles.backArrow}
         aria-label="Go back"
       >
@@ -71,7 +78,7 @@ function Login() {
               />
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={handleShowPassword}
                 className="absolute top-1/2 right-3 transform -translate-y-1/2"
                 aria-label="Toggle password visibility"
               >
