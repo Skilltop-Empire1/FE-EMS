@@ -8,8 +8,8 @@
 }
 
 .header h3 {
-  font-size: 18px;
-  font-weight: 700;
+  font-weight: bold;
+  font-size: 25px;
   line-height: 28px;
   margin-bottom: 10px;
 }
@@ -24,19 +24,22 @@
 .inputContent label {
   display: block;
   text-align: left;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: bold;
   line-height: 27px;
-  color: #565d6d;
+  /* color: #565d6d; */
 }
 
 .inputContent input {
   width: 330px;
   height: 35px;
-  border-radius: 2px;
-  border: 1px solid #ced4da;
+  border-radius: 8px;
+  /* border: 1px solid #ced4da; */
+  background-color: #F8F8F8;
   outline: none;
   padding: 4px 3px;
+  color: #000;
+  font-weight: 300;
 }
 
 .checkbox {
@@ -67,7 +70,12 @@
   top: 442px;
   left: 234px;
   padding: 15.5px 47px;
-  border-radius: 3px;
+  border-radius: 8px;
+}
+
+.formButton {
+  display: flex;
+  justify-content: end;
 }
 
 .formButton :first-child {

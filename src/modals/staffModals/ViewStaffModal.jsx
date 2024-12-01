@@ -13,7 +13,7 @@ const modalVariants = {
 const ViewStaffModal = ({ show, onClose, staffData, viewMode }) => {
   if (!show) return null;
   return (
-    <ModalWrapper onClose={onClose} contentMaxWidth="max-w-5xl" modalTitle="Staff">
+    <ModalWrapper onClose={onClose} contentMaxWidth="max-w-[60%] h-[80%] overflow-auto" modalTitle="Staff">
       <motion.div
         className="relative flex-grow"
         initial="hidden"

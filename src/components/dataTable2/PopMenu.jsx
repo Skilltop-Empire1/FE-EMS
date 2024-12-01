@@ -8,7 +8,7 @@ import {
   BringToFront,
 } from "lucide-react";
 
-const PopMenu = ({ onView, onEdit, onDelete }) => {
+const PopMenu = ({ onView, onEdit, onDelete, hide1, hide2 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -63,14 +63,14 @@ const PopMenu = ({ onView, onEdit, onDelete }) => {
           </button>
           <button
             onClick={() => handleAction(onEdit)}
-            className="flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100"
+            className={`flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100 ${hide1}`}
           >
             <Printer className="w-4 h-4 mr-2" />
             Print
           </button>
           <button
             onClick={() => handleAction(onEdit)}
-            className="flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100"
+            className={`flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100 ${hide2}`}
           >
             <BringToFront className="w-4 h-4 mr-2" />
             Invite

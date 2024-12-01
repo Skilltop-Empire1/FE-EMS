@@ -117,7 +117,7 @@ const StaffViewEditForm = ({
 
   return (
     <div>
-      <div className="flex justify-between mb-4">
+      <div className="flex justify-between  mb-4">
         <h2 className="text-xl">{viewMode ? "View Staff" : "Edit Staff"}</h2>
         {/* <button onClick={() => setViewMode(!viewMode)} className="text-blue-600 hover:underline">
           {viewMode ? "Edit" : "View"}
@@ -139,13 +139,13 @@ const StaffViewEditForm = ({
               hidden: key == "staffId",
             })}
           >
-            <label htmlFor={key} className="block mb-1 font-medium text-sm">
+            <label htmlFor={key} className="block mb-1 font-bold text-[17px]">
               {key.charAt(0).toUpperCase() +
                 key.slice(1).replace(/([A-Z])/g, " $1")}
               {formErrors[key] && <span className="text-red-400">*</span>}
             </label>
             {viewMode ? (
-              <div className="w-full border border-gray-300 text-sm rounded-lg p-2 bg-gray-100">
+              <div className="w-full bg-[#F8F8F8] text-sm rounded-lg p-2 ">
                 {formData[key] || "N/A"}
               </div>
             ) : key === "dateOfBirth" || key === "dateOfHire" ? (
@@ -155,7 +155,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
               />
             ) : key === "gender" ? (
               <select
@@ -163,7 +163,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
                 disabled={viewMode}
               >
                 <option value="male">Male</option>
@@ -175,7 +175,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
                 disabled={viewMode}
               >
                 <option value="Doctor">Doctor</option>
@@ -188,7 +188,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
                 disabled={viewMode}
               >
                 <option value="">Select Department</option>
@@ -205,7 +205,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
                 disabled={viewMode}
               />
             )}
@@ -216,28 +216,45 @@ const StaffViewEditForm = ({
         ))}
 
         {viewMode && (
-          <div className="col-span-1 md:col-span-2">
-            <label className="flex items-center justify-center  space-x-2 m-4">
+          <div className="col-span-1 md:col-span-2 flex justify-end">
+            <label className="flex items-center justify-end  space-x-2 m-4">
             <button
               type="button"
-              className="w-96 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition"
+              className="w-[150px] h-[50px] bg-emsBlue text-white py-2 rounded-md hover:bg-blue-900 transition"
               onClick={reactToPrintFn}
             >
               Print
+            </button>
+            </label>
+             <label className="flex items-center justify-end  space-x-2 m-4">
+            <button
+              type="button"
+              className="w-[150px] h-[50px] bg-emsRed text-white py-2 rounded-md hover:bg-red-800 transition"
+              onClick={reactToPrintFn}
+              disabled
+            >
+              Cancel
             </button>
             </label>
           </div>
         )}
 
         {!viewMode && (
-          <div className="col-span-1">
+          <div className="col-span-1 md:col-span-2 flex justify-end gap-6">
             <label className="inline-block mt-12"></label>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition"
+              className="w-[150px] h-[50px] bg-emsBlue text-white py-2 rounded-md hover:bg-blue-900 transition"
               disabled={isLoading}
             >
               {isLoading ? "Updating..." : "Update Staff"}
+            </button>
+             <button
+              type="submit"
+              className="w-[150px] h-[50px]  bg-emsRed text-white py-2 rounded-md hover:bg-red-800 transition"
+              disabled
+            >
+              Cancel
             </button>
           </div>
         )}

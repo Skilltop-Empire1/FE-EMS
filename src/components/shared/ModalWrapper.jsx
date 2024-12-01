@@ -60,10 +60,10 @@ const ModalWrapper = ({
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex h-8 w-8 items-center justify-center rounded bg-gray-200 text-gray-400 hover:text-gray-900"
+              className="inline-flex h-8 w-8 items-center justify-center rounded text-lg text-gray-400 hover:text-red-600"
               data-modal-hide="modal"
             >
-              <svg
+              {/* <svg
                 className="h-2 w-2"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,8 @@ const ModalWrapper = ({
                   strokeWidth="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
-              </svg>
+              </svg> */}
+              x
               <span className="sr-only">Close modal</span>
             </button>
           </div>

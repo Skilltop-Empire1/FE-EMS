@@ -111,7 +111,7 @@ const StaffTable = ({ data, Role }) => {
             <tr
               key={idx}
               className={`border-b gap-5 text-sm ${
-                idx % 2 === 0 ? "bg-blue-100" : "bg-white"
+                idx % 2 === 0 ? "bg-[#ebeffa]" : "bg-white"
               }`}
             >
               <td className="p-2">
@@ -128,10 +128,12 @@ const StaffTable = ({ data, Role }) => {
                   onView={() => handleView(item)}
                   onEdit={() => handleEdit(item)}
                   onDelete={() => handleDelete(item)}
+                  hide1='hidden'
                 />
               </td>
             </tr>
           ))}
+          
         </tbody>
         {viewStaffModal && (
           <ViewStaffModal
@@ -161,17 +163,17 @@ const StaffTable = ({ data, Role }) => {
           <button
             onClick={goToFirstPage}
             disabled={currentPage === 1}
-            className="flex items-center justify-center w-10 h-10 bg-gray-200 text-gray-700 border border-gray-400 disabled:opacity-50"
+            className="flex items-center justify-center w-10 h-10  text-[#171a1f] border border-[#e0e0e0] disabled:opacity-50"
           >
-            <ChevronsLeft size={20} />
+            &lt;&lt;
           </button>
 
           <button
             onClick={goToPreviousPage}
             disabled={currentPage === 1}
-            className="flex items-center justify-center w-10 h-10 bg-gray-200 text-gray-700 border border-gray-400 disabled:opacity-50"
+            className="flex items-center justify-center w-10 h-10  text-[#171a1f] border border-[#e0e0e0] disabled:opacity-50"
           >
-            <ChevronLeft size={20} />
+            &lt;
           </button>
 
           <div className="flex">
@@ -179,10 +181,10 @@ const StaffTable = ({ data, Role }) => {
               <button
                 key={index}
                 onClick={() => goToPage(index + 1)}
-                className={`flex items-center justify-center w-10 h-10 border border-gray-400 ${
+                className={`flex items-center justify-center w-10 h-10  text-[#171a1f] border border-[#e0e0e0] ${
                   currentPage === index + 1
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-700"
+                    ? "bg-blue-500 text-[#ffffff]"
+                    : "text-[#171a1f]"
                 }`}
               >
                 {index + 1}
@@ -193,17 +195,17 @@ const StaffTable = ({ data, Role }) => {
           <button
             onClick={goToNextPage}
             disabled={currentPage === totalPages}
-            className="flex items-center justify-center w-10 h-10 bg-gray-200 text-gray-700 border border-gray-400 disabled:opacity-50"
+            className="flex items-center justify-center w-10 h-10  text-[#171a1f] border border-[#e0e0e0] disabled:opacity-50"
           >
-            <ChevronRight size={20} />
+            &gt;
           </button>
 
           <button
             onClick={goToLastPage}
             disabled={currentPage === totalPages}
-            className="flex items-center justify-center w-10 h-10 bg-gray-200 text-gray-700 border border-gray-400 disabled:opacity-50"
+            className="flex items-center justify-center w-10 h-10 text-[#171a1f] border border-[#e0e0e0] disabled:opacity-50"
           >
-            <ChevronsRight size={20} />
+            &gt;&gt;
           </button>
         </div>
       </div>

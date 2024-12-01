@@ -3,6 +3,7 @@ import { useModal } from "../../context/ModalContext";
 import style from "./Table.module.css";
 import Loader from "../loader/Loader";
 import { MoreHorizontal } from "lucide-react";
+import PopMenu from "../dataTable2/PopMenu";
 
 const ActionCell = React.forwardRef(
   ({ item, onView, onEdit, onDelete, onPrint }, ref) => (
@@ -151,6 +152,7 @@ function Table({
                           // ref={actionDropDownRef}
                         />
                       )}
+                       
                     </div>
                   </td>
                 </tr>

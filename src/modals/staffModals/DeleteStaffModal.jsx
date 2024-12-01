@@ -58,7 +58,7 @@ const DeleteStaffModal = ({ show, onClose, staffData }) => {
           <motion.button
             onClick={handleStaffDelete}
             disabled={isLoading}
-            className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-500 transition"
+            className="w-[150px] h-[50px] bg-emsBlue text-white py-2 rounded-md hover:bg-blue-900 transition"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
@@ -69,7 +69,7 @@ const DeleteStaffModal = ({ show, onClose, staffData }) => {
           {/* Close Button */}
           <motion.button
             onClick={onClose}
-            className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-500 transition"
+            className="w-[150px] h-[50px] bg-emsRed text-white py-2 rounded-md hover:bg-red-800 transition"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"

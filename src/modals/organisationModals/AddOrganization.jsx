@@ -72,7 +72,7 @@ const AddOrganisation = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className={style.header}>
+      <div className={`${style.header} mb-8`}>
         <h3>Add Department</h3>
       </div>
       {loading && <div style={{ color: "blue" }}>Loading...</div>}
@@ -89,7 +89,7 @@ const AddOrganisation = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Department Name"
+              // placeholder="Department Name"
             />
           </div>
           <div>
@@ -100,7 +100,7 @@ const AddOrganisation = () => {
               name="location"
               value={formData.location}
               onChange={handleChange}
-              placeholder="Location"
+              // placeholder="Location"
             />
           </div>
         </div>
@@ -113,7 +113,7 @@ const AddOrganisation = () => {
               name="hod"
               value={formData.hod}
               onChange={handleChange}
-              placeholder="Head of Department"
+              // placeholder="Head of Department"
             />
           </div>
           <div>
@@ -124,7 +124,7 @@ const AddOrganisation = () => {
               name="specialty"
               value={formData.specialty}
               onChange={handleChange}
-              placeholder="Specialty"
+              // placeholder="Specialty"
             />
           </div>
         </div>
@@ -137,7 +137,7 @@ const AddOrganisation = () => {
               name="noOfStaff"
               value={formData.noOfStaff}
               onChange={handleChange}
-              placeholder="Number of Staff"
+              // placeholder="Number of Staff"
             />
           </div>
           <div>
@@ -148,7 +148,7 @@ const AddOrganisation = () => {
               name="noOfPatient"
               value={formData.noOfPatient}
               onChange={handleChange}
-              placeholder="Number of Patients"
+              // placeholder="Number of Patients"
             />
           </div>
         </div>
@@ -161,7 +161,7 @@ const AddOrganisation = () => {
               name="deptContact"
               value={formData.deptContact}
               onChange={handleChange}
-              placeholder="Department Contact"
+              // placeholder="Department Contact"
             />
           </div>
           <div>
@@ -172,7 +172,7 @@ const AddOrganisation = () => {
               name="bedCapacity"
               value={formData.bedCapacity}
               onChange={handleChange}
-              placeholder="Bed Capacity"
+              // placeholder="Bed Capacity"
             />
           </div>
         </div>
@@ -196,7 +196,7 @@ const AddOrganisation = () => {
               name="deptBudget"
               value={formData.deptBudget}
               onChange={handleChange}
-              placeholder="Department Budget"
+              // placeholder="Department Budget"
             />
           </div>
         </div>

@@ -5,6 +5,7 @@ import { FaEye } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
 import { deletePatient } from "../../hooks/Api";
 import { MoreHorizontal } from "lucide-react";
+import PopMenu from "../dataTable2/PopMenu";
 
 const Table3 = ({
   data = [],
@@ -98,32 +99,14 @@ const Table3 = ({
               <td className={style.td}>{item.outstandBal}</td>
               <td className={style.td}>{item.createdAt.substr(0, 10)}</td>
               <td className={style.td}>{item.paymentStatus}</td>
-              <td className={`${style.td} `}>
-                <div
-                  onClick={() => openAction(idx)}
-                  className={style.actionMama}
-                >
-                  <MoreHorizontal size={24} />
-                </div>
-
-                {action[idx] && (
-                  <div className={`${style.action}`} ref={actionRef}>
-                    <p onClick={() => runInfo(item)}>View</p>
-                    <hr />
-                    <p onClick={() => runView(item)}>Edit</p>
-                    <hr />
-                    <p>Print</p>
-                    <hr />
-                    <p
-                      onClick={() => {
-                        console.log("Account ID to delete:", item.acctId);
-                        runToggle(item.acctId);
-                      }}
-                    >
-                      Delete
-                    </p>
-                  </div>
-                )}
+              <td className={`${style.td} flex justify-center`}>
+              <PopMenu
+                  onView={() => runInfo(item)}
+                  onEdit={() => runView(item)}
+                  onDelete={() => runToggle(item.accId)}
+                  hide1='hidden'
+                  hide2='hidden'
+                />
               </td>
             </tr>
           ))}

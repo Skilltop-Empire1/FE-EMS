@@ -6,7 +6,21 @@ const BASE_URL = "https://be-ems.onrender.com/api/v1";
 // Create the staff API slice
 const staffApi = createApi({
   reducerPath: "staffApi",
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({ 
+    baseUrl: BASE_URL,
+    prepareHeaders: (headers) => {
+      const user = localStorage.getItem('user'); // Get the user object
+      const token = user ? JSON.parse(user).token : null; // Parse the object and extract the token
+
+      
+
+      // console.log('Token in state:', token);
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`); // Attach the token to the header
+      }
+      return headers;
+    },
+  }),
   tagTypes: ["StaffList", "InviteStaffList"], // Define tag type for staff data
 
   endpoints: (builder) => ({

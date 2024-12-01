@@ -4,6 +4,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { FaEye } from "react-icons/fa";
 import { MdModeEditOutline } from "react-icons/md";
 import { MoreHorizontal } from "lucide-react";
+import PopMenu from "./PopMenu";
 
 const Table2 = ({
   data = [],
@@ -91,36 +92,14 @@ const Table2 = ({
               <td className={style.td}>{item.dateOfBirth}</td>
               <td className={style.td}>{item.lastVisit?.substr(0, 10)}</td>
               {/* <td className={style.td}>{item.organization}</td> */}
-              <td style={{ textAlign: "right" }} className={`${style.td} `}>
-                {/* <div className={style.mamaIcons}>
-                 <div className={style.actionIcons}>
-                   <FaEye />
-                 </div >
-                 <div className={style.actionIcons}>
-                  <MdModeEditOutline />
-                 </div>
-                 <div className={style.actionIcons} onClick={() => handleDeletePatient(item.phone)}>
-                  <RiDeleteBinLine /> 
-                 </div>
-               </div> */}
-                <div
-                  onClick={() => openAction(idx)}
-                  className={style.actionMama}
-                >
-                  <MoreHorizontal size={24} />
-                </div>
-
-                {action[idx] && (
-                  <div className={`${style.action}`} ref={actionRef}>
-                    <p onClick={() => runInfo(item)}>View</p>
-                    <hr />
-                    <p onClick={() => runView(item)}>Edit</p>
-                    <hr />
-                    <p>Print</p>
-                    <hr />
-                    <p onClick={() => runToggle(item.patId)}>Delete</p>
-                  </div>
-                )}
+              <td style={{ textAlign: "right" }} className={`${style.td} flex justify-center`} >
+                  <PopMenu
+                  onView={() => runInfo(item)}
+                  onEdit={() => runView(item)}
+                  onDelete={() => runToggle(item.patId)}
+                  hide1='hidden'
+                  hide2='hidden'
+                />
               </td>
             </tr>
           ))}

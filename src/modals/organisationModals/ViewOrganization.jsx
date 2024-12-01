@@ -19,7 +19,7 @@ const ViewOrganization = () => {
 
   return (
     <div className={style.modalContainer}>
-      <div className={style.header}>
+      <div className={`${style.header} mb-8`}>
         <h3>View Department Details</h3>
       </div>
       <div className={style.formContainer}>
