@@ -46,7 +46,7 @@ const PopMenu = ({ onView, onEdit, onDelete, hide1, hide2 }) => {
         <MoreHorizontal className="text-gray-600" />
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded shadow-lg z-50">
+        <div className="absolute right-0 mt-2 w-30 bg-white border border-gray-300 rounded shadow-lg z-50">
           <button
             onClick={() => handleAction(onView)}
             className="flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100"
