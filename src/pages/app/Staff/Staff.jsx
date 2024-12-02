@@ -89,7 +89,7 @@ const Staff = () => {
   };
 
   return (
-    <div className="w-full px-10 py-5 flex flex-col space-y-4">
+    <div className="w-full px-5 py-5 flex flex-col space-y-4">
       <div className="my-4">
         <h2 className="text-2xl font-bold text-left">
           Staffs -{" "}

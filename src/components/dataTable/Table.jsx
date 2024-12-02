@@ -2,19 +2,25 @@ import React, { useEffect, useRef, useState } from "react";
 import { useModal } from "../../context/ModalContext";
 import style from "./Table.module.css";
 import Loader from "../loader/Loader";
-import { MoreHorizontal } from "lucide-react";
+import { Edit, Eye, MoreHorizontal, Trash } from "lucide-react";
 import PopMenu from "../dataTable2/PopMenu";
 
 const ActionCell = React.forwardRef(
   ({ item, onView, onEdit, onDelete, onPrint }, ref) => (
     <ul ref={ref} className={style.buttonRow}>
-      <li onClick={() => onView(item)}>View</li>
-      <hr />
-      <li onClick={() => onEdit(item)}>Edit</li>
-      <hr />
-      <li onClick={() => onPrint(item)}>Print</li>
-      <hr />
-      <li onClick={() => onDelete(item)}>Delete</li>
+      <li onClick={() => onView(item)}>
+        <Eye className="w-4 h-4 mr-2" />
+        <span>View</span>
+      </li>
+      <li onClick={() => onEdit(item)}>
+        {" "}
+        <Edit className="w-4 h-4 mr-2" />
+        <span>Edit</span>
+      </li>
+      <li onClick={() => onDelete(item)}>
+        <Trash className="w-4 h-4 mr-2" />
+        <span>Delete</span>
+      </li>
     </ul>
   )
 );
@@ -141,7 +147,10 @@ function Table({
                         e.key === "Enter" && toggleActionCell(itemId)
                       }
                     >
-                      <MoreHorizontal size={24} color="currentColor" />
+                      <span className="p-2 rounded-full hover:bg-gray-200">
+                        <MoreHorizontal size={24} color="currentColor" />
+                      </span>
+
                       {activeActionCell === itemId && (
                         <ActionCell
                           item={item}
@@ -152,7 +161,6 @@ function Table({
                           // ref={actionDropDownRef}
                         />
                       )}
-                       
                     </div>
                   </td>
                 </tr>

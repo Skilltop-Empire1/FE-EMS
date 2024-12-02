@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   width: 413px;
-  height: 52px;
+  height: 45px;
   border-radius: 2px;
   border: 1px solid #ced4da;
   outline: none;
@@ -11,7 +11,7 @@
 }
 
 .searchBar:focus-within {
-  outline: 2px solid #ced4da;
+  outline: 1px solid rgb(59 130 246 / 0.5);
 }
 
 .searchBar input {
