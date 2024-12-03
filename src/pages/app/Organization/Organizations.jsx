@@ -10,6 +10,7 @@ import SearchQuery from "../../../components/searchQuery/SearchQuery";
 
 function Organizations() {
   const URL = "/department/list";
+
   const navigate = useNavigate();
 
   const { data: fetchedData, isLoading, error } = useFetchResourceQuery(URL);
@@ -43,7 +44,7 @@ function Organizations() {
         <div>
           <button
             className={style.staffNavButton}
-            onClick={() => navigate("/staff")}
+            onClick={() => navigate("/app/staff")}
             type="button"
           >
             Add Staff
@@ -53,26 +54,23 @@ function Organizations() {
           </button>
         </div>
       </div>
-      {
-        isLoading ? (
-          <StaffTableSkeleton/>
-        ) :
-        error ? (
-          <div>Error loading data</div>
-        ) : (
-      <Table
-        headers={table}
-        data={data}
-        editModal={MODAL_TYPES.TYPE5}
-        viewModal={MODAL_TYPES.TYPE8}
-        deleteModal={MODAL_TYPES.TYPE9}
-        isLoading={isLoading}
-        error={error}
-        onEdit={handleEdit}
-        getId={(item) => item.deptId}
-      />
-      )
-      }
+      {isLoading ? (
+        <StaffTableSkeleton />
+      ) : error ? (
+        <div>Error loading data</div>
+      ) : (
+        <Table
+          headers={table}
+          data={data}
+          editModal={MODAL_TYPES.TYPE5}
+          viewModal={MODAL_TYPES.TYPE8}
+          deleteModal={MODAL_TYPES.TYPE9}
+          isLoading={isLoading}
+          error={error}
+          onEdit={handleEdit}
+          getId={(item) => item.deptId}
+        />
+      )}
     </div>
   );
 }
