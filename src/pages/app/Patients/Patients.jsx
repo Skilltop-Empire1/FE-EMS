@@ -5,6 +5,7 @@ import Table2 from "../../../components/dataTable2/Table2";
 import AddPatients from "../../../modals/patientsModals/AddPatients";
 import ConfirmationModal from "src/modals/ConfirmationModal/ConfirmationModal";
 import ViewPatients from "src/modals/patientsModals/ViewPatients";
+import StaffTableSkeleton from "@src/components/dataTable2/StaffTableSkeleton";
 import {
   useFetchResourceQuery,
   useDeleteResourceMutation,
@@ -97,7 +98,7 @@ const Patients = () => {
         </div>
 
         {patientLoading ? (
-          <div>Loading...</div>
+          <div><StaffTableSkeleton/></div>
         ) : patientError ? (
           <div>Failed to Load patient data</div>
         ) : filteredPatients.length > 0 ? (

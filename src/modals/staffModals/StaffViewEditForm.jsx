@@ -216,7 +216,7 @@ const StaffViewEditForm = ({
         ))}
 
         {viewMode && (
-          <div className="col-span-1 md:col-span-2 flex justify-end">
+          <div className="col-span-1 md:col-span-2 flex justify-center">
             <label className="flex items-center justify-end  space-x-2 m-4">
             <button
               type="button"
@@ -230,8 +230,8 @@ const StaffViewEditForm = ({
             <button
               type="button"
               className="w-[150px] h-[50px] bg-emsRed text-white py-2 rounded-md hover:bg-red-800 transition"
-              onClick={reactToPrintFn}
-              disabled
+              onClick={onClose}
+              
             >
               Cancel
             </button>
@@ -240,7 +240,7 @@ const StaffViewEditForm = ({
         )}
 
         {!viewMode && (
-          <div className="col-span-1 md:col-span-2 flex justify-end gap-6">
+          <div className="col-span-1 md:col-span-2 flex justify-center gap-6">
             <label className="inline-block mt-12"></label>
             <button
               type="submit"
@@ -252,7 +252,7 @@ const StaffViewEditForm = ({
              <button
               type="submit"
               className="w-[150px] h-[50px]  bg-emsRed text-white py-2 rounded-md hover:bg-red-800 transition"
-              disabled
+              onClick={onClose}
             >
               Cancel
             </button>

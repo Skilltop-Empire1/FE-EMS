@@ -25,9 +25,7 @@ const Organizations = lazy(
   () => import("./pages/app/Organization/Organizations")
 );
 const Patients = lazy(() => import("./pages/app/Patients/Patients"));
-const Appointments = lazy(
-  () => import("./pages/app/Appointments/Appointments")
-);
+const Appointment = lazy(() => import("./pages/app/Appointments/Appointments"));
 const Account = lazy(() => import("./pages/app/Account/Account"));
 const Help = lazy(() => import("./pages/app/Help/Help"));
 const Reports = lazy(() => import("./pages/app/Reports/Reports"));
@@ -152,7 +150,7 @@ const router = createBrowserRouter([
         path: "appointments",
         element: (
           <SuspenseWrapper>
-            <Appointments />
+            <Appointment/>
           </SuspenseWrapper>
         ),
         children: [

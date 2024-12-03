@@ -214,8 +214,7 @@ const AddOrganisation = () => {
           </div>
         </div>
       </div>
-      <div className={style.checkbox}>
-        <div className="check">
+        <div className="flex">
           <input
             type="checkbox"
             id="addMore"
@@ -223,7 +222,9 @@ const AddOrganisation = () => {
             onChange={handleCheck}
           />
           <label htmlFor="addMore">Create another Department</label>
+          
         </div>
+      <div className={style.checkbox}>
         <div className={style.formButton}>
           <button type="submit" disabled={loading}>
             Save

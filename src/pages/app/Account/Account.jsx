@@ -5,6 +5,7 @@ import Table3 from "src/components/dataTable3/Table3";
 import AddAccount from "src/modals/AccountModals/AddAcount";
 import ConfirmationModal from "src/modals/ConfirmationModal/ConfirmationModal";
 import ViewAccount from "src/modals/AccountModals/ViewAccount";
+import StaffTableSkeleton from "@src/components/dataTable2/StaffTableSkeleton";
 import {
   useFetchResourceQuery,
   useDeleteResourceMutation,
@@ -94,7 +95,9 @@ const Account = () => {
         </div>
 
         {accountLoading ? (
-          <div>Loading...</div>
+          <div>
+            <StaffTableSkeleton/>
+          </div>
         ) : accountError ? (
           <div>Failed to load account data</div>
         ) : filteredAccounts?.length > 0 ? (

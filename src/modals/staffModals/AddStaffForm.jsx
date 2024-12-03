@@ -140,7 +140,7 @@ const AddStaffForm = ({ onClose }) => {
           )}
           {Object.keys(formData).map((key) => (
             <div key={key}>
-              <label htmlFor={key} className="block mb-1 font-medium text-sm">
+              <label htmlFor={key} className="block mb-1 font-bold text-[15px]">
                 {key.charAt(0).toUpperCase() +
                   key.slice(1).replace(/([A-Z])/g, " $1")}
                 <span className="text-red-400 px-1">*</span>
@@ -153,7 +153,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
                 />
               ) : key === "gender" ? (
                 <select
@@ -161,7 +161,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -172,7 +172,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
                 >
                   <option value="Doctor">Doctor</option>
                   <option value="Nurse">Nurse</option>
@@ -184,7 +184,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
                 >
                   <option value="">Select Department</option>
                   {fetchedDepartment?.map((dept) => (
@@ -206,7 +206,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full border border-gray-300 text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
                 />
               )}
               {formErrors[key] && (
@@ -227,13 +227,20 @@ const AddStaffForm = ({ onClose }) => {
             </label>
           </div>
 
-          <div className="col-span-1 md:col-span-2">
+          <div className="col-span-1 md:col-span-2 flex justify-center gap-6">
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition"
+              className="w-[150px] h-[50px] bg-emsBlue text-white py-2 rounded-md hover:bg-blue-900 transition"
               disabled={isLoading}
             >
               {isLoading ? "Adding Staff..." : "Add Staff"}
+            </button>
+            <button
+              type="submit"
+              className="w-[150px] h-[50px] bg-emsRed text-white py-2 rounded-md hover:bg-red-800 transition"
+              onClick={onClose}
+            >
+              Cancel
             </button>
           </div>
         </form>

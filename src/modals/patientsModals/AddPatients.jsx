@@ -131,125 +131,60 @@ const AddPatients = ({ toggleForm }) => {
           {/* Update the close button to call handleClose */}
           <button onClick={handleClose} className={style.close}>X</button>
         </div>
-        <form className={style.form} onSubmit={handleSubmit}>
-          <div className={style.formChild}>
-            <label htmlFor="firstName">Firstname</label>
-            <input type="text" id="name" name="firstName" className={style.input} required/>
+        <form  onSubmit={handleSubmit}>
+          <div className={style.form}>
+              <div className={style.formChild}>
+                <label htmlFor="firstName">Firstname</label>
+                <input type="text" id="name" name="firstName" className={style.input} required/>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="lastName">Lastname</label>
+                <input type="text" id="name" name="lastName" className={style.input} required/>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="address">Address</label>
+                <input type="text" id="address" name="address" className={style.input} required />
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" name="email" className={style.input} required/>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="educationQualification">Last Visit</label>
+                <input type="date" id="qualification" name="educationQualification" className={style.input} required/>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="phone">Mobile Number</label>
+                <input type="number" id="number" name="phone" className={style.input} required/>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="medCondition">Medical Condition</label>
+                <input type="text" id="medCondition" name="medCondition" className={style.input} required/>
+              </div>
+              <div className={`mt-2 ${style.formChild}`}>
+              <label htmlFor="gender">Gender</label>
+              <select name="gender" id="gender"className={`${style.input}`}>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="dateOfBirth" >Date Of Birth</label>
+                <input type="date" id="date" name="dateOfBirth" className={style.input} required/>
+              </div>
           </div>
-          <div className={style.formChild}>
-            <label htmlFor="lastName">Lastname</label>
-            <input type="text" id="name" name="lastName" className={style.input} required/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="address">Address</label>
-            <input type="text" id="address" name="address" className={style.input} required />
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" className={style.input} required/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="educationQualification">Last Visit</label>
-            <input type="date" id="qualification" name="educationQualification" className={style.input} required/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="phone">Mobile Number</label>
-            <input type="number" id="number" name="phone" className={style.input} required/>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="medCondition">Medical Condition</label>
-            <input type="text" id="medCondition" name="medCondition" className={style.input} required/>
-          </div>
-          <div className={`mt-2 ${style.formChild}`}>
-          <label htmlFor="gender">Gender</label>
-           <select name="gender" id="gender"className={`${style.input}`}>
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-           </select>
-          </div>
-          {/* <div className={style.formChild}> */}
-            {/* <label htmlFor="gender">Doctor Assigned</label> */}
-            {/* <div className="relative"> */}
-              {/* Search input field */}
-              {/* <input
-                type="text"
-                value={searchTerm2}
-                onChange={handleSearchChange2}
-                onClick={() => setIsDropdownOpen2(!isDropdownOpen2)}
-                placeholder='select a doctor'
-                className={`${style.input}`}
-              /> */}
-
-              {/* Dropdown options */}
-              {/* {isDropdownOpen2 && (
-                <ul className="absolute w-full max-h-40 overflow-y-auto bg-white border border-gray-300 rounded-lg mt-1">
-                  {filteredOptions2?.length > 0 ? (
-                    filteredOptions2.map((option, index) => (
-                      <li
-                        key={index}
-                        onClick={() => handleOptionSelect2(option)}
-                        className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                      >
-                        {option.firstName} {option.lastName}
-                      </li>
-                    ))
-                  ) : (
-                    <li className="px-4 py-2 text-gray-500">No doctor yet</li>
-                  )}
-                </ul>
-              )} */}
-            {/* </div> */}
-          {/* </div> */}
-          <div className={style.formChild}>
-            <label htmlFor="dateOfBirth" >Date Of Birth</label>
-            <input type="date" id="date" name="dateOfBirth" className={style.input} required/>
-          </div>
-          {/* <div className={style.formChild}> */}
-            {/* <label htmlFor="organization">Department</label> */}
-            {/* <input type="text" id="role" name="organization" className={style.input} required/>*/}
-            {/* <div className="relative"> */}
-              {/* Search input field */}
-              {/* <input
-                type="text"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                placeholder='select a department'
-                className={`${style.input}`}
-                name="organization"
-              /> */}
-
-              {/* Dropdown options */}
-              {/* {isDropdownOpen && (
-                <ul className="absolute w-full max-h-40 overflow-y-auto bg-white border border-gray-300 rounded-lg mt-1">
-                  {filteredOptions?.length > 0 ? (
-                    filteredOptions.map((option, index) => (
-                      <li
-                        key={index}
-                        onClick={() => handleOptionSelect(option)}
-                        className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                      >
-                        {option.name}
-                      </li>
-                    ))
-                  ) : (
-                    <li className="px-4 py-2 text-gray-500">No department yet</li>
-                  )}
-                </ul>
-              )}
-            </div>
-  */}
-          {/* </div> */}
-          <br />
+         <div className='w-full'>
           <div className={`${style.addAnother} text-blue-500`}>
-            <input type="checkbox" checked={keepOpen} onChange={handleCheckboxChange}    className={`accent-blue-500 hover:accent-blue-700 focus:ring-2 focus:ring-blue-500 ${style.tick}`}/>
-            <label htmlFor="checkbox" className={` text-emsBlue`}> Add another patient</label>
-          </div>
-          <div className='flex gap-3'>
-            <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Saving' : 'Save'}</button>
-            <button  className={`text-white bg-emsRed ${style.submit}`} onClick={handleClose}>Cancel</button>
+              <input type="checkbox" checked={keepOpen} onChange={handleCheckboxChange}    className={`accent-blue-500 hover:accent-blue-700 focus:ring-2 focus:ring-blue-500 ${style.tick}`}/>
+              <label htmlFor="checkbox" className={` text-emsBlue`}> Add another patient</label>
             </div>
+
+            <div className='flex justify-center gap-3'>
+              <button type="submit" className={`text-white bg-emsBlue ${style.submit}`}>{isLoading ? 'Saving' : 'Save'}</button>
+              <button  className={`text-white bg-emsRed ${style.submit}`} onClick={handleClose}>Cancel</button>
+              </div>
+         </div>
             <span className='text-red-500'>{formError}</span>
         </form>
       </div>

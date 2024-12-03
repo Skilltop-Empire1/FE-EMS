@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { table } from "./data";
 import style from "./AppointmentDetails.module.css";
+import StaffTableSkeleton from "@src/components/dataTable2/StaffTableSkeleton";
 
 function AppointmentsDetails() {
   const URL = "/appointment";
@@ -95,7 +96,10 @@ function AppointmentsDetails() {
       )}
 
       {/* Loading state */}
-      {loading && <div>Loading appointments...</div>}
+      {loading &&
+       <div>
+        <StaffTableSkeleton/>
+      </div>}
 
       {/* Table rendering */}
       <Table

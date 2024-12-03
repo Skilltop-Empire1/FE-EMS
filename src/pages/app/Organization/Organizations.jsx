@@ -4,6 +4,7 @@ import { table } from "./data";
 import { MODAL_TYPES, useModal } from "../../../context/ModalContext";
 import Table from "../../../components/dataTable/Table";
 import { useFetchResourceQuery } from "../../../redux/api/departmentApi";
+import StaffTableSkeleton from "@src/components/dataTable2/StaffTableSkeleton";
 import { useNavigate } from "react-router-dom";
 import SearchQuery from "../../../components/searchQuery/SearchQuery";
 
@@ -52,6 +53,13 @@ function Organizations() {
           </button>
         </div>
       </div>
+      {
+        isLoading ? (
+          <StaffTableSkeleton/>
+        ) :
+        error ? (
+          <div>Error loading data</div>
+        ) : (
       <Table
         headers={table}
         data={data}
@@ -63,6 +71,8 @@ function Organizations() {
         onEdit={handleEdit}
         getId={(item) => item.deptId}
       />
+      )
+      }
     </div>
   );
 }

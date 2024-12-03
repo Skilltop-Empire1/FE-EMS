@@ -129,7 +129,7 @@ const Navbar = () => {
               <CustomLinkWithDropdown
                 label="Appointments"
                 icon={<SiGoogleclassroom />}
-                path="/app/appointments"
+                path="/app/appointments/appointment"
                 dropdownItems={[
                   {
                     path: "/app/appointments/appointment",

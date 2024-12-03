@@ -34,7 +34,7 @@
   width: 330px;
   height: 35px;
   border-radius: 8px;
-  border: 1px solid #ced4da;
+  /* border: 1px solid #ced4da; */
   background-color: #f8f8f8;
   padding: 4px 3px;
   color: #000;
@@ -44,8 +44,9 @@
 .checkbox {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
 .checkbox input {
@@ -74,7 +75,8 @@
 
 .formButton {
   display: flex;
-  justify-content: end;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .formButton :first-child {

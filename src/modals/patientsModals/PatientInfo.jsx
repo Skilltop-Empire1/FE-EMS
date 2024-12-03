@@ -25,44 +25,46 @@ const PatientInfo = ({ toggleInfo, infoData }) => {
           <h3 >Patients information</h3>
           <button onClick={handleClose} className={`${style.close} noPrint`}>X</button>
         </div>
-        <form className={style.form}>
-          <div className={style.formChild}>
-            <label htmlFor="firstName">Firstname</label>
-            <p>{information?.firstName}</p>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="lastName">Lastname</label>
-            <p>{information?.lastName}</p>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="address">Address</label>
-            <p>{information?.address}</p>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="email">Email</label>
-            <p>{information?.email}</p>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="lastVisit">Last Visit</label>
-            <p>{information?.lastVisit?.slice(0, 10)}</p>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="phone">Mobile Number</label>
-            <p>{information?.phone}</p>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="medCondition">Medical Condition</label>
-            <p>{information?.medCondition}</p>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="gender">Gender</label>
-            <p>{information?.gender}</p>
-          </div>
-          <div className={style.formChild}>
-            <label htmlFor="dateOfBirth">Date Of Birth</label>
-            <p>{information?.dateOfBirth}</p>
-          </div>
-          <div className="flex gap-3">
+        <form>
+         <div className={style.form}>
+            <div className={style.formChild}>
+                <label htmlFor="firstName">Firstname</label>
+                <p>{information?.firstName}</p>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="lastName">Lastname</label>
+                <p>{information?.lastName}</p>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="address">Address</label>
+                <p>{information?.address}</p>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="email">Email</label>
+                <p>{information?.email}</p>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="lastVisit">Last Visit</label>
+                <p>{information?.lastVisit?.slice(0, 10)}</p>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="phone">Mobile Number</label>
+                <p>{information?.phone}</p>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="medCondition">Medical Condition</label>
+                <p>{information?.medCondition}</p>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="gender">Gender</label>
+                <p>{information?.gender}</p>
+              </div>
+              <div className={style.formChild}>
+                <label htmlFor="dateOfBirth">Date Of Birth</label>
+                <p>{information?.dateOfBirth}</p>
+              </div>
+         </div>
+          <div className="flex gap-3 justify-center">
             <button type="button" onClick={reactToPrintFn} className={`text-white bg-emsBlue ${style.submit} noPrint`}>
               Print
             </button>
