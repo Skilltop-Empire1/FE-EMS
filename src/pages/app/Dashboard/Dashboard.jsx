@@ -142,7 +142,7 @@ const Dashboard = () => {
             <div className={styles.docList}>
               <div className="flex justify-between ">
                 <h2 className="text-md">Recently Added Doctors</h2>
-                <NavLink to="/app/doctors">
+                <NavLink to="/app/staff?type=doctor">
                   <p className="font-light underline">See full list</p>
                 </NavLink>
               </div>
