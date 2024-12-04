@@ -31,6 +31,7 @@
     "react-router-dom": "^6.26.2",
     "react-spinners": "^0.14.1",
     "react-to-print": "^3.0.2",
+    "react-toastify": "^10.0.6",
     "skilltop": "file:",
     "zod": "^3.23.8"
   },

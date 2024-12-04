@@ -32,9 +32,9 @@
   text-decoration: none;
 }
 
-.activeLink {
+/* .activeLink {
   font-weight: bold;
-}
+} */
 
 .loginButton {
   padding: 0.5rem 1rem;
@@ -62,6 +62,47 @@ body {
   position: absolute;
   right: 5px;
   top: 5px;
+}
+
+/* LandingPageNavBar.module.css */
+
+.dropdownMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: #e0f7f7b2;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  list-style-type: none;
+  position: absolute;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+  z-index: 10;
+}
+
+.dropdownItem {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  letter-spacing: -0.10000000149011612px;
+  text-align: center;
+}
+
+.dropdownIcon {
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.rotated {
+  transform: rotate(180deg);
 }
 
 /* Mobile Styles */
