@@ -154,7 +154,7 @@ const AddAccount = ({ toggleForm }) => {
                         </div>
                         <div className={style.formChild}>
                             <label htmlFor="nextPayDueDate">Next Payment Date</label>
-                            <input type="date" id="nextPayDueDate" name="nextPayDueDate" className={style.input} required />
+                            <input type="date" id="nextPayDueDate" name="nextPayDueDate" className={style.input}  />
                         </div>
                         <div className={style.formChild}>
                             <label htmlFor="paymentProvider">Payment Provider</label>
@@ -176,7 +176,7 @@ const AddAccount = ({ toggleForm }) => {
                         </div>
                         <div className={style.formChild}>
                             <label htmlFor="outstandBal">Outstanding Balance</label>
-                            <input type="number" id="outstandBal" name="outstandBal" className={style.input} required />
+                            <input type="number" id="outstandBal" name="outstandBal" className={style.input}  />
                         </div>
                         <div className={style.formChild}>
                             <label htmlFor="treatmentType">Service/Treatment Type</label>

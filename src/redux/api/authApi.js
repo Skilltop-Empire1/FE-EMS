@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://be-ems.onrender.com/api/v1',
+    baseUrl: 'https://be-ems-production-d07e.up.railway.app/api/v1',
     prepareHeaders: (headers) => {
       const user = localStorage.getItem('user');
       const token = user ? JSON.parse(user).token : null;

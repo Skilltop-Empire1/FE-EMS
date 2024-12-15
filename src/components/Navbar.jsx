@@ -158,7 +158,7 @@ const Navbar = () => {
               <CustomLinkWithDropdown
                 label="Reports"
                 icon={<TbReportMedical />}
-                path="/reports"
+                path="/app/reports/admin"
                 dropdownItems={[
                   { path: "/app/reports/admin", label: "Admin" },
                   { path: "/app/reports/doctors", label: "Doctors" },

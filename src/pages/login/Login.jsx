@@ -16,7 +16,7 @@ function Login() {
     setShowPassword(true);
     setTimeout(() => {
       setShowPassword(false);
-    }, 500);
+    }, 2000);
   };
 
   const handleSubmit = async (e) => {

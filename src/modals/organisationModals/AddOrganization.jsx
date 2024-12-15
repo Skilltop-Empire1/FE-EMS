@@ -225,6 +225,7 @@ const AddOrganisation = () => {
           
         </div>
       <div className={style.checkbox}>
+      </div>
         <div className={style.formButton}>
           <button type="submit" disabled={loading}>
             Save
@@ -233,7 +234,6 @@ const AddOrganisation = () => {
             Cancel
           </button>
         </div>
-      </div>
     </form>
   );
 };

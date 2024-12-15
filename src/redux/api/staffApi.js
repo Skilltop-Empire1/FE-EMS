@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Define a base URL for the API
-const BASE_URL = "https://be-ems.onrender.com/api/v1";
+const BASE_URL = "https://be-ems-production-d07e.up.railway.app/api/v1";
 
 // Create the staff API slice
 const staffApi = createApi({

@@ -241,7 +241,7 @@ const AddAppointment = () => {
           </div>
         </div>
       </div>
-      <div className={style.checkbox}>
+      <div className={` flex  justify-start ${style.checkbox}`}>
         <div className="check">
           <input
             type="checkbox"
@@ -251,6 +251,7 @@ const AddAppointment = () => {
           />
           <label htmlFor="addMore">Create another Appointment</label>
         </div>
+      </div>
         <div className={style.formButton}>
           <button type="submit" disabled={loading}>
             Add
@@ -259,7 +260,6 @@ const AddAppointment = () => {
             Cancel
           </button>
         </div>
-      </div>
     </form>
   );
 };
