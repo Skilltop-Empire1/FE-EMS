@@ -129,7 +129,7 @@ const AddStaffForm = ({ onClose }) => {
   };
 
   return (
-    <div>
+    <div className="mx-[20px]">
       <div className="w-full">
         <form
           onSubmit={handleSubmit}
@@ -153,7 +153,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-1"
                 />
               ) : key === "gender" ? (
                 <select
@@ -161,7 +161,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-1"
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -172,7 +172,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd]  text-sm rounded-lg p-1"
                 >
                   <option value="Doctor">Doctor</option>
                   <option value="Nurse">Nurse</option>
@@ -184,7 +184,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-1"
                 >
                   <option value="">Select Department</option>
                   {fetchedDepartment?.map((dept) => (
@@ -206,7 +206,7 @@ const AddStaffForm = ({ onClose }) => {
                   name={key}
                   value={formData[key]}
                   onChange={handleInputChange}
-                  className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                  className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-1"
                 />
               )}
               {formErrors[key] && (

@@ -125,11 +125,9 @@ const ViewAccount = ({ toggleForm, account }) => {
 
 
     const handleClose = (e) => {
-        e.preventDefault();
-        const confirmation = window.confirm('Are you sure you want to close the form?');
-        if (confirmation) {
+
             toggleForm();
-        }
+        
     };
 
 

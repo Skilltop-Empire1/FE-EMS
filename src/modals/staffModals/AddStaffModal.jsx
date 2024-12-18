@@ -19,7 +19,7 @@ const AddStaffModal = ({ show, onClose }) => {
   return (
     <ModalWrapper
       onClose={onClose}
-      contentMaxWidth="max-w-2xl"
+      contentMaxWidth="max-w-[700px]"
       modalTitle="Add Staff"
     >
       <motion.div

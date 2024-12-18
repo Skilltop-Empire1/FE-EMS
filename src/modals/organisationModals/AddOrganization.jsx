@@ -71,9 +71,9 @@ const AddOrganisation = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className={`${style.header} mb-8`}>
-        <h3>Add Department</h3>
+    <form onSubmit={handleSubmit} className='w-[]'>
+      <div className={`${style.header} my-8`}>
+        <h3 className="">Add Department</h3>
       </div>
       {loading && <div style={{ color: "blue" }}>Loading...</div>}
       {message && <div style={{ color: "green" }}>{message}</div>}
@@ -214,14 +214,14 @@ const AddOrganisation = () => {
           </div>
         </div>
       </div>
-        <div className="flex">
+        <div className="flex gap-2">
           <input
             type="checkbox"
             id="addMore"
             checked={isChecked}
             onChange={handleCheck}
           />
-          <label htmlFor="addMore">Create another Department</label>
+          <label htmlFor="addMore"> Create another Department</label>
           
         </div>
       <div className={style.checkbox}>

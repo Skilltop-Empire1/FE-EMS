@@ -14,16 +14,17 @@
 
 .modalStyle {
   background: white;
-  padding: 10px 42px;
+  padding: 20px 40px;
   border-radius: 8px;
   position: relative;
-  width: 786px;
+  width: 700px;
   /* height: 503px; */
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: center;
   overflow-y: scroll;
+  max-height: 600px;
 }
 
 .deleteModalStyle {

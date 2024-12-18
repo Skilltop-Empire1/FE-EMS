@@ -116,11 +116,7 @@ const AddPatients = ({ toggleForm }) => {
 
     // Handle close confirmation only when "X" button is clicked
     const handleClose = (e) => {
-      e.preventDefault();  // Prevent any default behavior from the button
-      const confirmation = window.confirm('Are you sure you want to close the form?');
-      if (confirmation) {
-        toggleForm(); // Close form if confirmed
-      }
+      toggleForm()
     };
 
   return (

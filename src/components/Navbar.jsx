@@ -170,7 +170,7 @@ const Navbar = () => {
                 ]}
               />
             </li>
-            <li>
+            {/* <li>
               <NavLink
                 to="/app/help"
                 className={({ isActive }) =>
@@ -179,7 +179,7 @@ const Navbar = () => {
               >
                 <IoMdHelpCircle /> Help
               </NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink
                 to="/app/settings"

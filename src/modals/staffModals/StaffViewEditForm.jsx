@@ -145,7 +145,7 @@ const StaffViewEditForm = ({
               {formErrors[key] && <span className="text-red-400">*</span>}
             </label>
             {viewMode ? (
-              <div className="w-full bg-[#F8F8F8] text-sm rounded-lg p-2 ">
+              <div className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-2 ">
                 {formData[key] || "N/A"}
               </div>
             ) : key === "dateOfBirth" || key === "dateOfHire" ? (
@@ -155,7 +155,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-1"
               />
             ) : key === "gender" ? (
               <select
@@ -163,7 +163,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-1"
                 disabled={viewMode}
               >
                 <option value="male">Male</option>
@@ -175,7 +175,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-1"
                 disabled={viewMode}
               >
                 <option value="Doctor">Doctor</option>
@@ -188,7 +188,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-1"
                 disabled={viewMode}
               >
                 <option value="">Select Department</option>
@@ -205,7 +205,7 @@ const StaffViewEditForm = ({
                 name={key}
                 value={formData[key]}
                 onChange={handleInputChange}
-                className="w-full bg-[#F8F8F8] text-sm rounded-lg p-1"
+                className="w-full bg-[#F8F8F8] border-[1px] border-[#cfcdcd] text-sm rounded-lg p-1"
                 disabled={viewMode}
               />
             )}
